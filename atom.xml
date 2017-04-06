@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://nosea.github.io/atom.xml" rel="self"/>
   <link href="http://nosea.github.io/"/>
-  <updated>2017-04-06T15:08:23+00:00</updated>
+  <updated>2017-04-06T15:21:27+00:00</updated>
   <id>http://nosea.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,5 +12,2674 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Boost PropertyTree]]></title>
+    <link href="http://nosea.github.io/blog/2015/01/26/boost-propertytree/"/>
+    <updated>2015-01-26T23:08:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2015/01/26/boost-propertytree</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>The Property Tree library provides a data structure that stores an arbitrarily deeply nested tree of values, 
+indexed at each level by some key. 
+可以很方便的解析xml，ini，json，info文件
+</code></pre>
+
+<!--more-->
+
+
+<h1>Content</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;string&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;set&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;boost/foreach.hpp&gt; </span><span class="c1">// for BOOST_FOREACH</span>
+</span><span class='line'><span class="cp">#include &lt;boost/property_tree/ptree.hpp&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;boost/property_tree/xml_parser.hpp&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/*</span>
+</span><span class='line'><span class="cm"> * 例子来自boost property的five minute tutorial，我稍微修改了下</span>
+</span><span class='line'><span class="cm"> *  &lt;debug&gt;</span>
+</span><span class='line'><span class="cm"> *      &lt;filename&gt;debug.log&lt;/filename&gt;</span>
+</span><span class='line'><span class="cm"> *    &lt;modules&gt;</span>
+</span><span class='line'><span class="cm"> *        &lt;module&gt;Finance&lt;/module&gt;</span>
+</span><span class='line'><span class="cm"> *        &lt;module&gt;Admin&lt;/module&gt;</span>
+</span><span class='line'><span class="cm"> *        &lt;module&gt;HR&lt;/module&gt;</span>
+</span><span class='line'><span class="cm"> *    &lt;/modules&gt;</span>
+</span><span class='line'><span class="cm"> *    &lt;level&gt;2&lt;/level&gt;</span>
+</span><span class='line'><span class="cm"> *  &lt;/debug&gt;</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="k">class</span> <span class="nc">xml_demo</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'><span class="k">public</span><span class="o">:</span>
+</span><span class='line'>    <span class="kt">void</span> <span class="n">load</span><span class="p">();</span>
+</span><span class='line'>    <span class="kt">void</span> <span class="nf">save</span><span class="p">();</span>
+</span><span class='line'>    <span class="n">xml_demo</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">config_name</span><span class="p">)</span><span class="o">:</span>
+</span><span class='line'>        <span class="n">config_</span><span class="p">(</span><span class="n">config_name</span><span class="p">){}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">void</span> <span class="n">show</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">private</span><span class="o">:</span>
+</span><span class='line'>    <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">config_</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">log_</span><span class="p">;</span> <span class="c1">// log filename</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">level_</span><span class="p">;</span>  <span class="c1">// log level</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">modules_</span><span class="p">;</span> <span class="c1">// modules where logging is enabled</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="n">xml_demo</span><span class="o">::</span><span class="n">show</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;the config info is below: </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;log file name is: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">log_</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;log level is: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">level_</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;the module info is : </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">it</span><span class="o">=</span><span class="n">modules_</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+</span><span class='line'>         <span class="n">it</span><span class="o">!=</span><span class="n">modules_</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="n">it</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">it</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="n">xml_demo</span><span class="o">::</span><span class="n">load</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">boost</span><span class="o">::</span><span class="n">property_tree</span><span class="o">::</span><span class="n">ptree</span> <span class="n">pt</span><span class="p">;</span> <span class="c1">// Create an empty property tree object</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Load the XML file into the property tree. If reading fails</span>
+</span><span class='line'>    <span class="c1">// (cannot open file, parse error), an exception is thrown.</span>
+</span><span class='line'>    <span class="n">boost</span><span class="o">::</span><span class="n">property_tree</span><span class="o">::</span><span class="n">read_xml</span><span class="p">(</span><span class="n">config_</span><span class="p">,</span> <span class="n">pt</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Get the filename of log and store it in the level_ variable</span>
+</span><span class='line'>    <span class="c1">// if the debug.filename key is not found, an exception is thrown.</span>
+</span><span class='line'>    <span class="n">log_</span> <span class="o">=</span> <span class="n">pt</span><span class="p">.</span><span class="n">get</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;debug.filename&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Get the debug level and store it in the level_ variable.</span>
+</span><span class='line'>    <span class="c1">// This is another version of the get method; if the value is not</span>
+</span><span class='line'>    <span class="c1">// found, the default value (specified by the second parameter) is</span>
+</span><span class='line'>    <span class="c1">// returned instead.</span>
+</span><span class='line'>    <span class="c1">// 注意，因为抽取的数据类型与默认值一致，因此使用了get(...)而不是</span>
+</span><span class='line'>    <span class="c1">// get&lt;int&gt;(...)</span>
+</span><span class='line'>    <span class="n">level_</span> <span class="o">=</span> <span class="n">pt</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;debug.level&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// 遍历读取 debug.modules 的值</span>
+</span><span class='line'>    <span class="n">BOOST_FOREACH</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">property_tree</span><span class="o">::</span><span class="n">ptree</span><span class="o">::</span><span class="n">value_type</span><span class="o">&amp;</span> <span class="n">v</span><span class="p">,</span>
+</span><span class='line'>                  <span class="n">pt</span><span class="p">.</span><span class="n">get_child</span><span class="p">(</span><span class="s">&quot;debug.modules&quot;</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="n">modules_</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">second</span><span class="p">.</span><span class="n">data</span><span class="p">());</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="n">xml_demo</span><span class="o">::</span><span class="n">save</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">log_</span> <span class="o">=</span> <span class="s">&quot;new_debug.log&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">level_</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">boost</span><span class="o">::</span><span class="n">property_tree</span><span class="o">::</span><span class="n">ptree</span> <span class="n">pt</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">pt</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="s">&quot;debug.filename&quot;</span><span class="p">,</span> <span class="n">log_</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">pt</span><span class="p">.</span><span class="n">put</span><span class="p">(</span><span class="s">&quot;debug.level&quot;</span><span class="p">,</span> <span class="n">level_</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">BOOST_FOREACH</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">,</span> <span class="n">modules_</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="n">pt</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="s">&quot;debug.modules.module&quot;</span><span class="p">,</span> <span class="s">&quot;NEW &quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">boost</span><span class="o">::</span><span class="n">property_tree</span><span class="o">::</span><span class="n">write_xml</span><span class="p">(</span><span class="n">config_</span><span class="p">,</span> <span class="n">pt</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">conf_file</span><span class="p">(</span><span class="s">&quot;config.xml&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">xml_demo</span> <span class="nf">demo</span><span class="p">(</span><span class="n">conf_file</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">demo</span><span class="p">.</span><span class="n">load</span><span class="p">();</span>
+</span><span class='line'>    <span class="n">demo</span><span class="p">.</span><span class="n">show</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Now modifing... </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">demo</span><span class="p">.</span><span class="n">save</span><span class="p">();</span>
+</span><span class='line'>    <span class="n">demo</span><span class="p">.</span><span class="n">load</span><span class="p">();</span>
+</span><span class='line'>    <span class="n">demo</span><span class="p">.</span><span class="n">show</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>Reference</h1>
+
+<p>Boost propertytree tutorial</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Boost Filesystem]]></title>
+    <link href="http://nosea.github.io/blog/2015/01/26/boost-filesystem/"/>
+    <updated>2015-01-26T12:46:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2015/01/26/boost-filesystem</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>The Boost.Filesystem library provides facilities to manipulate files and 
+directories, and the paths that identify them.
+可移植，不用为不同平台编写不同的代码。
+</code></pre>
+
+<!--more-->
+
+
+<h1>Content</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;boost/filesystem.hpp&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">handle_file</span><span class="p">(</span><span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">filesystem</span><span class="o">::</span><span class="n">path</span><span class="o">&amp;</span> <span class="n">p</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">try</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">filesystem</span><span class="o">::</span><span class="n">exists</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">filesystem</span><span class="o">::</span><span class="n">is_regular_file</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="c1">// p 是一个普通的文件</span>
+</span><span class='line'>                <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">p</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; size is &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">filesystem</span><span class="o">::</span><span class="n">file_size</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>            <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">filesystem</span><span class="o">::</span><span class="n">is_directory</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="c1">// p 是一个目录</span>
+</span><span class='line'>                <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">p</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; is a directory </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>            <span class="k">else</span>
+</span><span class='line'>                <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">p</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; exists, but is neither a reqular file nor a direcotry</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">else</span>
+</span><span class='line'>            <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">p</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; does not exist</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">catch</span> <span class="p">(</span><span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">filesystem</span><span class="o">::</span><span class="n">filesystem_error</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;usage: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; filepath</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">boost</span><span class="o">::</span><span class="n">filesystem</span><span class="o">::</span><span class="n">path</span> <span class="n">p</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span><span class='line'>    <span class="n">handle_file</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>Reference</h1>
+
+<p>boost filesystem tutorial</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Eclipse 相关]]></title>
+    <link href="http://nosea.github.io/blog/2015/01/26/tools-eclipse/"/>
+    <updated>2015-01-26T12:41:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2015/01/26/tools-eclipse</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>eclipse 相关内容
+</code></pre>
+
+<!--more-->    
+
+
+<h1>Content</h1>
+
+<h2>设置pupop弹出框的背景颜色</h2>
+
+<pre><code>1、偏好设置 &gt; C/C++ &gt; Editor 栏，然后在右边的Appearance color options下，
+选择Source hover background，然后点击System_default即可使用主题的配置。
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Boost Program Options]]></title>
+    <link href="http://nosea.github.io/blog/2015/01/25/boost-program-options/"/>
+    <updated>2015-01-25T18:12:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2015/01/25/boost-program-options</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>program_options主要用于方便的从命令行或者配置文件获取程序选项。
+</code></pre>
+
+<!--more--> 
+
+
+<h1>Content</h1>
+
+<h2>example</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="cp">#include &lt;boost/program_options.hpp&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">namespace</span> <span class="n">po</span> <span class="o">=</span>  <span class="n">boost</span><span class="o">::</span><span class="n">program_options</span><span class="p">;</span>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/*</span>
+</span><span class='line'><span class="cm"> * @brief: 四个步骤</span>
+</span><span class='line'><span class="cm"> *    1) 创建一个options_description对象</span>
+</span><span class='line'><span class="cm"> *    2) 调用options_description对象的add_options方法</span>
+</span><span class='line'><span class="cm"> *    3) 创建一个variables_map对象</span>
+</span><span class='line'><span class="cm"> *    4) 调用parse_command_line函数生成basic_parsed_options</span>
+</span><span class='line'><span class="cm"> *    4) 调用program_options的全局函数store</span>
+</span><span class='line'><span class="cm"> *    5) 调用notify全局函数</span>
+</span><span class='line'><span class="cm"> * @{</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">ac</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">av</span><span class="p">[])</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">add_times</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">po</span><span class="o">::</span><span class="n">options_description</span> <span class="n">desc</span><span class="p">(</span><span class="s">&quot;Allowed options&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">desc</span><span class="p">.</span><span class="n">add_options</span><span class="p">()</span>
+</span><span class='line'>      <span class="p">(</span><span class="s">&quot;help&quot;</span><span class="p">,</span> <span class="s">&quot;produce help message&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="s">&quot;addtimes&quot;</span><span class="p">,</span> <span class="n">po</span><span class="o">::</span><span class="n">value</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="o">&amp;</span><span class="n">add_times</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">default_value</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="s">&quot;Add Times&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">po</span><span class="o">::</span><span class="n">value</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(),</span> <span class="s">&quot;Your name&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="s">&quot;compression&quot;</span><span class="p">,</span> <span class="n">po</span><span class="o">::</span><span class="n">value</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(),</span> <span class="s">&quot;set commpresson level&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">po</span><span class="o">::</span><span class="n">variables_map</span> <span class="n">vm</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">po</span><span class="o">::</span><span class="n">store</span><span class="p">(</span><span class="n">po</span><span class="o">::</span><span class="n">parse_command_line</span><span class="p">(</span><span class="n">ac</span><span class="p">,</span> <span class="n">av</span><span class="p">,</span> <span class="n">desc</span><span class="p">),</span> <span class="n">vm</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">po</span><span class="o">::</span><span class="n">notify</span><span class="p">(</span><span class="n">vm</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">vm</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="s">&quot;help&quot;</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">desc</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">vm</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="s">&quot;compression&quot;</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Compression level was set to &quot;</span>
+</span><span class='line'>           <span class="o">&lt;&lt;</span> <span class="n">vm</span><span class="p">[</span><span class="s">&quot;compression&quot;</span><span class="p">].</span><span class="n">as</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">vm</span><span class="p">.</span><span class="n">count</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Your name  was set to &quot;</span>
+</span><span class='line'>           <span class="o">&lt;&lt;</span> <span class="n">vm</span><span class="p">[</span><span class="s">&quot;name&quot;</span><span class="p">].</span><span class="n">as</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Compression level was not set.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>add_options函数</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;string&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;boost/shared_ptr.hpp&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">namespace</span> <span class="n">program_options</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">option_description</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>  <span class="k">public</span><span class="o">:</span>
+</span><span class='line'>      <span class="n">option_description</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">description</span><span class="p">)</span><span class="o">:</span>
+</span><span class='line'>          <span class="n">name_</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">description_</span><span class="p">(</span><span class="n">description</span><span class="p">)</span> <span class="p">{}</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">name</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span><span class="k">return</span> <span class="n">name_</span><span class="p">;}</span> 
+</span><span class='line'>      <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">description</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span><span class="k">return</span> <span class="n">description_</span><span class="p">;}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">private</span><span class="o">:</span>
+</span><span class='line'>      <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name_</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">description_</span><span class="p">;</span>        
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">options_description</span><span class="p">;</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="k">class</span> <span class="nc">options_description_easy_init</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>  <span class="k">public</span><span class="o">:</span>
+</span><span class='line'>      <span class="n">options_description_easy_init</span><span class="p">(</span><span class="n">options_description</span><span class="o">*</span> <span class="n">owner</span><span class="p">)</span><span class="o">:</span>
+</span><span class='line'>          <span class="n">owner_</span><span class="p">(</span><span class="n">owner</span><span class="p">)</span> <span class="p">{}</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="n">options_description_easy_init</span><span class="o">&amp;</span> <span class="k">operator</span><span class="p">()</span>
+</span><span class='line'>          <span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">descrition</span><span class="p">);</span>
+</span><span class='line'>          
+</span><span class='line'>  <span class="k">private</span><span class="o">:</span>
+</span><span class='line'>      <span class="n">options_description</span><span class="o">*</span> <span class="n">owner_</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">options_description</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>  <span class="k">public</span><span class="o">:</span>
+</span><span class='line'>      <span class="kt">void</span> <span class="n">add</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">option_description</span><span class="o">&gt;</span> <span class="n">desc</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">{</span>
+</span><span class='line'>          <span class="n">options_</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">desc</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="n">options_description_easy_init</span> <span class="n">add_option</span><span class="p">()</span>
+</span><span class='line'>      <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">options_description_easy_init</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span><span class="p">,</span> <span class="n">options_description</span><span class="o">&amp;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">private</span><span class="o">:</span>
+</span><span class='line'>      <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">option_description</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">options_</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">options_description_easy_init</span><span class="o">&amp;</span> <span class="n">options_description_easy_init</span><span class="o">::</span><span class="k">operator</span><span class="p">()</span>
+</span><span class='line'>      <span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">description</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="n">boost</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">option_description</span><span class="o">&gt;</span> <span class="n">item</span><span class="p">(</span><span class="k">new</span> <span class="n">option_description</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">));</span>
+</span><span class='line'>      <span class="n">owner_</span><span class="o">-&gt;</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">o</span><span class="p">,</span> <span class="n">options_description</span><span class="o">&amp;</span> <span class="n">p</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">p</span><span class="p">.</span><span class="n">options_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">{</span>
+</span><span class='line'>          <span class="n">o</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">options_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">name</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">options_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">description</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">return</span> <span class="n">o</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="k">using</span> <span class="k">namespace</span> <span class="n">program_options</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">program_options</span><span class="o">::</span><span class="n">options_description</span> <span class="n">set</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">set</span><span class="p">.</span><span class="n">add_option</span><span class="p">()</span>
+</span><span class='line'>      <span class="p">(</span><span class="s">&quot;--help&quot;</span><span class="p">,</span> <span class="s">&quot;help message&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="s">&quot;--version&quot;</span><span class="p">,</span> <span class="s">&quot;version message&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">;</span>
+</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">set</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[修复win7的引导]]></title>
+    <link href="http://nosea.github.io/blog/2015/01/25/fix-windows-7-bootmbr/"/>
+    <updated>2015-01-25T14:47:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2015/01/25/fix-windows-7-bootmbr</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>案例：装有双系统(win7 和 Linux)，其中引导由linux得grub引导，且win7和linux的引导
+分别在不同的磁盘分区，如果删除了Linux， 如何修复win7的mbr引导
+</code></pre>
+
+<!-- more -->
+
+
+<h1>Content</h1>
+
+<pre><code>正常情况下:
+1、制作一个win7的启动U盘，或者PE也行，进入修复界面，启动cmd窗口
+bootrec /fixmbr     //执行这个即可修复
+
+2、如果还是不行，比如出现了"找不到元素", 执行下面的命令
+Diskpart
+LIST DISK
+SELECT DISK (followed by the number of the disk . most likely 0)
+LIST PARTITION
+SELECT PARTITION (followed by your partition number. most likely 0)
+ACTIVE
+EXIT
+
+Windows startup recovery should now work.
+</code></pre>
+
+<h1>Reference</h1>
+
+<p><a href="https://social.technet.microsoft.com/Forums/zh-CN/7791044e-db7f-4144-a96c-945299811f58/bootmgr-not-found-bootrec-rebuildbcd-and-fixboot-give-element-not-found-error">bootmgr not found. bootrec /rebuildbcd and /fixboot give &lsquo;Element not found" error</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[函数返回引用]]></title>
+    <link href="http://nosea.github.io/blog/2015/01/24/returning-a-reference/"/>
+    <updated>2015-01-24T19:26:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2015/01/24/returning-a-reference</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>函数返回引用
+</code></pre>
+
+<!-- more -->
+
+
+<h1>Content</h1>
+
+<pre><code>函数返回引用，返回的就是对象本身，不用再拷贝一次。
+注意一点：不要返回局部变量的引用
+</code></pre>
+
+<h1>Reference</h1>
+
+<p><a href="http://stackoverflow.com/questions/6441218/can-a-local-variables-memory-be-accessed-outside-its-scope/6445794#6445794">can a local vairables memory be accessed outside its scope</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Linux命令tcpdump]]></title>
+    <link href="http://nosea.github.io/blog/2015/01/06/linux-command-tcpdump/"/>
+    <updated>2015-01-06T17:41:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2015/01/06/linux-command-tcpdump</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>tcpdump命令日常使用
+</code></pre>
+
+<!--more-->
+
+
+<h1>OPTION</h1>
+
+<pre><code>-i     Listen on interface.
+$ sudo tcpdump -ieth0  // 监听eth0上所有的包
+22:26:20.775096 IP NOSEA-PC.1600 &gt; 192.168.14.16.41732: . ack 98 win 271 ...省略
+
+-c     Exit after receiving count packets.
+
+$ sudo tcpdump -ieth0 -c 10   // 监听eth0上收到的10个包
+22:26:20.775096 IP NOSEA-PC.1600 &gt; 192.168.14.16.41732: . ack 98 win 271 ...省略
+下面只显示抓到的10个包
+
+-n     Don't  convert  addresses  (i.e.,  host addresses, port numbers,
+       etc.) to names.
+       如果不使用-n选项，那么ip会被转变为主机名，端口会被转为相应的服务，如port 22
+       会被转换为ftp。
+$ sudo tcpdump -ieth0 -c 10   
+22:26:20.775096 IP NOSEA-PC.1600 &gt; 192.168.14.16.41732: . ack 98 win 271 ...省略
+
+$ sudo tcpdump -ieth0  -n -c 10   // 不要把地址转换为主机名，不要把端口转换为服务名
+22:26:20.775096 IP 192.168.14.17.1600 &gt; 192.168.14.16.41732: . ack 98 win 271 ...省略
+
+-X     When parsing and printing, in addition to printing  the  headers
+       of  each  packet,  print the data of each packet (minus its link
+       level header)  in  hex  and  ASCII.   This  is  very  handy  for
+       analysing new protocols.
+       打印了包头和包得内容，对于协议的分析很有用。
+$ sudo tcpdump -ieth0 -X -n -c 10
+
+-e     Print  the  link-level  header  on  each dump line.  This can be
+       used, for example, to print MAC layer  addresses  for  protocols
+       such as Ethernet and IEEE 802.11.
+       之前是只有IP的信息，这个会打印链路层的信息，对于查看mac地址挺有用
+$ sudo tcpdump -ieth0 -enX -c10
+
+-l     Make stdout line buffered.  Useful if you want to see  the  data
+       while capturing it. 
+       让标准输出行缓冲后，可以用pipe针对每行做处理，在想实时的看到dump到
+       packet时很有用。比如
+       tcpdump -l | tee dat
+       tcpdump -l &gt; dat &amp; tail -f data
+$ sudo tcpdump -ieth0 -enX -c10
+
+-v     When  parsing and printing, produce (slightly more) verbose out-
+       put.  For example,  the  time  to  live,  identification,  total
+       length  and  options  in an IP packet are printed.  Also enables
+       additional packet integrity checks such as verifying the IP  and
+       ICMP header checksum.
+       -v和-vv都是打印更多的详细的信息，需要时再用吧
+$ sudo tcpdump -ieth0 -enX -c10
+
+-w     Write  the  raw packets to file rather than parsing and printing
+       them out.  They can later be printed with the -r option.   Stan-
+       dard output is used if file is ``-''.
+
+       This  output will be buffered if written to a file or pipe, so a
+       program reading from the file or pipe may not see packets for an
+       arbitrary  amount  of  time after they are received.  Use the -U
+       flag to cause  packets  to  be  written  as  soon  as  they  are
+       received.
+       注意，保存到文件里的是raw packets是原始的dump数据，没有经过分析的
+       二进制数据。如果要读这些包文件的话，用-r选项。另外，即使在保存到
+       文件的时候，用了一些匹配选项，保存的也是最原始的日志.
+$ sudo tcpdump -ieth0  -c10 -w dump.data
+tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 96 bytes
+10 packets captured
+22 packets received by filter
+0 packets dropped by kernel
+
+-r     Read  packets  from file (which was created with the -w option).
+       Standard input is used if file is ``-''.
+$ sudo tcpdump -ieth0 -elnX -c10 -rdump.data
+
+-p     Don't  put  the  interface into promiscuous mode.  Note that the
+       interface might be in promiscuous mode for  some  other  reason;
+       hence,  `-p'  cannot  be used as an abbreviation for `ether host
+       {local-hw-addr} or ether broadcast'.
+       不要把网卡置于混杂模式
+
+-s     Snarf snaplen bytes of data from each  packet  rather  than  the
+       default  of 65535 bytes.  Packets truncated because of a limited
+       snapshot are indicated in the output  with  ``[|proto]'',  where
+       proto  is the name of the protocol level at which the truncation
+       has occurred.  Note that taking larger snapshots both  increases
+       the amount of time it takes to process packets and, effectively,
+       decreases the amount of packet buffering.  This may cause  pack-
+       ets to be lost.  You should limit snaplen to the smallest number
+       that will capture the protocol information you're interested in.
+       Setting  snaplen to 0 sets it to the default of 65535, for back-
+       wards compatibility with recent older versions of tcpdump.
+
+       -s0 用以抓取65535字节的包
+</code></pre>
+
+<h1>expression</h1>
+
+<pre><code>The filter expression consists of one or more  primitives.   Primitives
+usually consist of an id (name or number) preceded by one or more qual-
+ifiers.  There are three different kinds of qualifier: type, dir, proto
+
+表达式用于过滤要dump的packets。理解了awk得过滤，这个也差不多。
+详见 man 7 pcap-filter。
+
+格式：tcpdump -elnX -c 10 'expression'
+expression的格式为：qualifier id(id是一个数字或者名字).
+</code></pre>
+
+<h2>qualifiers</h2>
+
+<h3>type</h3>
+
+<pre><code>type qualifiers say what kind of thing the  id  name  or  number
+refers  to. 通常的types是host(主机), net(网络), port(端口)和portrange(连续的端口)
+
+// dump与192.168.9.73的包
+$ sudo tcpdump -enl -c10 'host 192.168.9.73'
+
+// 在上面的基础上，加上端口为10001的限制
+$ sudo tcpdump -enl -c10 'host 192.168.9.73 and port 10001'
+</code></pre>
+
+<h3>dir</h3>
+
+<pre><code>dir qualifiers specify a particular transfer direction to and/or
+from id
+指定方向了，这个相当有用，常用的就是src, dst了
+
+// dump来自192.168.9.73的包，并且目标的端口是10001
+$ sudo tcpdump -enl -c10 'src host 192.168.9.73 and dst port 10001'
+
+// dump来自192.168.9.73的包，并且目标的端口是10001到10100之间的包
+$ sudo tcpdump -enl -c10 'src host 192.168.9.73 and dst portrange 10001'
+</code></pre>
+
+<h3>proto</h3>
+
+<pre><code>proto qualifiers restrict the match to  a  particular  protocol.
+Possible  protos are: ether, fddi, tr, wlan, ip, ip6, arp, rarp,
+decnet, tcp and udp.
+估计常用到的就是tcp和udp了。。
+
+// dump来自192.168.9.73的包，并且目标的端口是10001的tcp包
+$ sudo tcpdump -enl -c10 'tcp and src host 192.168.9.73 and dst port 10001'
+</code></pre>
+
+<h3>其他常用的</h3>
+
+<pre><code>In addition to the above, there are some special  `primitive'  keywords
+that  don't  follow  the pattern: gateway, broadcast, less, greater and
+arithmetic expressions.  All of these are described below.jjjjkkkk
+
+less length
+    True  if  the  packet has a length less than or equal to length.
+    This is equivalent to:
+    len &lt;= length.
+
+// dump来自192.168.9.73的tcp包，且包大小小于100，greater的用法一样
+// 注意，用-v选项才可以看到包的大小，如果想看的话
+$ sudo tcpdump -nlv -c10 'tcp and src host 192.168.9.73 and less 100'
+</code></pre>
+
+<h1>Reference</h1>
+
+<p>man tcpdump  <br/>
+<a href="http://www.cnblogs.com/ggjucheng/archive/2012/01/14/2322659.html">Linux tcpdump命令详解</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[在mac上安装octopress]]></title>
+    <link href="http://nosea.github.io/blog/2014/12/16/install-octopress-on-mac/"/>
+    <updated>2014-12-16T22:30:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2014/12/16/install-octopress-on-mac</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>在Mac上安装Octopress记录
+</code></pre>
+
+<!--more-->
+
+
+<h1>Content</h1>
+
+<pre><code>System: OS X Yosemite 10.10.1
+因为之前已经建立仓库了，这次只是简单的同步下环境。
+</code></pre>
+
+<h2>生成Key</h2>
+
+<pre><code>cd ~/.ssh   
+ssh-keygen -t rsa -C "your email"
+注意：
+  Enter file in which to save the key -- 这个直接回车
+  Enter passphrase -- 这个可以填一个密码，也可以为空
+同样，下面的也加上
+echo "Host github.com   
+User git   
+Port 443   
+Hostname ssh.github.com   
+PreferredAuthentications publickey   
+identityfile ~/.ssh/id_rsa" &gt;&gt; ~/.ssh/config
+# follow the ways given above put your pub key in github
+# Testing   
+ssh -T git@github.com
+</code></pre>
+
+<h2>把key放在github上</h2>
+
+<pre><code>1、访问https://github.com/，登录
+2、点击右上角的齿轮，也就是设置
+3、点击SSH keys
+4、点击Add SSH key，把.ssh/id_rsa.pub里的内容复制进去
+   详细的教程参见
+   https://help.github.com/articles/generating-ssh-keys/
+5、ssh -T git@github.com 来验证即可
+</code></pre>
+
+<h2>安装ruby</h2>
+
+<pre><code>1、brew install rbenv
+2、brew install ruby-build
+3、rbenv install 1.9.3-p194  
+   # 最开始安装的时1.9.3-p125，后来出现了如下的错误
+   rbenv: version `1.9.3-p194' is not installed，因此重新安装了这个新的版本
+4、rbenv rehash
+5、把下面的两句加到 ~/.bash_profile  里，否则会出现ruby --version还是系统自带的高版本的
+   export PATH="$HOME/.rbenv/bin:$PATH"
+   eval "$(rbenv init -)"
+</code></pre>
+
+<h2>clone 现有版本</h2>
+
+<pre><code>git clone -b source git@github.com:nosea/nosea.github.com.git octopress
+cd octopress
+
+修改下默认的源  Gemfile里默认都是修改为淘宝的，去掉原来的
+gem sources -a http://ruby.taobao.org
+gem sources -r https://rubygems.org/
+
+然后安装依赖
+gem install bundler
+bundle install
+因为主题默认都有了，也就不需要rake install了
+
+然后生成页面即可
+rake generate
+</code></pre>
+
+<h1>Reference</h1>
+
+<p><a href="http://msching.github.io/blog/2014/04/11/starting/">http://msching.github.io/blog/2014/04/11/starting/</a>  <br/>
+<a href="http://segmentfault.com/blog/yaashion_xiang/1190000000364677">http://segmentfault.com/blog/yaashion_xiang/1190000000364677</a>  <br/>
+<a href="http://samwize.com/2012/09/11/how-to-setup-octopress-on-github-pages/">http://samwize.com/2012/09/11/how-to-setup-octopress-on-github-pages/</a>  <br/>
+<a href="http://stackoverflow.com/questions/10940736/rbenv-not-changing-ruby-version">ruby版本解决办法</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Bash Tips]]></title>
+    <link href="http://nosea.github.io/blog/2014/08/31/bash-tips/"/>
+    <updated>2014-08-31T22:58:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2014/08/31/bash-tips</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>long time tips
+</code></pre>
+
+<!--more--> 
+
+
+<h1>Content</h1>
+
+<h2>logging in file</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">_LOG_FILE</span><span class="o">=</span><span class="s2">&quot;test.log&quot;</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">_INFO_FLAG</span><span class="o">=</span><span class="s2">&quot;[INFO]&quot;</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">_ERROR_FLAG</span><span class="o">=</span><span class="s2">&quot;[ERROR]&quot;</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">_LOG_FORMAT</span><span class="o">=</span><span class="s2">&quot;%Y-%m-%d %H:%M:%S&quot;</span>
+</span><span class='line'>
+</span><span class='line'>LOG_INFO<span class="o">()</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="k">$(</span>date +<span class="s2">&quot;${_LOG_FORMAT} ${_INFO_FLAG} (${BASH_SOURCE[1]##*/}:${BASH_LINENO[0]}) &quot;</span><span class="k">)</span> <span class="nv">$*</span> &gt;&gt; <span class="nv">$_LOG_FILE</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>LOG_ERROR<span class="o">()</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="k">$(</span>date +<span class="s2">&quot;${_LOG_FORMAT} ${_ERROR_FLAG} (${BASH_SOURCE[1]##*/}:${BASH_LINENO[0]}) &quot;</span><span class="k">)</span> <span class="nv">$*</span> &gt;&gt; <span class="nv">$_LOG_FILE</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>function decorator</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">_ERROR_LOG</span><span class="o">=</span><span class="s2">&quot;err.log&quot;</span>
+</span><span class='line'>RUN<span class="o">()</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="c"># every function will append some infomation to debug or logging</span>
+</span><span class='line'>    <span class="nb">local </span><span class="nv">_func</span><span class="o">=</span><span class="s2">&quot;$1&quot;</span><span class="p">;</span> <span class="nb">shift </span>1
+</span><span class='line'>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;start ${_func} ...&quot;</span>
+</span><span class='line'>    <span class="c"># run the function </span>
+</span><span class='line'>    <span class="k">${</span><span class="nv">_func</span><span class="k">}</span> <span class="nv">$@</span> 2&gt;&gt;<span class="k">${</span><span class="nv">_ERROR_LOG</span><span class="k">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># logging</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;done ${_func} ...&quot;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">test</span><span class="o">()</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;param is :&quot;</span> <span class="nv">$@</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>reverse the order of lines in a file</h2>
+
+<pre><code>1、use command tac
+   tac filename
+2、sed tricks
+   sed '1!G;h;$!d' filename
+   sed -n '1!G;h;$p' filename
+3、pelr
+   perl -e 'print reverse &lt;&gt;' filename
+</code></pre>
+
+<h2>exit shell script from a subshell</h2>
+
+<h3>use kill &amp;&amp; or kill 0</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sub_proc<span class="o">()</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;start sub process...&quot;</span>
+</span><span class='line'>    <span class="nb">kill</span> <span class="nv">$$</span>
+</span><span class='line'>  <span class="c"># the same as kill 0</span>
+</span><span class='line'>  <span class="c"># for detail see kill(2) manpage</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>base_proc<span class="o">()</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nv">var</span><span class="o">=</span><span class="k">$(</span>sub_proc<span class="k">)</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;this will never be printed&quot;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>base_proc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>use set -E and trap</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'><span class="nb">set</span> -E <span class="c"># -E  If set, the ERR trap is inherited by shell functions</span>
+</span><span class='line'><span class="nb">trap</span> <span class="s1">&#39;[ &quot;$?&quot; -eq 99 ] &amp;&amp; exit 99&#39;</span> ERR
+</span><span class='line'>sub_proc<span class="o">()</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;start sub process...&quot;</span>
+</span><span class='line'>    <span class="nb">exit </span><span class="m">99</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>base_proc<span class="o">()</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nv">var</span><span class="o">=</span><span class="k">$(</span>sub_proc<span class="k">)</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;this will never be printed&quot;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>base_proc
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Lexical_Cast]]></title>
+    <link href="http://nosea.github.io/blog/2014/08/04/lexical-cast/"/>
+    <updated>2014-08-04T23:21:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2014/08/04/lexical-cast</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>数值与字符串转换之用，更方便，安全，有效。
+</code></pre>
+
+<!--more--> 
+
+
+<h1>使用</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="cp">#include &lt;boost/lexical_cast.hpp&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;boost/random.hpp&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">string</span> <span class="nf">number_to_string</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">ivec</span><span class="p">);</span>
+</span><span class='line'><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">gen_ivec</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">low</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">top</span><span class="p">);</span>
+</span><span class='line'><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">string_to_number</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ivec</span> <span class="o">=</span> <span class="n">gen_ivec</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+</span><span class='line'>  
+</span><span class='line'>
+</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Begin int to string...&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">string</span> <span class="n">res</span> <span class="o">=</span> <span class="n">number_to_string</span><span class="p">(</span><span class="n">ivec</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">res</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Begin string to int...&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ivec_handle</span> <span class="o">=</span> <span class="n">string_to_number</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">iter</span><span class="o">=</span><span class="n">ivec_handle</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+</span><span class='line'>      <span class="n">iter</span><span class="o">!=</span><span class="n">ivec_handle</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">iter</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">iter</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/*</span>
+</span><span class='line'><span class="cm">*    convert an array of integers to string whiche divided by &quot;=&quot;</span>
+</span><span class='line'><span class="cm">*/</span>
+</span><span class='line'><span class="n">string</span> <span class="nf">number_to_string</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">ivec</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">string</span> <span class="n">ret</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">const_iterator</span> <span class="n">iter</span><span class="o">=</span><span class="n">ivec</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+</span><span class='line'>      <span class="n">iter</span><span class="o">!=</span><span class="n">ivec</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">iter</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span> <span class="o">+</span> <span class="n">boost</span><span class="o">::</span><span class="n">lexical_cast</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">iter</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;=&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="n">ret</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/*</span>
+</span><span class='line'><span class="cm">*    convert string to an array of integers</span>
+</span><span class='line'><span class="cm">*/</span>
+</span><span class='line'><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">string_to_number</span><span class="p">(</span><span class="k">const</span> <span class="n">string</span> <span class="o">&amp;</span><span class="n">s</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ivec</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">string</span><span class="o">::</span><span class="n">const_iterator</span> <span class="n">iter</span><span class="o">=</span><span class="n">s</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span>
+</span><span class='line'>      <span class="n">iter</span><span class="o">!=</span><span class="n">s</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">iter</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="n">try</span>
+</span><span class='line'>      <span class="p">{</span>
+</span><span class='line'>          <span class="n">ivec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">lexical_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="o">*</span><span class="n">iter</span><span class="p">));</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">catch</span> <span class="p">(</span><span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">bad_lexical_cast</span><span class="o">&amp;</span><span class="p">){}</span> <span class="c1">// skip it</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="n">ivec</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/*</span>
+</span><span class='line'><span class="cm">* generate random number</span>
+</span><span class='line'><span class="cm">*/</span>
+</span><span class='line'><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">gen_ivec</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">low</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">top</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ivec</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">boost</span><span class="o">::</span><span class="n">uniform_int</span><span class="o">&lt;&gt;</span> <span class="n">distribution</span><span class="p">(</span><span class="n">low</span><span class="p">,</span> <span class="n">top</span><span class="p">)</span> <span class="p">;</span>
+</span><span class='line'>  <span class="n">boost</span><span class="o">::</span><span class="n">mt19937</span> <span class="n">engine</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">boost</span><span class="o">::</span><span class="n">variate_generator</span><span class="o">&lt;</span><span class="n">boost</span><span class="o">::</span><span class="n">mt19937</span><span class="p">,</span> <span class="n">boost</span><span class="o">::</span><span class="n">uniform_int</span><span class="o">&lt;&gt;&gt;</span> <span class="n">irandom</span> <span class="p">(</span><span class="n">engine</span><span class="p">,</span> <span class="n">distribution</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="n">low</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">top</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      <span class="n">ivec</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">irandom</span><span class="p">());</span>
+</span><span class='line'>      <span class="c1">//cout &lt;&lt; irandom() &lt;&lt; &quot;, &quot;;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="n">ivec</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>Reference</h1>
+
+<p><a href="http://www.boost.org/doc/libs/1_55_0/doc/html/boost_lexical_cast.html">boost</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[HTML Basic]]></title>
+    <link href="http://nosea.github.io/blog/2014/01/05/html-basic/"/>
+    <updated>2014-01-05T22:44:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2014/01/05/html-basic</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>html基础
+</code></pre>
+
+<!--more-->
+
+
+<h1>Content</h1>
+
+<h2>Basic terminology</h2>
+
+<pre><code>HTML —— HyperText Markup Language(超文本标记语言),
+       Hypertext means "text with links in it."
+&lt;!DOCTYPE html&gt;  —— 放在第一行，用于告诉浏览器是什么类型的文件        
+Tag —— 由尖括号包围的词，如&lt;html&gt;,&lt;body&gt;，几乎总是成对出现
+       &lt;html&gt; —— 类似这种的为开始标签(opening tag)
+       &lt;/html&gt; —— 类似这种的为结束标签(closing tag）
+       标签可以有属性
+       标签可以嵌套
+element —— 标签和标签之间内容合起来为元素，
+    即element = &lt;opening tag&gt; + content + &lt;closing tag&gt;
+注释 —— &lt;!--  这个之间的为注释  --&gt;
+</code></pre>
+
+<h2>Attribute</h2>
+
+<pre><code>style —— 修饰字体颜色，大小，页面背景等，多个以分号相隔
+    eg: style="font-size:20px; color:green"
+    style="font-size:10px" -- 字体大小
+    style="color:green" —— 字体颜色
+    style="font-family:Garamond" —— 字体类型
+    style="background-color:green" —— 背景颜色，设置body对应整个网页，其他则局部
+    style="text-align:center" —— 居中，也可以是左对齐或者右对齐
+colspan -- 表格头占用格数
+    eg: &lt;th colspan="3"&gt;xxxx&lt;th&gt;  ## 占用3格
+height -- 高度
+width -- 宽度
+border -- 边框
+text-decoration: none   —— 去掉链接的下划线
+margin: auto; -- div居中
+</code></pre>
+
+<h2>Tags</h2>
+
+<pre><code>&lt;html&gt; —— 用于开始html文件，所有的内容都应在html标签内
+&lt;head&gt; -- 里面的文本描述网页的重要信息，如标题等
+&lt;title&gt; -- 网页标题，在标题栏可见
+&lt;body&gt; -- 里面的内容为可见的页面内容
+&lt;p&gt; —— 里面的内容为段落
+&lt;h1&gt; —— 里面的内容显示为标题，html提供了6个标题标签，即&lt;h1&gt;到&lt;h6&gt;，&lt;h1&gt;最高
+&lt;img&gt; —— 显示图片，必须包含src属性告诉html哪里去获得图片，即&lt;img src="url"/&gt; ，注意是自关闭的
+&lt;a&gt; —— 显示链接，用href属性说明链接是哪一个，即&lt;a href="url"&gt;
+       href stands for "hypertext reference." 
+       里面的内容可以是文本或者图片之类的
+&lt;ol&gt; —— 顺序列表
+&lt;li&gt; —— 列表项
+&lt;ul&gt; —— 无序列表
+&lt;strong&gt; —— 加粗
+&lt;em&gt; —— 强调(倾斜)
+&lt;table&gt; -- 定义表格
+  &lt;thead&gt; -- table head
+    &lt;th&gt; -- table head data
+  &lt;tbody&gt; -- table body
+  &lt;tr&gt; -- 创建表的行
+    &lt;td&gt; -- table data  # 多个td即多个列
+&lt;div&gt; -- divide webpage into pieces
+&lt;span&gt; -- control styling for smaller parts
+</code></pre>
+
+<h2>CSS</h2>
+
+<pre><code>1、放置的方式有两种:
+  I、放置在style里 eg:
+  &lt;head&gt;
+    &lt;style&gt;
+        p {
+            color: red
+        }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  II、使用&lt;link&gt;标签，并且link标签必须包含三个属性 # 自关闭标签
+  type="text/css"  # 必须为这样
+  rel="stylesheet" # 必须为这样
+  href="" # 指定CSS文件地址
+  eg:
+  &lt;head&gt;
+    &lt;link type="text/css"; rel="stylesheet"; href="stylesheet.css"/&gt;
+  &lt;/head&gt;
+2、CSS语法
+  1) 通用语法
+  selector {
+      property: value;
+  }
+  2) 注释
+  /* This is a comment */
+3、class
+  .name {
+      color: red
+  }
+4、id
+  #name {
+      color: red
+  }
+5、pseudo-class selectors
+  selector:pseudo-class_selector {
+      property: value;
+  }
+  1) for a:
+    link -- unvisited
+    visited -- visited
+    hover -- 鼠标经过时
+  2) first child
+    p:first-child {
+        color: red
+    }
+  3) nth child
+    p:nth-child(3) {
+        color: red
+    }
+6、margin --&gt; border --&gt; pandding --&gt; content
+7、float:left/right
+8、clear:left/right/both
+9、z-index: 1  # 一直在页面前
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Shell Color Format]]></title>
+    <link href="http://nosea.github.io/blog/2014/01/01/shell-color-format/"/>
+    <updated>2014-01-01T21:59:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2014/01/01/shell-color-format</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>终端颜色打印
+</code></pre>
+
+<!--more-->
+
+
+<h1>Preview</h1>
+
+<pre><code>通过转义序列(escape sequences)来实现颜色的输出，这些序列需要搭配转义字符，
+用"^[" 或者"&lt;Esc&gt;"来表示。在bash里，转义字符通过如下语法获取
+* \e
+* \033
+* \x1B
+通过man 7 ascii可以看出
+Oct   Dec   Hex   Char           
+------------------------------
+033   27    1B    ESC (escape)
+
+格式：
+    echo -e "\e[XXmString\e[0m"  
+    or
+    echo -e "\033[XXmString\033[0m"
+说明：
+    echo的-e选项是开启解析转义序列
+    "\e[0m"序列是去掉所有颜色输出属性
+    "XX"代表颜色打印控制码
+</code></pre>
+
+<h1>Set Code</h1>
+
+<pre><code>----------------Set----------------
+Code    说明                    
+1       加粗和明亮(Bold/Bright)       
+2       变暗(Dim)
+4       加下划线(Underlined)
+5       闪烁(Blink)
+7       取反(Reverse)，将字体颜色(前景)和背景互换
+8       隐藏(Hidden)，可以用于密码隐藏
+        PS: 密码的隐藏可以 stty -echo后再stty echo
+----------------Reset-------------- 
+Code    说明   # 全部加2    
+0       重置所有属性(Reset all attributes)
+21      重置加粗和明亮(Reset bold/bright)
+22      重置变暗(Reset dim)
+24      重置加下划线(Reset underlined)
+25      重置闪烁(Reset blink)
+27      重置取反(Reset reverse)
+28      重置隐藏(Reset hidden)
+</code></pre>
+
+<h1>Color Code</h1>
+
+<h2>8/16位颜色</h2>
+
+<pre><code>适用大多数terminal
+----------------Foreground--------------        
+Code    说明                    
+39      默认前景颜色(Default foreground color)
+30      黑色(Black)
+31      红色(Red)
+32      绿色(Green)
+33      黄色(Yellow)
+34      蓝色(Blue)
+35      品红(Magenta)
+36      青色(Cyan)
+37      浅灰(Light gray)
+90      深灰(Dark gray)
+91      淡红(Light red)
+92      淡绿(Light green)
+93      淡黄(Light yellow)
+94      淡蓝(Light blue)
+95      淡品红(Light magenta)
+96      淡青(Light cyan)
+97      白色(White)
+----------------Background--------------        
+Code    说明                    
+49      默认背景色(Default background color)
+40      黑色(Black)
+41      红色(Red)
+42      绿色(Green)
+43      黄色(Yellow)
+44      蓝色(Blue)
+45      品红(Magenta)
+46      青色(Cyan)
+47      淡灰(Light gray)
+100      深灰(Dark gray)
+101      淡红(Light red)
+102      淡绿(Light green)
+103      淡黄(Light yellow)
+104      淡蓝(Light blue)
+105      淡品红(Light magenta)
+106      淡青(Light cyan)
+107      白色(White)  
+</code></pre>
+
+<h1>Reference</h1>
+
+<p>译自<a href="http://misc.flogisoft.com/bash/tip_colors_and_formatting">Bash tips: Colors and formatting (ANSI/VT100 Control sequences)</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MySQL Skills]]></title>
+    <link href="http://nosea.github.io/blog/2013/12/08/mysql-skills/"/>
+    <updated>2013-12-08T11:02:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/12/08/mysql-skills</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>纯记录
+</code></pre>
+
+<!--more--> 
+
+
+<h1>Content</h1>
+
+<pre><code>1、对一个网段赋权限
+  grant all privileges on testdb.* to 'testuser'@'192.168.1.%'  identified by 'test123';
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Shell Trap]]></title>
+    <link href="http://nosea.github.io/blog/2013/12/02/shell-trap/"/>
+    <updated>2013-12-02T22:35:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/12/02/shell-trap</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>有些错误犯一次就够了
+</code></pre>
+
+<!--more-->
+
+
+<h1>Content</h1>
+
+<pre><code>1、删除文件
+  rules: 
+    文件 -- 带绝对路径删除，直接rm就行，不要添加-rf参数
+    文件夹 —— 先检测文件夹是否存在，再删除
+
+  eg:
+  =============Wrong================
+  cd ~/dir1/dir2/
+  rm -rf *  ## 如果dir1或者dir2不存在，会把当前用户home目录的文件全部删除
+  ==================================
+
+  =============Correct=============
+  rm /home/xxx/dir1/dir2/*   # 直接如果没有文件
+
+  if [ -d '/home/xxx/dir1' ]; then
+      rm -r /home/xxx/dir1/dir2
+  fi
+  =================================
+2、执行脚本
+  rules: 用绝对路径执行，别"./"，脚本也是绝对路径
+  /bin/bash /xx/xxx/xx/a.sh
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Awk常用函数]]></title>
+    <link href="http://nosea.github.io/blog/2013/11/24/awk-funclib/"/>
+    <updated>2013-11-24T14:52:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/11/24/awk-funclib</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>收集些我觉得有用的函数
+</code></pre>
+
+<!--more--> 
+
+
+<h1>Content</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+</pre></td><td class='code'><pre><code class='awk'><span class='line'><span class="c1">#!/usr/bin/awk -f</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">############################################################</span>
+</span><span class='line'><span class="c1"># description: print column sums</span>
+</span><span class='line'><span class="c1"># parameter:</span>
+</span><span class='line'><span class="c1">#     filename: the file to be processed</span>
+</span><span class='line'><span class="c1">#     sum: Local variable</span>
+</span><span class='line'><span class="c1">#     maxln: Local variables</span>
+</span><span class='line'><span class="c1"># return value: None</span>
+</span><span class='line'><span class="c1">############################################################</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">sum_col</span><span class="p">(</span><span class="nx">filename</span><span class="p">,</span> <span class="nx">sum</span><span class="p">,</span> <span class="nx">maxln</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">while</span> <span class="p">(</span><span class="kr">getline</span> <span class="o">&lt;</span> <span class="nx">filename</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;=</span><span class="nb">NF</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">sum</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+=</span> <span class="o">$</span><span class="nx">i</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="nb">NF</span> <span class="o">&gt;</span> <span class="nx">maxln</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">maxln</span> <span class="o">=</span> <span class="nb">NF</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;=</span><span class="nx">maxln</span><span class="p">;</span>  <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>        <span class="kr">printf</span><span class="p">(</span><span class="s2">&quot;%d &quot;</span><span class="p">,</span> <span class="nx">sum</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+</span><span class='line'>    <span class="kr">print</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>    <span class="kr">close</span><span class="p">(</span><span class="nx">filename</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="c1">############################################################</span>
+</span><span class='line'><span class="c1"># description: print row sums</span>
+</span><span class='line'><span class="c1"># parameter:</span>
+</span><span class='line'><span class="c1">#     filename: the file to be processed</span>
+</span><span class='line'><span class="c1">#     sum: Local variable</span>
+</span><span class='line'><span class="c1">#     maxln: Local variables</span>
+</span><span class='line'><span class="c1"># return value: None</span>
+</span><span class='line'><span class="c1">############################################################</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">sum_row</span><span class="p">(</span><span class="nx">filename</span><span class="p">,</span> <span class="nx">sum</span><span class="p">,</span> <span class="nx">N</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">while</span> <span class="p">(</span><span class="kr">getline</span> <span class="o">&lt;</span> <span class="nx">filename</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>  <span class="nx">N</span><span class="o">++</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;=</span><span class="nb">NF</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">sum</span><span class="p">[</span><span class="nx">N</span><span class="p">]</span> <span class="o">+=</span> <span class="o">$</span><span class="nx">i</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">for</span><span class="p">(</span><span class="nx">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;=</span><span class="nx">N</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span>
+</span><span class='line'>  <span class="kr">printf</span><span class="p">(</span><span class="s2">&quot;row %d: %d\n&quot;</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">sum</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+</span><span class='line'>    <span class="kr">close</span><span class="p">(</span><span class="nx">filename</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">isnum</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="c1"># Note: in awk, xx.0 &lt;=&gt; xx</span>
+</span><span class='line'>    <span class="c1"># so, &#39;4.0&#39; will be automatically transformed &#39;4&#39;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">n</span> <span class="o">~</span> <span class="sr">/^[+-]?[0-9]+$/</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">isdecnum</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">n</span> <span class="o">~</span> <span class="sr">/^[+-]?[0-9]+[.]?[0-9]*$/</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">isfloatnum</span><span class="p">(</span><span class="nx">n</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">n</span> <span class="o">~</span> <span class="sr">/^[+-]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][+-]?[0-9]+)?$/</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">BEGIN</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">testfile</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
+</span><span class='line'>    <span class="nx">sum_col</span><span class="p">(</span><span class="nx">testfile</span><span class="p">)</span>
+</span><span class='line'>    <span class="nx">sum_row</span><span class="p">(</span><span class="nx">testfile</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kr">print</span> <span class="nx">isnum</span><span class="p">(</span><span class="mf">45.0</span><span class="p">)</span>
+</span><span class='line'>    <span class="kr">print</span> <span class="nx">isnum</span><span class="p">(</span><span class="o">-</span><span class="mf">45.01</span><span class="p">)</span>
+</span><span class='line'>    <span class="kr">print</span> <span class="nx">isdecnum</span><span class="p">(</span><span class="o">-</span><span class="mf">45.234</span><span class="p">)</span>
+</span><span class='line'>    <span class="kr">print</span> <span class="nx">isfloatnum</span><span class="p">(</span><span class="o">-</span><span class="mf">42.2e8</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Perl Basic]]></title>
+    <link href="http://nosea.github.io/blog/2013/11/23/perl-basic/"/>
+    <updated>2013-11-23T00:15:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/11/23/perl-basic</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>Perl —— Practical Extraction and Report Language
+</code></pre>
+
+<!--more--> 
+
+
+<h1>基本</h1>
+
+<pre><code>1、执行
+   为了可移植性，跟python一样，#!/usr/bin/env perl
+2、注释
+   和shell、python等一行，以"#"井号开始的为注释
+3、告警信息
+   $ perl -w my_program  
+   或者 
+   #!/usr/bin/perl -w 
+   或者 
+   #!/usr/bin/perl
+   use warnings;
+</code></pre>
+
+<h1>基本类型</h1>
+
+<h2>scalar</h2>
+
+<pre><code>Perl用标量(scalar)来称呼单件事物，可以是数字或者字符串,两者大多数在内部是可以转换的。
+1、数字
+   数字可以是整数和浮点数，但在perl内部，总是按照"双精度浮点数"来保存和运算数据
+   literal: 类似C++中的字面值常量(literal constant)，是某个数值在Perl代码的书写方式，
+            只是直接写在源代码里的数据。
+
+   数字可以有以下几种书写方式:
+   浮点数：1.24， 22.00， 7.23e34(7.23乘以10的34次方), -3.23E-19(负3.23乘以10的负19次方)
+
+   整数:
+     十进制: 0, 22, 34, 1001, 1094383221
+     八进制: 034 （以0开头）
+     十进制: 0xFF (以0x开头)
+     二进制: 0b11111111 （以0b开头，这个等于十进制255）
+     注意
+       如果太长读起来费力，也可以写成"1_094_383_221"，"ob1111_1111"
+
+   数字操作符:
+     加(+) 减(-)  乘(*) 除(/） 取模(%) 乘方(**)
+2、字符串
+   最短的是不含任何字符的空串，最长没有限制。通常字符串由可输出的字母、数字和标点符号组成，但是
+   也可以包含任何字符，所以对于二进制文件也同样适用，比如，可以将一个二进制文件读进Perl的字符串
+   里，然后修改它的值，再写回去。
+
+   字符串的literal书写方式有以下两种:
+   单引号 —— 'abc', 'xj_33s' '\'\\' # 单引号，接着反斜杠
+   注意:
+     字符串内除单引号和反斜杠，其余均表示本身字符串,要表示反斜线和单引号本身，需要在前面加反斜线
+     另外，在单引号里，反斜线只对反斜线本身和单引号本身起作用，对其他不转义。比如"\n"仅仅表示反斜线和
+     n两个字母
+
+   双引号 —— "good", "test"
+    双引号里反斜线"\"同其他语言一样，可以转义
+
+   字符串操作符:
+     点号(.) —— 字符串自动连接，"a" . "b" &lt;=&gt; "ab"
+     乘号(x) —— 重复，类似python的(*). "a" x 3 &lt;=&gt; "aaa"
+3、标量变量
+   标量变量用于存储标量值，以美元$开头，后面是标识符，标识符跟其他语言一样，以字母或下划线开头，后跟
+   数字、字母、下划线
+   eg: $variable1
+   $var_1 = 23;
+   $var_2 = $var_1 + 23
+   $var_3 = "good" * 3
+   $var_4 = $var_3 . " time"
+   $var_5 += $var_1  ## 同其他语言一样，也有双目操作符
+
+   在字符串里取得变量的值
+   $test = "good bye $var_4"   ## 感觉和shell一样了。。。
+   $test = "good bye ${var_4}" ## 这种较好
+4、比较操作符
+   比较               数字                字符串
+   大于               &gt;                    gt
+   小于               &lt;                    lt
+   等于               ==                   eq
+   不等于             !=                   ne
+   大于等于           &gt;=                   ge
+   小于等于           &lt;=                   le
+5、读取标准输入
+   $input_var = &lt;STDIN&gt;;   ## 遇到回车时结束
+6、chomp操作符
+   功能只有一个，去除字符串变量尾部的回车换行符，它实际是一个函数，返回值是去除的字数
+   chomp($line_var)
+   chomp($line_var = &lt;STDIN&gt;)  ## 从STDIN读取，然后去掉尾部的换行
+   如果尾部有两个换行符，只去除一个，如果没有换行符，则什么都不干，直接返回0
+7、初次使用
+   对于使用没有赋值的标量，数字初始默认为0，字符串默认为空串
+8、defined
+   行输入操作符&lt;STDIN&gt;在没有输入的情况下，会返回undef，判断字符串是空串还是undef，可以用这个
+   if (defined(${line_var})) {
+       statement
+   } else {
+       print "No Input\n."
+   }
+</code></pre>
+
+<h2>list和array</h2>
+
+<pre><code>列表指的是标量的有序集合，代表数据，数组是存储列表的变量，代表变量
+列表中的每个元素都是单独的标量，并且是有序的，索引是从0开始，每次加1
+因为每个元素不相关，因此每个元素可以是数字，字符串，undef等
+
+赋值
+  ##　单个
+  $array[0] = "astring"
+  $array[1] = "bstring"
+
+注意：
+  1、下标不一定要是具体的数字，任何可以得到数字的表达式也可以当下标，是小数的话，它会自动取整
+  2、如果对超过数组现有长度赋值，比如目前只有$array[4],那么赋值$array[50]的话，
+     array[5] —— array[49]都会是undef的。
+  3、数组的最后一个值的索引值是 $#array， 取最后一个值 $end = $array[$#array]
+    所以元素的个数为 $#array + 1
+    与python类似，可以用负号表示反方向，那么-1就表示倒数第一个，因此
+    $array[$#array] &lt;=&gt; $array[-1]
+
+列表字面值
+ (1, 2, 3)  ## 包含三个数字的列表
+ (1, 2, 3,) ## 同上，最后一个逗号忽略
+ ("str1", 3, 4)  ##　可以是不同类型的
+ () ## 空列表
+ (1..100) ## 1-100整数构成的列表，另外".."是范围操作符，每次增加1
+
+ qw(str1 str2 str3)  &lt;=&gt; ("str1", "str2", "str3")  ## qw加上引号，出了()可以作为分隔符之外，
+    其他的任何标点符号也可以用来做分隔符
+    比如:
+    qw {
+        str1
+        str2
+        str3
+    }
+
+列表的赋值
+  ## 类似python的元组赋值
+  (${var_1}, ${var_2}, ${var_3}) = ("str1", "str2", "str3")
+  (${var_2}, ${var_1}) = (${var_1}, ${var_2})  ## 互换二者的值
+
+  ## 如果变量的个数不等于给定列表的个数
+  (${var_1}, ${var_2}) = ("str1", "str2", "str3")  ##　"str3"会被自动忽略掉
+  (${var_1}, ${var_2}, ${var_3}) = ("str1", "str2") ## ${var_3}会是undef
+
+数组赋值      
+  ## 字符串数组
+  (array[0], array[1], array[2]) = ("str1", "str2", "str3")  
+  (array[0], array[1], array[2]) = qw/str1 str2 str3/                                  
+
+  ## 引用整个数组
+  @array = qw/str1 str2 str3/   ## 在变量前加@表示整个数组
+  @copy = @array  ## 数组复制
+
+数组POP和PUSH
+@array = 1..9
+$num = pop(@array)  ##pop去掉数组最后一个值，并且返回该值，跟python一样
+</code></pre>
+
+<h1>控制流程</h1>
+
+<h2>if statement</h2>
+
+<pre><code>if (expression) {
+    statement
+}
+
+if (expression) {
+    statement
+} else {
+
+}
+</code></pre>
+
+<h2>while statement</h2>
+
+<pre><code>while (bool) {
+    statement
+}
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Linux命令xargs]]></title>
+    <link href="http://nosea.github.io/blog/2013/11/21/linux-command-xargs/"/>
+    <updated>2013-11-21T22:32:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/11/21/linux-command-xargs</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>xargs - build and execute command lines from standard input
+</code></pre>
+
+<!--more-->
+
+
+<h1>Content</h1>
+
+<pre><code>如果需要将上一条命令的标准输出作为参数传给下一条命令，简单的话可以使用这个
+它默认对输出的分割依据是blanks，可以指定其他的参数
+command_1 | xargs command_2
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Linux命令iptables]]></title>
+    <link href="http://nosea.github.io/blog/2013/11/13/linux-command-iptables/"/>
+    <updated>2013-11-13T17:08:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/11/13/linux-command-iptables</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>iptables — administration tool for IPv4 packet filtering and NAT
+</code></pre>
+
+<!--more--> 
+
+
+<h1>总览</h1>
+
+<h2>表和链</h2>
+
+<pre><code>目前有四个表和五条链
+表 —— 表包含一系列内置的链，也可以包含用户自定义的链
+链 —— 每条链都是一张可以匹配报文的规则清单，每条规则说明了对匹配到的报文做何种处理
+</code></pre>
+
+<p><img src="http://nosea.github.io/image_tag/linux/iptables_tables_and_chains.png"></p>
+
+<h3>mangle表</h3>
+
+<pre><code>用来修改数据包，
+target —— TOS、TTL、MARK、SECMARK、CONNSECMARK
+注意：不要做数据包的过滤之类的操作
+TOS —— 修改报文的服务类型(Type of Service)，这个主要用来设置报文如何被路由之类的策略
+       但是这个实现的并不好，网络中的很多路由器并不处理这个字段的值
+
+TTL —— Time To Live，当通过一台机器共享网络时，转发的报文的TTL实际是各种各样的，运营商
+       会通过这个来判断你是否共享网络，为了避免被发现，可以设置统一的TTL值
+
+MARK —— 给报文设置指定的标记值，iproute2能够识别报文的这些值来做出不同的路由策略
+        同时也可以根据这个来做带宽限制和Class Based Queuing
+
+SECMARK —— 可以给单个报文设置安全的上下文标记，这些标记可以被SELinux和其他安全系统处理
+           SECMARK和CONNSECMARK合用可以用来设置整个连接
+CONNSECMARK —— 可以用来拷贝单个报文的上下文标记给整个连接或者相反，然后供SELinux和其他安全系统
+        处理
+</code></pre>
+
+<h3>nat表</h3>
+
+<p><img src="http://nosea.github.io/image_tag/linux/iptables_nat.png">
+    只用来NAT
+    target —— DNAT、SNAT、MASQUERADE、REDIRECT
+    DNAT —— 当你只有一个公网IP时，想通过防火墙重导向到其他内网机器，即改变报文的目的地址并路由到指定的内网服务器
+    SNAT —— 用来改变报文的源地址，与DNAT相反，隐藏本地的网络结构，共享上网，统一出口之类的
+    MASQUERADE —— 跟SNAT一样，区别是使用这个机器负载高点，好处是当公网IP是不固定的，比如dhclient获得的之类的，那么
+                  对于每个匹配的包，MASQUERADE都会去查找可用的IP，而不是指定的</p>
+
+<h3>raw表</h3>
+
+<pre><code>主要用来做一件事情，就是对报文设置一个标记来告诉连接跟踪系统不对这个报文做处理
+target —— NOTRACK
+</code></pre>
+
+<h3>filter表</h3>
+
+<pre><code>用来过滤数据包
+target —— ACCEPT、DROP
+</code></pre>
+
+<h2>packet经过流程</h2>
+
+<pre><code>PREROUTING链 —— 对报文做路由选择前应用这个链的规则，即进来的报文都先经过这个链处理
+POSTROUTING链 —— 所有报文出去之前应用这个链的规则
+INPUT链 —— 到本地应用程序之前应用这个链的所有规则
+OUTPUT链 —— 出了应用程序后应用这个链的所有规则
+FORWARD链 —— 本机转发的包应用这个链的所有规则
+</code></pre>
+
+<p><img src="http://nosea.github.io/image_tag/linux/iptables_map.png"></p>
+
+<h1>用法</h1>
+
+<h2>总览</h2>
+
+<pre><code>说明: 如果没有指定-t 选项，即没有指定表名，默认的操作表为filter表
+######################################################
+iptables [-t table] command [match] [target/jump]
+######################################################
+iptables [-t table] {-A|-C|-D} chain rule-specification
+iptables [-t table] -I chain [rulenum] rule-specification
+iptables [-t table] -R chain rulenum rule-specification
+iptables [-t table] -D chain rulenum
+iptables [-t table] -S [chain [rulenum]]
+iptables [-t table] {-F|-L|-Z} [chain [rulenum]] [options...]
+iptables [-t table] -N chain
+iptables [-t table] -X [chain]
+iptables [-t table] -P chain target
+iptables [-t table] -E old-chain-name new-chain-name
+rule-specification = [matches...] [target]
+match = -m matchname [per-match-options]
+target = -j targetname [per-target-options]
+</code></pre>
+
+<h2>command</h2>
+
+<pre><code>-A, --append chain rule-specification
+    在链尾追加一条规则
+      eg: 在filter表INPUT链尾加一条规则
+      iptables -A INPUT --dport 80 -j ACCEPT
+
+-C, --check chain rule-specification
+
+-D, --delete chain rule-specification
+    删除链里面指定的一条规则，这个是通过输出完整的规则来删除
+      eg: 删除filter表INPUT链里为'-p udp --dport 8000 -j ACCEPT'的规则
+      iptables -D INPUT -p udp --dport 8000 -j ACCEPT
+
+-D, --delete chain rulenum
+    删除链里面指定的一条规则，这个是通过指定规则序号删除，序号1代表第一条规则
+      eg: 删除filter表里INPUT链的第一条规则
+      iptables -D INPUT 1
+
+-I, --insert chain [rulenum] rule-specification
+    在链里插入一条规则，rulenum指明插入的位置，如果没有给出，默认值为1
+      eg: 在filter表INPUT链的第二个位置插入一条规则
+      iptables -I INPUT 2 --dport 443 -j DROP
+
+-R, --replace chain rulenum rule-specification
+    替换指定rulenum的规则
+      eg: 替换filter表INPUT链的第二个规则
+      iptables -R INPUT 2 --dport 443 -j ACCEPT
+
+-L, --list [chain]
+    列出指定链的规则，不指定的话，则列出所有链的规则，常配合n和v选项使用
+      eg: iptables -nvL
+
+-S, --list-rules [chain]
+    以iptables-save的格式打印指定链的规则，不指定链的话，则打印所有的
+
+-F, --flush [chain]
+    清空指定链的规则，如果不指定链的话，则清空所有规则，它相比逐条删除更快
+      eg: 清空INPUT链的所有规则
+      iptables -F INPUT
+
+-Z, --zero [chain [rulenum]]
+    清空指定链指定序号的规则的包传输统计值，就是通过这个规则的流量，不指定的话，清空所有规则的统计值
+
+-N, --new-chain chain
+    在指定的表上创建一个新的链(名字不能与内置的链同名)
+    eg: 在filter表上创建一个链
+    iptables -N TEST_CHAIN
+
+-X, --delete-chain [chain]
+    删除指定表的指定用户链(注意，只能删除用户自定义的链)，如果不指定链名，会删除指定表上所有用户
+    自定义链，另外，要删除的链必须是空链，即不能含有任何规则，否则无法删除
+    eg: 删除filter表上的TEST_CHANIN链
+    iptables -X TEST_CHAIN
+
+-P, --policy chain target
+    为内置的链设置默认的规则(ACCEPT DROP)，所有不符合规则的报文都使用这个规则，注意，内置的链和用户自定
+    义的链都不能作为target，即不能出现类似这种：
+    iptables -P INPUT OUTPUT或 iptables -P INPUT TEST_CHAIN
+
+    eg: 设置filter表INPUT链默认为DROP
+    iptables -P INPUT DROP
+
+-E, --rename-chain old-chain new-chain
+    修改链名
+
+-h    Help
+</code></pre>
+
+<h2>match</h2>
+
+<pre><code>指定了表和链，下面就要开始匹配经过这条链的每个数据包，匹配的结果无非是true或者false，true即执
+行后面的target或jumpfalse则执行下一条规则
+可以把所有的匹配选项分为5个子类：
+generic matches —— 可以用于所有的规则
+TCP matches —— 只能用于TCP包
+UDP matches —— 只能用于UDP包
+ICMP matches —— 只能用于ICMP包
+special matches —— 一些特殊的匹配
+</code></pre>
+
+<h3>generic matches</h3>
+
+<pre><code> -p, --protocol [!] protocol
+   1) protocol可以是"tcp"、"udp"、"icmp"或者"all"或者其相依的数值，具体数值可以参考/etc/protocols
+   2) /etc/protocols里的其他协议也可以使用
+   3) 协议名前可选的"!"为取反，比如 -p ! tcp 代表除tcp之外的协议
+   4) 数值0等同于"all"
+   5) "all"代表所有协议，并且当-p选项省略时，"all"为默认值
+   eg:
+     iptables -A INPUT -p tcp
+
+-s, --source [!] address[/mask]
+  用来匹配包的源ip地址，可以是单个ip地址，也可以附加CIDR表示网络，"!"表示取反。默认是匹配全部的ip地址
+  eg:
+     1、单个ip地址
+       iptables -A INPUT -p tcp -s 192.168.1.9 
+        等同于
+        iptables -A INPUT -p tcp -s 192.168.1.9/255.255.255.255
+        等同于
+        iptables -A INPUT -p tcp -s 192.168.1.9/32
+     2、网络
+      iptables -A INPUT -p tcp -s 192.168.1.0/24 ## 这个会匹配所有来自192.168.0.x的包
+
+-d, --destination [!] address[/mask]
+  用来匹配包的目的ip地址，跟-s相同的语法
+
+-i, --in-interface [!] name
+  用来匹配包入口的网络接口。这个选项只用于INPUT、FORWARD和PREROUTING三个链，用于其他链会返回错误
+  注意:
+    1) 接口可以物理网卡如eth0，也可以是其他如PPP0,或虚拟网卡
+    2) 如果不指定具体的interface，那么会默认以"+"代替所有的interface，另外"eth+"也可以通配
+       所有以eth开头的，如eth1、eth2...
+    3) "!"为取反，如 "! eth0" 表示出eth0之外的所有包
+
+-o, --out-interface [!] name
+  用来匹配包的出口接口，用法同"-i"，这个选项只用于OUTPUT, FORWARD 和 POSTROUTING链
+
+[!]  -f, --fragment
+  用来匹配被分片的包的第二和第三部分，因为包头在第一部分，源地址和目的地址，端口等都无法知道，
+  上述规则无法匹配，所以才有了这个匹配。注意"! -f"只匹配第一个分片或者不分片的包。为了防止碎片攻击
+  可以使用这个，但是目前的内核有很好的碎片重组功能可以使用，所以不需要取反来防止碎片攻击。
+  如果使用连接跟踪选项的话，就不会看到任何分片包，因为在抵达任何链之前包就被处理了
+</code></pre>
+
+<h3>Implicit matches</h3>
+
+<pre><code>iptables可以使用扩展的包匹配模块，必须导入才能使用，导入有两种方法，一种的隐式的导入，当-p 或者
+--protocol指定了协议类型时，另一种是显式的使用-m 或者 --match选项后面紧跟匹配模块名的方式
+</code></pre>
+
+<h4>TCP matches</h4>
+
+<pre><code>下面的选项只有在使用了"--protocol tcp"才有效
+--sport, --source-port [!] port[:port]
+  匹配TCP包源端口
+  注意:
+   1) 不用此选项，则匹配所有端口
+   2) port1:port2表示连续端口，如"7000:8000"表示7000到8000端口
+   3) 省略第一个port时，默认为0，如 ":22"表示0到22端口
+   4) 省略第二个port时，默认为65535，如"22:"表示22到65535端口
+   5) "!"取反
+
+--dport, --destination-port [!] port[:port]
+  匹配包的目的端口，用法同源端口
+
+--tcp-flags [!] mask comp
+  匹配TCP的flag。flag可以是: SYN ACK FIN RST URG PSH ALL NONE
+  有两个参数，mask和comp，每个参数都是一个list，里面的内容以逗号隔开，参数之间以空格隔开。
+  mask表示要检查的flags有哪些，而comp则说明哪些flag需要被设置
+  eg: 匹配SYN被设置，而ACK, FIN 和 RST没有被设置的包
+    iptables -A FORWARD -p tcp --tcp-flags SYN,ACK,FIN,RST SYN
+</code></pre>
+
+<h4>UDP matches</h4>
+
+<pre><code>下面的选项只有使用了"--protocol udp"才有效
+--source-port [!] port[:port]
+  使用方法同TCP
+--destination-port [!] port[:port]
+  使用方法同TCP
+</code></pre>
+
+<h4>ICMP matches</h4>
+
+<pre><code>下面的选项只有使用了"--protocol icmp"才有效
+  --icmp-type [!] typename
+    根据ICMP的类型来匹配包，可以是ICMP类型名，也可以是相对应的类型值。
+    ICMP的类型名可以参考如下命令: iptables -p icmp -h
+    eg: 匹配ICMP类型8的包
+      iptables -A INPUT -p icmp --icmp-type 8
+</code></pre>
+
+<h4>SCTP matches</h4>
+
+<pre><code>SCTP(Stream Control Transmission Protocol), 一个较新的协议
+当指定了"-p sctp" 或者 "--protocol sctp"时，其所属的matches自动被加载
+  --source-port,--sport [!] port[:port]
+    匹配SCTP报文头的源端口，使用方法同TCP的
+  --destination-port,--dport [!] port[:port]
+    匹配SCTP报文头的目的端口，使用方法同TCP的
+  --chunk-types [!] {all|any|only} chunktype[:flags] [...]
+</code></pre>
+
+<h3>Explicit matches</h3>
+
+<pre><code>pass
+</code></pre>
+
+<h2>target/jump</h2>
+
+<pre><code>target/jumps指明了当包匹配上了后应该做何种动作
+-j, --jump target/chain
+指定要执行的动作，或是跳转到其他链，或是ACCEPT之类的
+
+ACCEPT 
+  说明 —— 这个target用来让报文通过
+  选项 —— 无
+  eg: 让80端口的tcp包通过
+    iptables -A INPUT -p tcp --sport 80 -j ACCEPT
+
+DNAT
+  说明 —— 做目的地址转换，因此需要重写目的IP地址，一旦匹配，所有的包都会被转换，然后路由到正确的设备
+  注意 —— DNAT只在nat表的PREROUTING 和 OUTPUT链中有效，或是从这两条链跳转的任何用户自定义链
+  选项:
+    --to-destination ipaddr[-ipaddr][:port-port]
+      重写ip头的地址，可以是单个ip也可以是一个ip段，如果是ip段的话，会把匹配的包随机分配到这些ip中
+  eg:
+    iptables -t nat -A PREROUTING -d 15.45.23.67 -j DNAT --to-destination 192.168.1.1-192.168.1.10
+      把目的地址为 15.45.23.67 的包发往后面的ip段。单个流会始终分配到同一个ip。
+    iptables -t nat -A PREROUTING -d 15.45.23.67 -j DNAT --to-destination 192.168.1.2
+      指定单个ip
+    iptables -t nat -A PREROUTING -p tcp -d 15.45.23.67 -j DNAT --to-destination 192.168.1.2:22-443
+      指定目的端口，注意，要使用端口，必须指定"--protocol"选项
+
+DROP: 将报文丢弃掉，不会向发送者返回任何信息
+
+MASQUERADE: 同SNAT，但是不需要--to-source选项
+
+REJECT: 将报文丢弃掉，但会向发送者返回一个错误信息
+
+SNAT:
+  说明 —— 做源地址转换，因此需要重写源IP地址，常用来共享IP地址。使用这个功能时，首先要在内核里打开IP
+          转发功能
+  注意 —— SNAT只在nat表里的POSTROUTING链里有效，另外当同一个连接的第一个包被匹配到后，其余的包自动被
+          转发
+  选项:
+    --to-source [ipaddr[-ipaddr]][:port[-port]]
+       指定源地址和端口
+  eg:
+</code></pre>
+
+<h1>实例</h1>
+
+<h2>共享网络</h2>
+
+<pre><code>linux主机当nat服务器，有多个网卡，其中一个网卡接公网ip，其他的接私网。
+其中接出来的私网接入路由器，由路由器分配ip。路由器接入交换机，使台式机可以通过有线上网。
+笔记本可以直接通过无线上网。
+</code></pre>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'>/etc/init.d/network-manager stop
+</span><span class='line'>killall -9 dhclient
+</span><span class='line'><span class="c">#开启ip转发功能</span>
+</span><span class='line'><span class="nb">echo </span><span class="m">1</span> &gt;/proc/sys/net/ipv4/ip_forward
+</span><span class='line'>iptables -F
+</span><span class='line'>iptables -t nat -F
+</span><span class='line'><span class="c">#此处的eth*要改成你的公网ip的接口,而-s后面的ip是人为设定的转发网段的ip。</span>
+</span><span class='line'>iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -o eth* -j MASQUERADE
+</span><span class='line'>iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -o eth* -j MASQUERADE
+</span><span class='line'><span class="c">#设置公网ip和子网掩码</span>
+</span><span class='line'>ifconfig eth4 10.75.224.2 netmask 255.255.255.128
+</span><span class='line'><span class="c">#添加默认网关</span>
+</span><span class='line'>route add default gw 10.75.224.1
+</span><span class='line'><span class="c">#设置转发的ip</span>
+</span><span class='line'>ifconfig eth<span class="nv">$ </span>192.168.0.1
+</span><span class='line'>ifconfig eth<span class="nv">$ </span>192.168.1.1
+</span><span class='line'>iptables-save
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>Reference</h1>
+
+<p><a href="https://www.frozentux.net/iptables-tutorial/iptables-tutorial.html">Iptables Tutorial 1.2.2</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Linux命令vmstat]]></title>
+    <link href="http://nosea.github.io/blog/2013/11/10/linux-command-vmstat/"/>
+    <updated>2013-11-10T10:38:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/11/10/linux-command-vmstat</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>vmstat上报关于进程、内存、内存分页、阻塞IO、traps、CPU活动信息
+</code></pre>
+
+<!--more--> 
+
+
+<h1>说明</h1>
+
+<pre><code>不带参数直接运行默认显示如下
+==============================================================
+procs -----------memory---------- ---swap-- -----io---- -system-- ----cpu----
+r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa
+1  0      0 2591380  98044 645864    0    0    35    14  221  391  4  1 94  1
+==============================================================  
+procs:
+  r —— 正在等待运行的进程数量
+  b —— 进程处在不可中断睡眠状态的数量
+memory:
+  swpd —— 虚拟内存使用总量
+  free —— 空闲内存总量
+  buff —— 内存用作buffer的总量
+  cache —— 内存用作cache的总量
+  +++++++下面的用-a选项可以显示++++++
+  inact —— 非活动内存总量
+  active —— 活动内存总量
+swap:
+  si —— 每秒从交换分区写入内存的总量
+  so —— 每秒从内存写入交换分区的总量
+io:
+  bi —— 块设备每秒接收块的总量
+  bo —— 块设备每秒发送块的总量
+system:
+  in —— 每秒的中断数量，包括时钟中断
+  cs —— 每秒的上下文切换数量
+CPU:
+  us —— 用户CPU时间占比(include nice time)
+  sy —— 系统CPU时间占比
+  id —— 空闲CPU时间占比
+  wa —— IO阻塞CPU时间占比
+  st —— 虚拟机CPU时间占比
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Linux命令top]]></title>
+    <link href="http://nosea.github.io/blog/2013/11/09/linux-command-top/"/>
+    <updated>2013-11-09T16:29:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/11/09/linux-command-top</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>top -- display Linux tasks
+</code></pre>
+
+<!--more-->
+
+
+<h1>说明</h1>
+
+<pre><code>以光标为界分为两个部分，上面是显示的系统有关的整体性能信息的Summary Area
+下面显示的是各个进程的相关信息的Task Area。光标处用于输入命令
+</code></pre>
+
+<h2>Summary Area</h2>
+
+<pre><code>eg:
+=============================================================================
+top - 19:44:55 up 31 min,  6 users,  load average: 0.92, 0.62, 0.52
+Tasks: 200 total,   1 running, 198 sleeping,   0 stopped,   1 zombie
+Cpu(s):  5.5%us,  2.1%sy,  0.0%ni, 91.7%id,  0.6%wa,  0.0%hi,  0.1%si,  0.0%st
+Mem:   4099360k total,  1377388k used,  2721972k free,    57820k buffers
+Swap:  2097148k total,        0k used,  2097148k free,   582564k cached
+=============================================================================
+  第一行 —— 等同于uptime命令
+     系统当前时间
+     系统运行时间
+     当前登录用户数
+     系统负载
+  第二行 —— 进程概览
+     总进程数
+     正在运行的进程数
+     正在睡眠的进程数
+     已停止的进程数
+     僵尸进程数
+  第三行 —— CPU信息
+     us &lt;=&gt; user cpu time, CPU time spent in user space
+     sy &lt;=&gt; system cpu time, CPU time spent in kernel space
+     ni &lt;=&gt; user nice cpu time，CPU time spent on low priority processes
+            processes with priority upgrade nice
+     id &lt;=&gt; idle cpu time, CPU time spent idle
+     wa &lt;=&gt; io wait cpu time, CPU time spent in wait (on disk)
+     hi &lt;=&gt; hardware irq, CPU time spent servicing/handling hardware interrupts
+     si &lt;=&gt; software irq, CPU time spent servicing/handling software interrupts
+     st &lt;=&gt; steal time, CPU time stolen from a virtual machine
+  第四行 —— 物理内存
+     物理内存总量
+     物理内存使用量
+     物理内存空闲量
+     用于内核缓存的量
+  第五行 —— 交换空间，可以使用free命令
+     交换空间总量
+     交换空间使用量
+     交换空间空闲量
+     交换空间缓冲总量
+</code></pre>
+
+<h2>Task Area</h2>
+
+<pre><code>=============================================================================
+PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND
+2761 nosea     20   0  474m  95m  15m S   11  2.4   5:28.17 chrome 
+2042 nosea     20   0  337m 138m  48m S   10  3.5   8:10.84 compiz
+3562 nosea     20   0  256m  80m  28m S    8  2.0   2:44.51 chrome 
+2288 nosea     20   0  651m 118m  45m R    6  3.0   8:27.07 chrome 
+2844 nosea     20   0  409m 222m  40m S    6  5.6   5:51.43 chrome        
+...
+=============================================================================   
+PID: 进程ID
+USER: 进程所有者
+PR: 优先级
+NI: nice值，负数表示高优先级，正数表示低优先级
+VIRT: 进程使用的虚拟内存总量
+RES: 进程使用的物理内存总量
+SHR: 进程使用的共享内存总量
+S: 进程状态
+   D —— Sleeping(不可中断的睡眠状态)
+   R —— Running
+   S —— Sleeping
+   T —— Traced or stopped
+   Z —— Zombie 
+%CPU: 进程的CPU时间占比
+%MEM: 进程的物理内存占比
+TIME+: 进程和其子进程所用CPU时间总和
+COMMAND: 进程名或者是开启进程所运行带路径和参数的命令(按C可以展开)
+++++++++++下面的是默认不显示的，按f键可以选择需要显示的列++++++++++++++
+PPID  = Parent Process Pid
+RUSER = Real user name
+UID   = User Id
+GROUP = Group Name
+TTY   = Controlling Tty
+P     = Last used cpu (SMP)
+SWAP  = Swapped size (kb)
+TIME  = CPU Time
+CODE  = Code size (kb)
+DATA  = Data+Stack size (kb)
+nFLT  = Page Fault count
+nDRT  = Dirty Pages count
+WCHAN = Sleeping in Function
+Flags = Task Flags &lt;sched.h&gt;
+</code></pre>
+
+<h2>Interactive Commands</h2>
+
+<pre><code>Global Commands
+  Enter/Space: 立即刷新
+  ?/h: help
+  =: 
+  A: 4个列组同时显示
+  B: 加粗显示
+  d/s: 改变刷新时间
+  G: 切换列组(1-4显示不同的field)
+  I:Irix/Solaris Mode开关
+  k: kill一个进程
+  q: 退出
+  r: 改变一个进程的优先级
+  W: 保存当前的top设置
+  Z: 改变页面颜色
+SUMMARY Area Commands
+  l: Load Average/Uptime的显示开关
+  m: Memory/Swap Usage的显示开关
+  t: Memory/Swap Usage的显示开关
+  1: Single/Separate Cpu States的显示开关，如果想看每个CPU的信息的话
+TASK Area Commands
+  Appearance:  b, x, y, z
+  Content:     c, f, H, o, S, u
+  Size:        #, i, n
+  Sorting:     &lt;, &gt;, F, O, R
+COLOR Mapping
+  &lt;Ret&gt;, a, B, b, H, M, q, S, T, w, z, 0 - 7
+COMMANDS for Windows
+  -, _, =, +, A, a, G, g, w
+</code></pre>
+
+<h1>Reference</h1>
+
+<p><a href="http://unix.stackexchange.com/questions/18918/in-linux-top-command-what-are-us-sy-ni-id-wa-hi-si-and-st-for-cpu-usage">In Linux “top” command what are us, sy, ni, id, wa, hi, si and st (for CPU usage)?</a>  <br/>
+Thanks!</p>
+]]></content>
+  </entry>
   
 </feed>

@@ -1,0 +1,404 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Mysql Statistical Analysis Exercise - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Introduction MySQL查询练习题 Content 第一题 I:环境准备 $ mysql -h localhost -u root -p mysql&gt; CREATE DATABASE learn DEFAULT CHARACTER SET utf8 COLLATE &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nosea.github.io/blog/2013/04/17/mysql-statistical-analysis-exercise/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="nosea.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Mysql Statistical Analysis Exercise</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-04-17T10:26:00+00:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>10:26 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>Introduction</h1>
+
+<pre><code>MySQL查询练习题
+</code></pre>
+
+<!--more--> 
+
+
+<h1>Content</h1>
+
+<h2>第一题</h2>
+
+<pre><code>I:环境准备
+  $ mysql -h localhost -u root -p
+
+  mysql&gt; CREATE DATABASE learn DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+  Query OK, 1 row affected (0.00 sec)
+
+  mysql&gt; grant all privileges on learn.* to 'tiger'@'localhost' 
+      -&gt; identified by '123456' with grant option;
+  Query OK, 0 rows affected (0.00 sec)
+
+  mysql&gt; select * from mysql.user \G;
+
+  mysql&gt; flush privileges;
+  Query OK, 0 rows affected (0.00 sec)
+
+  $ mysql -u tiger -p
+
+  mysql&gt; show databases;
+  +--------------------+
+  | Database           |
+  +--------------------+
+  | information_schema |
+  | learn              |
+  | test               |
+  +--------------------+
+  3 rows in set (0.00 sec)
+
+  mysql&gt; use learn;
+  Database changed
+  mysql&gt; show tables;
+  Empty set (0.00 sec)
+
+  mysql&gt; create table event(
+      -&gt; event_time date,
+      -&gt; type int(11),
+    -&gt; uid int(11),
+    -&gt; score int(11));
+  Query OK, 0 rows affected (0.19 sec)
+
+  mysql&gt; show tables;
+  +-----------------+
+  | Tables_in_learn |
+  +-----------------+
+  | event           |
+  +-----------------+
+  1 row in set (0.01 sec)
+
+  mysql&gt; load data local infile 'data1.txt' into table event;
+  ERROR 1148 (42000): The used command is not allowed with this MySQL version
+
+  $ mysql -u tiger -p --local-infile=1
+
+  mysql&gt; load data local infile 'data1.txt' into table event;
+  Query OK, 30 rows affected (0.08 sec)
+  Records: 30  Deleted: 0  Skipped: 0  Warnings: 0
+
+  mysql&gt; select * from event limit 3;
+  +------------+------+------+-------+
+  | event_time | type | uid  | score |
+  +------------+------+------+-------+
+  | 2013-04-01 |    1 | 2344 |    34 |
+  | 2013-04-02 |    2 | 2122 |    21 |
+  | 2013-04-03 |    3 | 6744 |     9 |
+  +------------+------+------+-------+
+  3 rows in set (0.00 sec)
+
+  mysql&gt; create table work(test_time date, test_type int(11), uid int(11));
+  Query OK, 0 rows affected (0.16 sec)
+
+  mysql&gt; load data local infile 'data2.txt' into table work;
+  Query OK, 35 rows affected (0.08 sec)
+  Records: 35  Deleted: 0  Skipped: 0  Warnings: 0
+
+  mysql&gt; select * from work limit 3;
+  +------------+-----------+------+
+  | test_time  | test_type | uid  |
+  +------------+-----------+------+
+  | 2013-04-01 |        12 | 2344 |
+  | 2014-04-01 |        13 | 2122 |
+  | 2014-04-02 |        14 | 6744 |
+  +------------+-----------+------+
+  3 rows in set (0.00 sec)
+
+
+II:说明
+  event表里存放事件发生时间， 发生的种类，user的id，以及user的分数
+  work表里存放测试时间，测试类型的编号，user的id
+  题目: 
+    1.在event表里找出4月4号到4月29号的user，统计他们发生event的次数以及总的分数(score),和
+    socre的最大值
+
+    mysql&gt; select uid as '用户', count(*) as '事件发生次数',
+        -&gt; sum(score) as '总成绩', max(score) as '最高分'
+        -&gt; from event where event_time &gt;= '2013-04-04' &amp;&amp;
+        -&gt; event_time &lt;= '2013-04-29' group by uid;
+    +--------+--------------------+-----------+-----------+
+    | 用户   | 事件发生次数       | 总成绩    | 最高分    |
+    +--------+--------------------+-----------+-----------+
+    |   2122 |                  3 |        44 |        23 |
+    |   2123 |                  1 |        23 |        23 |
+    |   2134 |                  1 |        45 |        45 |
+    |   2189 |                  2 |       159 |        87 |
+    |   2342 |                  1 |        24 |        24 |
+    |   2344 |                  5 |        84 |        34 |
+    |   3111 |                  1 |        23 |        23 |
+    |   3211 |                  2 |       281 |       272 |
+    |   3232 |                  1 |        76 |        76 |
+    |   3412 |                  1 |        21 |        21 |
+    |   3444 |                  1 |        32 |        32 |
+    |   4522 |                  3 |        75 |        45 |
+    |   5422 |                  1 |        65 |        65 |
+    |   6522 |                  1 |        76 |        76 |
+    |   6744 |                  2 |        24 |        22 |
+    +--------+--------------------+-----------+-----------+
+    15 rows in set (0.00 sec)
+
+  2.在event表里找出4月4号到4月29号的user，统计他们发生event的次数以及总的分数(score),和
+    socre的最大值，以及这个user在work表里这段时间参加test为11，12的次数
+
+
+    mysql&gt; select event.uid as '用户', count(*) as '事件发生次数', 
+        -&gt; sum(event.score) as '总成绩', max(event.score) as '最高分', 
+        -&gt; count(case when  work.test_type = 11 then 1 else NULL end) as 'TEST11次数', 
+        -&gt; count(case when work.test_type = 12 then 1 else NULL end) as 'TEST12次数'  
+        -&gt; from event left join work on event.uid = work.uid where 
+        -&gt; event.event_time &gt;= '2013-04-04' &amp;&amp; event.event_time &lt;= '2013-04-29' 
+        -&gt; group by event.uid;
+    +--------+--------------------+-----------+-----------+--------------+--------------+
+    | 用户   | 事件发生次数       | 总成绩    | 最高分    | TEST11次数   | TEST12次数   |
+    +--------+--------------------+-----------+-----------+--------------+--------------+
+    |   2122 |                  9 |       132 |        23 |            0 |            0 |
+    |   2123 |                  1 |        23 |        23 |            0 |            1 |
+    |   2134 |                  1 |        45 |        45 |            0 |            1 |
+    |   2189 |                  4 |       318 |        87 |            0 |            2 |
+    |   2342 |                  1 |        24 |        24 |            0 |            1 |
+    |   2344 |                 25 |       420 |        34 |            5 |            5 |
+    |   3111 |                  1 |        23 |        23 |            0 |            0 |
+    |   3211 |                  2 |       281 |       272 |            0 |            0 |
+    |   3232 |                  1 |        76 |        76 |            0 |            0 |
+    |   3412 |                  1 |        21 |        21 |            0 |            0 |
+    |   3444 |                  1 |        32 |        32 |            0 |            0 |
+    |   4522 |                  9 |       225 |        45 |            0 |            3 |
+    |   5422 |                  1 |        65 |        65 |            0 |            0 |
+    |   6522 |                  1 |        76 |        76 |            0 |            1 |
+    |   6744 |                  4 |        48 |        22 |            0 |            0 |
+    +--------+--------------------+-----------+-----------+--------------+--------------+
+    15 rows in set (0.00 sec)
+</code></pre>
+
+<h2>第一题数据</h2>
+
+<pre><code>#===========data2.txt========       ===============data1.txt=========
+2013-04-01      12      2344   |    2013-04-01      1       2344    34
+2014-04-01      13      2122   |    2013-04-02      2       2122    21
+2014-04-02      14      6744   |    2013-04-03      3       6744    09
+2014-04-02      14      2344   |    2013-04-04      2       2344    11
+2014-04-03      15      3214   |    2013-04-05      2       3211    9
+2014-04-03      12      2384   |    2013-04-06      3       2344    7
+2014-04-03      15      6744   |    2013-04-07      2       6744    2
+2014-04-06      16      2142   |    2013-04-08      1       2122    4
+2014-04-09      18      2344   |    2013-04-09      4       2344    10
+2014-04-11      15      4522   |    2013-04-10      5       4522    12
+2014-04-11      13      2122   |    2013-04-11      1       2122    17
+2014-04-14      12      4522   |    2013-04-12      3       4522    18
+2014-04-15      11      2344   |    2013-04-13      2       2344    34
+2014-04-18      12      6774   |    2013-04-14      1       6744    22
+2014-04-18      12      2189   |    2013-04-15      5       2189    87
+2014-04-19      14      5422   |    2013-04-16      3       5422    65
+2014-04-19      16      4522   |    2013-04-17      4       4522    45
+2014-04-22      17      2189   |    2013-04-18      1       2189    72
+2014-04-24      13      3211   |    2013-04-19      2       3211    272
+2014-04-24      12      2134   |    2013-04-20      3       2134    45
+2014-04-25      16      2344   |    2013-04-21      8       2344    22
+2014-04-25      18      3111   |    2013-04-22      9       3111    23
+2014-04-28      15      3432   |    2013-04-23      6       3232    76
+2014-04-28      13      3412   |    2013-04-24      1       3412    21
+2014-04-29      12      2123   |    2013-04-25      4       2123    23
+2014-04-30      14      2122   |    2013-04-26      5       2122    23
+2014-04-30      12      6522   |    2013-04-27      6       6522    76
+2014-04-30      16      2242   |    2013-04-28      3       2342    24
+2014-04-30      17      3444   |    2013-04-29      5       3444    32
+2014-05-01      12      2342   |    2013-04-30      2       2342    23
+2014-05-02      14      4834   |
+2014-05-02      18      8379   |
+2014-05-03      13      8373   |
+2014-05-04      19      2277   |
+2014-05-04      16      8631   |
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2013-04-17T10:26:00+00:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>10:26 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/mysql/'>mysql</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://nosea.github.io/blog/2013/04/17/mysql-statistical-analysis-exercise/" data-via="" data-counturl="http://nosea.github.io/blog/2013/04/17/mysql-statistical-analysis-exercise/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/04/14/use-virsh-to-manage-kvm-virtual-machines/" title="Previous Post: Use virsh to manage kvm virtual machines">&laquo; Use virsh to manage kvm virtual machines</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/05/08/linux-command-cut/" title="Next Post: Linux命令之cut">Linux命令之cut &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-propertytree/">Boost PropertyTree</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-filesystem/">Boost Filesystem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/tools-eclipse/">Eclipse 相关</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/boost-program-options/">Boost Program Options</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/fix-windows-7-bootmbr/">修复win7的引导</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

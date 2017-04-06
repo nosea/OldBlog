@@ -1,0 +1,776 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Octopress | My Octopress Blog]]></title>
+  <link href="http://nosea.github.io/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://nosea.github.io/"/>
+  <updated>2017-04-06T15:21:27+00:00</updated>
+  <id>http://nosea.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[在mac上安装octopress]]></title>
+    <link href="http://nosea.github.io/blog/2014/12/16/install-octopress-on-mac/"/>
+    <updated>2014-12-16T22:30:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2014/12/16/install-octopress-on-mac</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>在Mac上安装Octopress记录
+</code></pre>
+
+<!--more-->
+
+
+<h1>Content</h1>
+
+<pre><code>System: OS X Yosemite 10.10.1
+因为之前已经建立仓库了，这次只是简单的同步下环境。
+</code></pre>
+
+<h2>生成Key</h2>
+
+<pre><code>cd ~/.ssh   
+ssh-keygen -t rsa -C "your email"
+注意：
+  Enter file in which to save the key -- 这个直接回车
+  Enter passphrase -- 这个可以填一个密码，也可以为空
+同样，下面的也加上
+echo "Host github.com   
+User git   
+Port 443   
+Hostname ssh.github.com   
+PreferredAuthentications publickey   
+identityfile ~/.ssh/id_rsa" &gt;&gt; ~/.ssh/config
+# follow the ways given above put your pub key in github
+# Testing   
+ssh -T git@github.com
+</code></pre>
+
+<h2>把key放在github上</h2>
+
+<pre><code>1、访问https://github.com/，登录
+2、点击右上角的齿轮，也就是设置
+3、点击SSH keys
+4、点击Add SSH key，把.ssh/id_rsa.pub里的内容复制进去
+   详细的教程参见
+   https://help.github.com/articles/generating-ssh-keys/
+5、ssh -T git@github.com 来验证即可
+</code></pre>
+
+<h2>安装ruby</h2>
+
+<pre><code>1、brew install rbenv
+2、brew install ruby-build
+3、rbenv install 1.9.3-p194  
+   # 最开始安装的时1.9.3-p125，后来出现了如下的错误
+   rbenv: version `1.9.3-p194' is not installed，因此重新安装了这个新的版本
+4、rbenv rehash
+5、把下面的两句加到 ~/.bash_profile  里，否则会出现ruby --version还是系统自带的高版本的
+   export PATH="$HOME/.rbenv/bin:$PATH"
+   eval "$(rbenv init -)"
+</code></pre>
+
+<h2>clone 现有版本</h2>
+
+<pre><code>git clone -b source git@github.com:nosea/nosea.github.com.git octopress
+cd octopress
+
+修改下默认的源  Gemfile里默认都是修改为淘宝的，去掉原来的
+gem sources -a http://ruby.taobao.org
+gem sources -r https://rubygems.org/
+
+然后安装依赖
+gem install bundler
+bundle install
+因为主题默认都有了，也就不需要rake install了
+
+然后生成页面即可
+rake generate
+</code></pre>
+
+<h1>Reference</h1>
+
+<p><a href="http://msching.github.io/blog/2014/04/11/starting/">http://msching.github.io/blog/2014/04/11/starting/</a>  <br/>
+<a href="http://segmentfault.com/blog/yaashion_xiang/1190000000364677">http://segmentfault.com/blog/yaashion_xiang/1190000000364677</a>  <br/>
+<a href="http://samwize.com/2012/09/11/how-to-setup-octopress-on-github-pages/">http://samwize.com/2012/09/11/how-to-setup-octopress-on-github-pages/</a>  <br/>
+<a href="http://stackoverflow.com/questions/10940736/rbenv-not-changing-ruby-version">ruby版本解决办法</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Table of Contents in Octopress]]></title>
+    <link href="http://nosea.github.io/blog/2012/12/27/table-of-contents-in-octopress/"/>
+    <updated>2012-12-27T19:12:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2012/12/27/table-of-contents-in-octopress</id>
+    <content type="html"><![CDATA[<h1>1.安装jQuery</h1>
+
+<h2>1.1 下载</h2>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wget -c &lt;a href="http://code.jquery.com/jquery-1.8.3.min.js">http://code.jquery.com/jquery-1.8.3.min.js&lt;/a>
+</span><span class='line'>wget -c &lt;a href="http://fuelyourcoding.com/scripts/toc/jquery.toc.zip">http://fuelyourcoding.com/scripts/toc/jquery.toc.zip&lt;/a></span></code></pre></td></tr></table></div></figure></p>
+
+<!-- more -->
+
+
+<h2>1.2 安装</h2>
+
+<pre><code>I.将jquery-1.8.3.min.js放置于source/javascripts/目录
+II.将jquery.toc.zip解压,取出jquery.tableofcontents.min.js
+   同样放置于source/javascripts/目录
+</code></pre>
+
+<h2>1.3 配置</h2>
+
+<p>I.修改source/_includes/custom/head.html，添加下面的内容
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;{{ root_url }}/javascripts/jquery-1.8.3.min.js&quot;</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;{{ root_url }}/javascripts/jquery.tableofcontents.min.js&quot;</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nx">jQuery</span><span class="p">.</span><span class="nx">noConflict</span><span class="p">();</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;{{ root_url }}/javascripts/generate-toc.js&quot;</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+II.把下面的内容保存为generate-toc.js放置于source/javascripts/目录
+<figure class='code'><figcaption><span>generate-toc.js </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">generateTOC</span><span class="p">(</span><span class="nx">insertBefore</span><span class="p">,</span> <span class="nx">heading</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">container</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="nx">div</span> <span class="nx">id</span><span class="o">=</span><span class="s1">&#39;tocBlock&#39;</span><span class="o">&gt;&lt;</span><span class="err">/div&gt;&amp;rdquo;);</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">div</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="nx">ul</span> <span class="nx">id</span><span class="o">=</span><span class="s1">&#39;toc&#39;</span><span class="o">&gt;&lt;</span><span class="err">/ul&gt;&amp;rdquo;);</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">content</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="nx">insertBefore</span><span class="p">).</span><span class="nx">first</span><span class="p">();</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="k">if</span> <span class="p">(</span><span class="nx">heading</span> <span class="o">!=</span> <span class="kc">undefined</span> <span class="o">&amp;</span><span class="nx">amp</span><span class="p">;</span><span class="o">&amp;</span><span class="nx">amp</span><span class="p">;</span> <span class="nx">heading</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">container</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="o">&lt;</span><span class="nx">span</span> <span class="kr">class</span><span class="o">=</span><span class="s2">&quot;tocHeading&quot;</span><span class="o">&gt;&amp;</span><span class="nx">rsquo</span><span class="p">;</span> <span class="o">+</span> <span class="nx">heading</span> <span class="o">+</span> <span class="o">&amp;</span><span class="nx">lsquo</span><span class="p">;</span><span class="o">&lt;</span><span class="err">/span&gt;&amp;rsquo;);</span>
+</span><span class='line'>  <span class="p">}</span><span class="o">&lt;</span><span class="err">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span>  <span class="nx">div</span><span class="p">.</span><span class="nx">tableOfContents</span><span class="p">(</span><span class="nx">content</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">container</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">div</span><span class="p">);</span>
+</span><span class='line'>  <span class="nx">container</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">insertBefore</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+III.在source/_includes/custom/after_footer.html文件里添加如下内容
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;h2&gt;</span>{% comment %}<span class="nt">&lt;/h2&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;h2&gt;</span>Table of contents generator<span class="nt">&lt;/h2&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>{% endcomment %}<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>{% if index %}
+</span><span class='line'>  {% comment %}
+</span><span class='line'>  No table of contents on the index page.
+</span><span class='line'>  {% endcomment %}<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>{% elsif page.toc == true %}<span class="nt">&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nx">jQuery</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Put a TOC right before the entry content.</span>
+</span><span class='line'>  <span class="nx">generateTOC</span><span class="p">(</span><span class="s1">&#39;.entry-content&#39;</span><span class="p">,</span> <span class="s1">&#39;Table of Contents&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nt">&lt;p&gt;</span>{% endif %}
+</span></code></pre></td></tr></table></div></figure>
+IV.将下面内容保存为_mixins.scss放置于sass/custom/目录下
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="k">@mixin</span> <span class="nt">rounded-border</span><span class="o">($</span><span class="nt">radius</span><span class="o">:</span> <span class="nt">10px</span><span class="o">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">border-radius</span><span class="o">:</span> <span class="o">$</span><span class="nt">radius</span><span class="o">;</span>
+</span><span class='line'>    <span class="nt">-moz-border-radius</span><span class="o">:</span> <span class="o">$</span><span class="nt">radius</span><span class="o">;</span>
+</span><span class='line'>   <span class="nt">padding</span><span class="o">:</span> <span class="o">$</span><span class="nt">radius</span><span class="o">;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="nt">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="k">@mixin</span> <span class="nt">centered</span><span class="o">($</span><span class="nt">width</span><span class="o">:</span> <span class="nt">auto</span><span class="o">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">width</span><span class="o">:</span> <span class="o">$</span><span class="nt">width</span> <span class="o">!</span><span class="nt">important</span><span class="o">;</span>
+</span><span class='line'>    <span class="nt">margin-left</span><span class="o">:</span> <span class="nt">auto</span> <span class="o">!</span><span class="nt">important</span><span class="o">;</span>
+</span><span class='line'>    <span class="nt">margin-right</span><span class="o">:</span> <span class="nt">auto</span> <span class="o">!</span><span class="nt">important</span><span class="o">;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="nt">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="k">@mixin</span> <span class="nt">drop-shadow-right-bottom</span><span class="o">($</span><span class="nt">width</span><span class="o">:</span> <span class="nt">5px</span><span class="o">,</span> <span class="o">$</span><span class="nt">color</span><span class="o">:</span> <span class="nf">#999</span><span class="o">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">box-shadow</span><span class="o">:</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">color</span><span class="o">;</span>
+</span><span class='line'>    <span class="nt">-moz-box-shadow</span><span class="o">:</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">color</span><span class="o">;</span>
+</span><span class='line'>    <span class="nt">-webkit-box-shadow</span><span class="o">:</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">width</span> <span class="o">$</span><span class="nt">color</span><span class="o">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+V.然后修改sass/custom/<em>styles.scss添加如下内容
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="k">@import</span> <span class="o">&amp;</span><span class="nt">ldquo</span><span class="p">;</span><span class="nt">mixins</span><span class="o">&amp;</span><span class="nt">rdquo</span><span class="o">;;</span>
+</span></code></pre></td></tr></table></div></figure>
+VI.将下面内容保存为</em>screen.scss放置于sass/custom/目录下
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="o">$</span><span class="nt">toc-bg</span><span class="o">:</span> <span class="nf">#dfdfdf</span><span class="o">;&lt;/</span><span class="nt">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;$</span><span class="nt">toc-incr</span><span class="o">:</span> <span class="nt">5px</span><span class="o">;&lt;/</span><span class="nt">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">div</span><span class="nf">#tocBlock</span> <span class="p">{</span>
+</span><span class='line'>    <span class="o">@</span><span class="n">include</span> <span class="n">drop</span><span class="o">-</span><span class="n">shadow</span><span class="o">-</span><span class="k">right</span><span class="o">-</span><span class="k">bottom</span><span class="p">(</span><span class="m">5px</span><span class="o">,</span> <span class="m">#999</span><span class="p">);</span>
+</span><span class='line'>    <span class="o">@</span><span class="n">include</span> <span class="n">rounded</span><span class="o">-</span><span class="k">border</span><span class="p">(</span><span class="m">10px</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">float</span><span class="o">:</span> <span class="k">right</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">font-size</span><span class="o">:</span> <span class="m">10pt</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">width</span><span class="o">:</span> <span class="m">300px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding-left</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding-right</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding-top</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding-bottom</span><span class="o">:</span> <span class="m">0px</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">background</span><span class="o">:</span> <span class="err">$</span><span class="n">toc</span><span class="o">-</span><span class="n">bg</span><span class="p">;</span>
+</span><span class='line'><span class="k">border</span><span class="o">:</span> <span class="k">solid</span> <span class="m">1px</span> <span class="m">#999999</span><span class="p">;</span>
+</span><span class='line'><span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="m">0</span> <span class="m">10px</span> <span class="m">15px</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">.</span><span class="n">tocHeading</span> <span class="err">{</span>
+</span><span class='line'>    <span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">font-size</span><span class="o">:</span> <span class="m">125%</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">#toc</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">background</span><span class="o">:</span> <span class="err">$</span><span class="n">toc</span><span class="o">-</span><span class="n">bg</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">ul</span> <span class="err">{</span>
+</span><span class='line'>        <span class="k">list-style</span><span class="o">:</span> <span class="k">disc</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">li</span> <span class="err">{</span>
+</span><span class='line'>            <span class="k">margin-left</span><span class="o">:</span> <span class="err">$</span><span class="n">toc</span><span class="o">-</span><span class="n">incr</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'>            <span class="k">padding</span><span class="o">:</span> <span class="m">0</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="err">}</span>
+</span><span class='line'><span class="err">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="nt">code</span><span class="o">&gt;&lt;/</span><span class="nt">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="err">}</span>
+</span></code></pre></td></tr></table></div></figure>
+VII.保存下面内容为_print.scss放置于sass/custom/
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="k">@import</span> <span class="o">&amp;</span><span class="nt">ldquo</span><span class="p">;</span><span class="nt">mixins</span><span class="o">&amp;</span><span class="nt">rdquo</span><span class="o">;;&lt;/</span><span class="nt">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;$</span><span class="nt">toc-incr</span><span class="o">:</span> <span class="nt">1em</span><span class="o">;&lt;/</span><span class="nt">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="nt">div</span><span class="nf">#tocBlock</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">font-size</span><span class="o">:</span> <span class="m">10pt</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding-left</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding-right</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding-top</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">padding-bottom</span><span class="o">:</span> <span class="m">0px</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">background</span><span class="o">:</span> <span class="nb">white</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'><span class="k">border</span><span class="o">:</span> <span class="k">solid</span> <span class="m">1px</span> <span class="m">#999999</span><span class="p">;</span>
+</span><span class='line'><span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="m">0</span> <span class="m">10px</span> <span class="m">15px</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">.</span><span class="n">tocHeading</span> <span class="err">{</span>
+</span><span class='line'>    <span class="k">font-weight</span><span class="o">:</span> <span class="k">bold</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">font-size</span><span class="o">:</span> <span class="m">125%</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">#toc</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">background</span><span class="o">:</span> <span class="nb">white</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">ul</span> <span class="err">{</span>
+</span><span class='line'>        <span class="k">list-style</span><span class="o">:</span> <span class="k">disc</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">li</span> <span class="err">{</span>
+</span><span class='line'>            <span class="k">margin-left</span><span class="o">:</span> <span class="err">$</span><span class="n">toc</span><span class="o">-</span><span class="n">incr</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'>            <span class="k">padding</span><span class="o">:</span> <span class="m">0</span> <span class="cp">!important</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="err">}</span>
+</span><span class='line'><span class="err">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="nt">code</span><span class="o">&gt;&lt;/</span><span class="nt">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nt">p</span><span class="o">&gt;</span><span class="err">}</span>
+</span></code></pre></td></tr></table></div></figure>
+VIII.在sass/screen.scss里添加如下内容
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="k">@import</span> <span class="o">&amp;</span><span class="nt">ldquo</span><span class="p">;</span><span class="nt">custom</span><span class="o">/</span><span class="nt">screen</span><span class="o">&amp;</span><span class="nt">rdquo</span><span class="o">;;</span>
+</span><span class='line'><span class="k">@import</span> <span class="o">&amp;</span><span class="nt">ldquo</span><span class="p">;</span><span class="nt">custom</span><span class="o">/</span><span class="nt">print</span><span class="o">&amp;</span><span class="nt">rdquo</span><span class="o">;;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h1>2.使用</h1>
+
+<p>设置toc为true即可
+<code>
+layout: post
+title: "Table of Contents in Octopress"
+date: 2012-12-27 19:12
+comments: true
+categories: Octopress
+toc: true
+</code></p>
+
+<h1>3.Reference</h1>
+
+<ul>
+<li><a href="http://brizzled.clapper.org/blog/2012/02/04/generating-a-table-of-contents-in-octopress/">Generating a Table of Contents in Octopress</a>  <br/>
+Thanks!</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[在Linux和Windows下同步Octopress]]></title>
+    <link href="http://nosea.github.io/blog/2012/12/11/sync-octopress-between-linux-and-windows/"/>
+    <updated>2012-12-11T16:54:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2012/12/11/sync-octopress-between-linux-and-windows</id>
+    <content type="html"><![CDATA[<p>一.需求
+    需要在Win7和Ubuntu下写东西，因此需要实时更新。</p>
+
+<p>二.按照前面的在Windows下搭建Octopress的步骤。唯一不同的是:
+   1.获取版本库时，获取的是自己的版本
+    git clone -b source git@github.com:username/username.github.com.git octopress
+    cd octopress
+    git clone git@github.com:username/username.github.com.git _deploy
+   2.安装依赖gems, 记得更改ruby的更新源
+    gem install bundler
+    bundle install
+    rake install</p>
+
+<!-- more -->   
+
+
+<p>三.每次到一个平台下写文章时  <br/>
+   1.获取最新数据 <br/>
+    cd _deploy
+    git pull origin master
+    cd ..
+    git pull origin source
+   2.写完后
+    rake generate
+    rake deploy
+    git add .   #这里是点，不是星号
+    git commit -a   #commit所有
+    git push origin source</p>
+
+<p>Referrence:     <br/>
+  <a href="http://note.softrayn.com/blog/2012/07/two-pc-sync-octopress/">两台计算机同步octopress</a> <br/>
+  Thanks!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[配置 Octopress]]></title>
+    <link href="http://nosea.github.io/blog/2012/12/10/configure-octopress/"/>
+    <updated>2012-12-10T17:09:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2012/12/10/configure-octopress</id>
+    <content type="html"><![CDATA[<p>一.给Octopress添加评论<br/>
+    1.到DISQUS:<a href="http://disqus.com/">http://disqus.com/</a> 注册一个账号，并且把你的博客地址添加到DISQUS.<br/>
+    2.编辑_config.xml, 修改如下两行 <br/>
+        disqus_short_name: your_disqus_short_name <br/>
+        disqus_show_comment_count: true  <br/>
+    Tips:
+        只有rake generate之后，rake priview才能看到效果.</p>
+
+<!-- more -->       
+
+
+<p>二.给Octopress添加分类<br/>
+   参考:<a href="http://codemacro.com/2012/07/18/add-category-list-to-octopress/">http://codemacro.com/2012/07/18/add-category-list-to-octopress/</a><br/>
+   Thanks！<br/>
+   添加category_list插件, 将下列代码保存到plugins/category_list_tag.rb;<br/>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">module</span> <span class="nn">Jekyll</span>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">CategoryListTag</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="no">Liquid</span><span class="o">::</span><span class="no">Tag</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">html</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">categories</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">registers</span><span class="o">[</span><span class="ss">:site</span><span class="o">].</span><span class="n">categories</span><span class="o">.</span><span class="n">keys</span>
+</span><span class='line'>      <span class="n">categories</span><span class="o">.</span><span class="n">sort</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">category</span><span class="o">|</span>
+</span><span class='line'>        <span class="n">posts_in_category</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">registers</span><span class="o">[</span><span class="ss">:site</span><span class="o">].</span><span class="n">categories</span><span class="o">[</span><span class="n">category</span><span class="o">].</span><span class="n">size</span>
+</span><span class='line'>        <span class="n">category_dir</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">registers</span><span class="o">[</span><span class="ss">:site</span><span class="o">].</span><span class="n">config</span><span class="o">[&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="n">category_dir</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="o">]</span>
+</span><span class='line'>        <span class="n">category_url</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">category_dir</span><span class="p">,</span> <span class="n">category</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/_|\P{Word}/</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="o">-&amp;</span><span class="n">rsquo</span><span class="p">;)</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/-{2,}/</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">lsquo</span><span class="p">;</span><span class="o">-&amp;</span><span class="n">rsquo</span><span class="p">;)</span><span class="o">.</span><span class="n">downcase</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">html</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&lt;</span><span class="n">li</span> <span class="n">class</span><span class="o">=</span><span class="s1">&#39;category&#39;</span><span class="o">&gt;&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;http://nosea.github.io/#{category_url}/&#39;</span><span class="o">&gt;</span><span class="c1">#{category} (#{posts_in_category})&lt;/a&gt;&lt;/li&gt;\n&amp;rdquo;</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>      <span class="n">html</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;Liquid::Template.register_tag(&amp;lsquo;category_list&amp;rsquo;, Jekyll::CategoryListTag)</span>
+</span></code></pre></td></tr></table></div></figure>  <br/>
+   添加到侧边栏:复制以下代码到source/_includes/asides/category_list.html  <br/>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;section&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;h1&gt;</span>Categories<span class="nt">&lt;/h1&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">&quot;categories&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    {% category_list %}<span class="nt">&lt;br/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'><span class="nt">&lt;/section&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>   修改_config.xml
+<code>
+default_asides: [asides/category_list.html, asides/recent_posts.html]
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Install Octopress on Windows]]></title>
+    <link href="http://nosea.github.io/blog/2012/12/08/install-octopress-on-windows/"/>
+    <updated>2012-12-08T13:01:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2012/12/08/install-octopress-on-windows</id>
+    <content type="html"><![CDATA[<ul>
+<li>Environment: <br/>
+OS: Windows 7 SP1 <br/>
+Lang: en</li>
+</ul>
+
+
+<!-- more -->
+
+
+<ul>
+<li><p>Install software</p>
+
+<ul>
+<li>Install git
+
+<ul>
+<li>Get the latest <a href="http://code.google.com/p/msysgit/downloads/list">msysgit</a> and install.</li>
+</ul>
+</li>
+<li>Install ruby for windows  -1.9.2 or 1.9.3
+
+<ul>
+<li>Get <a href="http://rubyforge.org/frs/?group_id=167">RubyInstaller</a> and install. <br/>
+Add the bin path to the System environment&rsquo;s path where ruby installed <br/>
+eg: <code>C:\Ruby192\bin</code></li>
+<li>Get <a href="https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe">RubyInstaller DevKit</a><br/>
+It is a self-extracting file and extract it in a place, such as <code>C:\DevKit</code> <br/>
+run the CMD, enter the <code>C:\DevKit</code> <br/>
+execute command <code>ruby dk.rb init</code> <br/>
+execute command <code>ruby dk.rb install</code></li>
+</ul>
+</li>
+<li>Install python
+
+<ul>
+<li>For windows platform, the <a href="http://www.activestate.com/activepython">ActivePython</a> may be a better choice, get it and install. <br/>
+Put the <code>D:\Python27</code> and the <code>D:\Python27\Scripts</code> to the Os-env-path. <br/>
+That&rsquo;s where I choose to install python.</li>
+<li>In CMD, run <code>easy_install pygments</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Configuration</p>
+
+<ul>
+<li>Configure git<br/>
+<code>git config --global user.name "yourname"</code> <br/>
+<code>git config --global user.email yourname@some.com</code></li>
+<li>Add env value <br/>
+<code>LANG=zh_CN.UTF-8</code> <br/>
+<code>LC_ALL=zh_CN.UTF-8</code></li>
+<li>Change gem upgrade source <br/>
+<code>gem sources --remove http://rubygems.org/</code><br/>
+<code>gem sources -a http://ruby.taobao.org/</code> <br/>
+<code>gem sources -l</code>  check if it is right.</li>
+</ul>
+</li>
+<li><p>Generating ssh keys
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;br/>
+</span><span class='line'>cd ~/.ssh &lt;br/>
+</span><span class='line'>ssh-keygen -t rsa -C &ldquo;your email&rdquo; &lt;br/>
+</span><span class='line'>put your pub kes to github  &lt;br/></span></code></pre></td></tr></table></div></figure></p></li>
+<li><p>Install octopress <br/>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>Enter a directory where you want to put octopress&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>git clone git://github.com/imathis/octopress.git octopress
+</span><span class='line'>cd octopress
+</span><span class='line'>
+</span><span class='line'>&lt;h1>vim Gemfile and change the source&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;p>turn: source &ldquo;&lt;a href="http://rubygems.org/">http://rubygems.org/&lt;/a>&rdquo;
+</span><span class='line'>to: source &ldquo;&lt;a href="http://ruby.taobao.org/">http://ruby.taobao.org/&lt;/a>&rdquo;
+</span><span class='line'>gem install rdoc bundler
+</span><span class='line'>bundle install
+</span><span class='line'>rake install</span></code></pre></td></tr></table></div></figure></p></li>
+<li><p>Error log
+<figure class='code'><figcaption><span>Error </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake generate
+</span><span class='line'>(in e:/WorkSpace/Blog/octopress)&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;h2>Generating Site with Jekyll&lt;/h2>
+</span><span class='line'>
+</span><span class='line'>&lt;p>unchanged sass/screen.scss
+</span><span class='line'>Configuration from e:/WorkSpace/Blog/octopress/_config.yml
+</span><span class='line'>c:/Ruby192/lib/ruby/gems/1.9.1/gems/blankslate-3.1.2/lib/blankslate.rb:51: warning: undefining &lt;code>object_id' may cause serious problems
+</span><span class='line'>Building site: source -&gt; public
+</span><span class='line'>c:/Ruby192/lib/ruby/gems/1.9.1/gems/jekyll-0.11.2/lib/jekyll/convertible.rb:29:in&lt;/code>read_yaml': invalid byte sequence in UTF-8 (ArgumentError)
+</span><span class='line'>      from c:/Ruby192/lib/ruby/gems/1.9.1/gems/jekyll-0.11.2/lib/jekyll/post.rb:39:in &lt;code>initialize'
+</span><span class='line'>      from e:/WorkSpace/Blog/octopress/plugins/preview_unpublished.rb:23:in&lt;/code>new'
+</span><span class='line'>      from e:/WorkSpace/Blog/octopress/plugins/preview_unpublished.rb:23:in &lt;code>block in read_posts'
+</span><span class='line'>      from e:/WorkSpace/Blog/octopress/plugins/preview_unpublished.rb:21:in&lt;/code>each'
+</span><span class='line'>      from e:/WorkSpace/Blog/octopress/plugins/preview_unpublished.rb:21:in &lt;code>read_posts'
+</span><span class='line'>      from c:/Ruby192/lib/ruby/gems/1.9.1/gems/jekyll-0.11.2/lib/jekyll/site.rb:128:in&lt;/code>read_directories'
+</span><span class='line'>      from c:/Ruby192/lib/ruby/gems/1.9.1/gems/jekyll-0.11.2/lib/jekyll/site.rb:98:in &lt;code>read'
+</span><span class='line'>      from c:/Ruby192/lib/ruby/gems/1.9.1/gems/jekyll-0.11.2/lib/jekyll/site.rb:38:in&lt;/code>process'
+</span><span class='line'>      from c:/Ruby192/lib/ruby/gems/1.9.1/gems/jekyll-0.11.2/bin/jekyll:250:in &lt;code>&lt;top (required)&gt;'
+</span><span class='line'>      from c:/Ruby192/bin/jekyll:19:in&lt;/code>load'
+</span><span class='line'>      from c:/Ruby192/bin/jekyll:19:in &lt;code>&lt;main&gt;'</span></code></pre></td></tr></table></div></figure>    
+ Make sure you've add this:   
+    # Add env value   
+   </code>LANG=zh_CN.UTF-8<code>  
+   </code>LC_ALL=zh_CN.UTF-8<code>
+ Or edit convertible.rb    
+ turn the</code>self.content = File.read(File.join(base, name))<code>   
+ to</code>self.content = File.read(File.join(base, name), :encoding => &ldquo;utf-8&rdquo;)`</p>
+
+<ul>
+<li>About ssh
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ssh -vT &lt;a href="&#109;&#x61;&#x69;&#108;&#x74;&#x6f;&#x3a;&#103;&#x69;&#116;&#64;&#x67;&#x69;&#x74;&#x68;&#x75;&#x62;&#x2e;&#99;&#x6f;&#x6d;">&#103;&#x69;&#x74;&#64;&#x67;&#x69;&#116;&#104;&#117;&#98;&#46;&#99;&#x6f;&#x6d;&lt;/a>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>&hellip;&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>Agent admitted failure to sign using the key.&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>debug1: No more authentication methods to try.&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;h1>Permission denied (publickey).&lt;/h1>
+</span><span class='line'>
+</span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure>
+<a href="https://help.github.com/articles/error-agent-admitted-failure-to-sign">Resolution</a>
+<figure class='code'><figcaption><span>Tips </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>&lt;/li>
+</span><span class='line'>&lt;/ul>
+</span><span class='line'>&lt;/li>
+</span><span class='line'>&lt;li>make sure you&rsquo;ve generated the ssh keys correctly&lt;/li>
+</span><span class='line'>&lt;li>run: ssh-add</span></code></pre></td></tr></table></div></figure></li>
+</ul>
+
+
+<p>Reference:  <br/>
+1.<a href="http://sinosmond.github.com/blog/2012/03/12/install-and-deploy-octopress-to-github-on-windows7-from-scratch/">http://sinosmond.github.com/blog/2012/03/12/install-and-deploy-octopress-to-github-on-windows7-from-scratch/</a> <br/>
+2.<a href="http://www.freehao123.com/github-pages/">http://www.freehao123.com/github-pages/</a>  <br/>
+Thanks!</p>
+]]></content>
+  </entry>
+  
+</feed>

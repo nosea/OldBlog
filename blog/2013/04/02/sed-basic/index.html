@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Sed Basic - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Introduction sed 基础 Content OPTION -n, --quiet, --silent
+-e 'edit command' eg: sed -e 'edit_command1' -e 'edit_command2'... file_to_process
+-f script &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nosea.github.io/blog/2013/04/02/sed-basic/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="nosea.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Sed Basic</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-04-02T14:55:00+00:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2013</span></span> <span class='time'>2:55 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>Introduction</h1>
+
+<pre><code>sed 基础
+</code></pre>
+
+<!--more-->
+
+
+<h1>Content</h1>
+
+<h2>OPTION</h2>
+
+<pre><code>-n, --quiet, --silent
+-e 'edit command'
+    eg:
+    sed -e 'edit_command1' -e 'edit_command2'... file_to_process
+-f script-file
+-i[SUFFIX], --in-place[=SUFFIX]
+    说明：指定后缀方便保留备份
+    eg:
+    $ ls
+    data
+    $ sed -i.backup -e'1,4s/good/bad/' data
+    $ ls
+    data  data.backup # data.backup为原数据
+</code></pre>
+
+<h2>edit command</h2>
+
+<pre><code>1、edit command的格式:
+   [address1[,address2]]function[argument]
+2、地址参数为
+   行数
+   or
+   regexp
+3、function为sed的内定函数，表示执行编辑动作
+4、当地址参数为regexp时，其前后必须加上"/"
+5、当只有一个地址参数时，表示符合地址的参数行才编辑
+   当有address1,address2时，表示对数据区间执行，
+   address1代表起始数据行，address2代表终止数据行
+</code></pre>
+
+<h2>function</h2>
+
+<pre><code>s
+  格式: [address1[,address2]]s/pattern/replacement/[flag]
+  pattern: regexp
+  replacement: 
+              &amp;:  pattern
+              \n:  表示pattern中第n个被\( \)括起来的字符串
+              \: 用来转义
+  flag:
+      g             替换所有满足的情况
+      十进制数m     表示替换行内第m个符合的字符串
+      p             表示替换第一个符合pattern的字符串后，将output输出到stdout
+      w wfile       表示替换第一个符合pattern的字符串后，输出到wfile内
+  若没有flag，则将资料行内第一个符合pattern的字符串用replacement替换
+  delimiter:
+            在"/pattern/replacement/[flag]"中，"/"是一个delimiter.
+            除了空白(blank),换行符(newline)之外，可以用任何字符作为delimiter.
+d   
+  说明: 删除数据行
+  格式: [address1[,address2]]d
+a
+  说明: 追加文本(Append text)
+  格式: [address]a\Text
+  eg: 
+  $ cat data 
+  1
+  2
+  3
+  4
+  5
+
+  $ sed '1,3afile' data 
+  1
+  file
+  2
+  file
+  3
+  file
+  4
+  5
+
+  $ sed '1,2afile\
+  &gt; port\
+  &gt; good' data
+  1
+  file
+  port
+  good
+  2
+  file
+  port
+  good
+  3
+  4
+  5
+
+i
+  说明:这个跟a类似，但是是插入行之前，而不是行之后.
+  注意:要想分行，必须加"\"backslash
+c 
+  说明: 这个是将address的内容change成c后面的内容
+  eg:
+  $ sed '1,2cgood' data   ## 1-2行被换成了good
+  good
+  3
+  4
+  5
+  ## 如果你要每行都换成good，可以这样
+  $ sed '/[0-9]/cgood' data  
+  ## OR
+  $ sed 'cgood' data
+  good
+  good
+  good
+  good
+  good
+p
+  说明: 就是将执行结果送至stdout
+  eg:
+  $ sed  '/[0-9]/p' data 
+  1
+  1
+  2
+  2
+  3
+  3
+  4
+  4
+  5
+  5
+  $ sed -n  '/[0-9]/p' data 
+  1
+  2
+  3
+  4
+  5
+l
+  说明: 将nonprinting字符以ASCII打印出来
+  eg：
+  $ cat data 
+  1    1
+  2
+  3
+  4
+  5
+
+  $ sed -n  '/[0-9]/l' data 
+  1\t1$
+  2$
+  3$
+  4$
+  5$
+r
+  说明: 就是将文件内的内容append到匹配的行后面
+  eg:
+  $ cat file1 
+  This is a test file
+  only contain two line
+  $ sed '1,3rfile1' data 
+  1
+  This is a test file
+  only contain two line
+  2
+  This is a test file
+  only contain two line
+  3
+  This is a test file
+  only contain two line
+  4
+  5
+w
+  格式: [address1[,address2]]w file
+  说明: 这个是将匹配的内容写file里，注意，file是被清空的
+  eg:
+  $ cat file1 
+  those words will be 
+  overwrite
+  $ sed -n '1,3w file1' data 
+  $ cat file1 
+  1    1
+  2
+  3
+y
+  格式: [address1[ ,address2]]y /xyz.../abc.../
+  说明: 这个是将pattern里的x，y，z换成a，b，c
+  eg:
+  $ cat data 
+  a b c d e f g h
+  1 2 3 4 5 6
+  $ sed 'y/abc/xyz/' data 
+  x y z d e f g h
+  1 2 3 4 5 6
+! 
+  说明: 这个表示不执行函数
+  eg:
+  $ cat data 
+  This is a 1 2 3
+  test 9 45
+  good
+  ok
+  thanks bye
+  $ sed '/[0-9]/!s/^./9/' data  ## 对含有数字的行不执行替换操作
+  This is a 1 2 3
+  test 9 45
+  9ood
+  9k
+  9hanks bye
+n 
+  说明: 表示读pattern的下一行
+  eg:
+  $ cat data 
+  This is a 1 2 3
+  test 9 45
+  good
+  ok
+  thanks bye
+  $ sed -n -e'n' -e 'p' data  ## 打印偶数行
+  test 9 45
+  ok
+q
+  说明: exit sed 
+  eg: 遇到含有两个o的行就退出
+  $ sed -n -e'p' -e'/oo/q' data 
+  This is a 1 2 3
+  test 9 45
+  good
+=
+  说明: 打印行数
+N
+  说明: 这个是将下一行读入patter内并且用newline分隔
+  eg: ## 将第二行与第一行合并
+  $ cat data 
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+  10
+  $ sed -e'N' -e's/\n/ /' data 
+  1 2
+  3 4
+  5 6
+  7 8
+  9 10
+D
+  说明: 删除pattern内的第一行资料，当pattern只有一行时，作用与d相同
+p
+  说明: 打印
+h/H
+  说明: Copy/append pattern space to hold space.
+g/G
+  说明: Copy/append hold space to pattern space
+x
+  说明: Exchange the contents of the hold and pattern spaces
+</code></pre>
+
+<h1>Reference</h1>
+
+<p>sed Manual  <br/>
+Thanks!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2013-04-02T14:55:00+00:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2013</span></span> <span class='time'>2:55 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>linux</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://nosea.github.io/blog/2013/04/02/sed-basic/" data-via="" data-counturl="http://nosea.github.io/blog/2013/04/02/sed-basic/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/03/28/special-characters-of-shell/" title="Previous Post: Special Characters of Shell">&laquo; Special Characters of Shell</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/04/08/linux-tool-taskwarrior/" title="Next Post: Linux Tool - Taskwarrior">Linux Tool - Taskwarrior &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-propertytree/">Boost PropertyTree</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-filesystem/">Boost Filesystem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/tools-eclipse/">Eclipse 相关</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/boost-program-options/">Boost Program Options</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/fix-windows-7-bootmbr/">修复win7的引导</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

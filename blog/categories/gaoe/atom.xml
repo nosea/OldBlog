@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Gaoe | My Octopress Blog]]></title>
+  <link href="http://nosea.github.io/blog/categories/gaoe/atom.xml" rel="self"/>
+  <link href="http://nosea.github.io/"/>
+  <updated>2017-04-06T15:21:27+00:00</updated>
+  <id>http://nosea.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Shell Trap]]></title>
+    <link href="http://nosea.github.io/blog/2013/12/02/shell-trap/"/>
+    <updated>2013-12-02T22:35:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/12/02/shell-trap</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>有些错误犯一次就够了
+</code></pre>
+
+<!--more-->
+
+
+<h1>Content</h1>
+
+<pre><code>1、删除文件
+  rules: 
+    文件 -- 带绝对路径删除，直接rm就行，不要添加-rf参数
+    文件夹 —— 先检测文件夹是否存在，再删除
+
+  eg:
+  =============Wrong================
+  cd ~/dir1/dir2/
+  rm -rf *  ## 如果dir1或者dir2不存在，会把当前用户home目录的文件全部删除
+  ==================================
+
+  =============Correct=============
+  rm /home/xxx/dir1/dir2/*   # 直接如果没有文件
+
+  if [ -d '/home/xxx/dir1' ]; then
+      rm -r /home/xxx/dir1/dir2
+  fi
+  =================================
+2、执行脚本
+  rules: 用绝对路径执行，别"./"，脚本也是绝对路径
+  /bin/bash /xx/xxx/xx/a.sh
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Raid]]></title>
+    <link href="http://nosea.github.io/blog/2013/11/02/raid/"/>
+    <updated>2013-11-02T18:21:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/11/02/raid</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>RAID,独立磁盘冗余数组（Redundant Array of Independent Disks），也称磁盘阵列。
+它通过RAID Controller将多块磁盘虚拟为大容量的磁盘使用，提供了更高的存储性能。
+</code></pre>
+
+<!--more-->
+
+
+<h1>说明</h1>
+
+<pre><code>术语：
+  EDAP —— Extended Data Avaliability and Protection.
+      RAID 磁盘阵列支援自动检测故障硬盘；
+      RAID 磁盘阵列支援重建硬盘坏轨的资料；
+      RAID 磁盘阵列支援支持不须停机的备援 Hot Spare;
+      RAID 磁盘阵列支援支持不须停机的硬盘替换 HOT Swap；
+      RAID 磁盘阵列支援扩充硬盘容量
+优点：
+   1、多块廉价磁盘比相同存储空间的单个磁盘便宜，降低成本。
+   2、多个磁盘同时读写，提高了存储的吞吐量，速度更快。
+   3、良好的容错机制可以保证数据的安全，单个磁盘损坏不会影响整体的使用
+分类：
+  RAID可以分为：软件RAID、硬件RAID、外置RAID(External RAID)
+  软件RAID：
+    一般包含在操作系统中。软RAID所有操作都由操作系统负责，会占用系统资源。
+    目前看RAID1+0和RAID 1跟硬件RAID性能没有太大区别。
+    但有校验的RAID可能会导致写的瓶颈，因为硬件RAID可以在高速缓存中合并非连续
+    写和校验写为连续写的操作，而软件RAID则要确认每次数据和校验是不是都写到磁盘
+    上去了。
+    例如，内核用软件RAID把/dev/sda1 和 /dev/sda2用于RAID阵列，那么就不能通过
+    sda1和sda2访问了，软件RAID把它们组合为一个类似/dev/md0的，通过这个访问。
+
+  硬件RAID
+    需要一个RAID 控制器，通常需要安装驱动程序内核才能识别这个控制器，它
+    独立于系统，不占用系统资源，部分带有电池，防止意外掉电的数据写入。对带有校验
+    的RAID来讲，性能会好点。系统可以通过一个自定义设备节点来访问RAID阵列，
+    跟通过/dev/hda和/dev/sda访问IDE和SCSI控制器一样。
+
+  外置RAID
+    术语硬件RAID的一种，但它的RAID卡不会安装在系统里，而是安装在外置的存储设备内。
+    而这个外置的储存设备则会连接到系统的SCSI卡上。系统没有任何的RAID功能, 因为它
+    只有一张SCSI卡；所有的RAID功能将会移到这个外置存储里。好处是外置的存储往往可
+    以连接更多的硬盘,不会受系统机箱的大小所影响。而一些高级的技术,如双机容错,是需
+    要多个服务器外连到一个外置储存上,以提供容错能力.外置式RAID的应用之一是可以安
+    装任何的操作系统,因此是与操作系统无关的。为什么呢?因为在系统里只存在一张SCSI
+    卡,并不是RAID卡。而对于这个系统及这张SCSI卡来说,这个外置式的RAID只是一个大型
+    硬盘,并不是什么特别的设备,所以这个外置式的RAID可以安装任何的操作系统。唯一的
+    要求就是你用的这张SCSI卡在这个操作系统要安装驱动程序。
+</code></pre>
+
+<h1>标准RAID</h1>
+
+<pre><code>标准raid主要有RAID-0, RAID-1, RAID-2, RAID-3, RAID-4, RAID-5, RAID-6.
+</code></pre>
+
+<h2>RAID 0</h2>
+
+<pre><code>  RAID 0是将多个磁盘组合成一个大的磁盘，写入的时候是并行向多块磁盘写入，因为是
+并行I/O，因此速度也最快。但是RAID 0没有冗余，若其中一块盘损坏，所有的数据都
+将丢失。
+  RAID 0适合于对性能要求较高，而对数据安全不太在乎的情形，理论上其性能为：
+总性能 = "单个磁盘性能" x "磁盘数量"，但受限于I/O总线和其他等因素，RAID的性能
+会边际递减.
+</code></pre>
+
+<h2>RAID 1</h2>
+
+<pre><code>  RAID 1就是磁盘镜像，用两组以上的N个磁盘相互镜像，那么每个磁盘都有自己的镜像盘，
+这样就最大程度的保证了数据的安全。如果磁盘和它的镜像盘同时损坏，那就没有办法了。
+  RAID 1适用于对数据安全要求很高的场合，它的读性能和单个磁盘差别不大，因为要同时
+写入两块磁盘，写的性能有所降低，镜像盘完全备份，因此RAID 1磁盘利用率最低，但安全
+性级别是最好的.
+</code></pre>
+
+<h2>RAID 2</h2>
+
+<pre><code>  RAID 0的升级版，较少少使用
+</code></pre>
+
+<h2>RAID 3</h2>
+
+<pre><code>  RAID 3是把数据按位或字节的方式交叉存放在N+1个硬盘上，实际数据占用的有效空间
+为N个硬盘的空间总和，而第N+1个硬盘上存储的数据是校验容错信息，当这N+1个硬盘中
+的其中一个硬盘出现故障时，从其它N个硬盘中的数据也可以恢复原始数据，这样，仅使用
+这N个硬盘也可以带伤继续工作（如采集和回放素材），当更换一个新硬盘后，系统可以重
+新恢复完整的校验容错信息。由于在一个硬盘阵列中，多于一个硬盘同时出现故障率的几率
+很小，所以一般情况下，使用RAID3，安全性是可以得到保障的。
+与RAID0相比，RAID3在读写速度方面相对
+较慢。使用的容错算法和分块大小决定RAID使用的应用场合，在通常情况下，RAID3
+比较适合大文件类型且安全性要求较高的应用，如视频编辑、硬盘播出机、大型数据库等.
+             -- 摘自百度百科
+</code></pre>
+
+<h1>混合RAID</h1>
+
+<pre><code>混合的主要有JBOD, RAID-7, RAID-10, RAID-50, RAID-53, RAID-60.
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[GAOE：术语]]></title>
+    <link href="http://nosea.github.io/blog/2013/07/07/gaoe-terminology/"/>
+    <updated>2013-07-07T18:40:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/07/07/gaoe-terminology</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>各种运维术语
+</code></pre>
+
+<!--more--> 
+
+
+<h1>Content</h1>
+
+<pre><code>ISP
+  Internet Service Provider，即互联网服务提供商。向广大用户综合提供
+  互联网接入业务、信息业务、和增值业务的电信运营商。ISP是经国家主管部门批准
+  的正式运营企业，享受国家法律保护。
+ICP
+  Internet Content Provider，即互联网内容提供商。向广大用户综合提供互联网
+  信息业务和增值业务的电信运营商。其必须具备的证书即为ICP证。如sina等。
+IDC
+  Internet Data Center，即互联网数据中心。可以为用户提供包括：申请域名、
+  租用虚拟主机空间、主机托管等服务。就是电信部门利用已有的互联网通信线路、带
+  宽资源，建立标准化的电信专业级机房环境，为企业、政府提供服务器托管、租用以
+  及相关增值等方面的全方位服务。即拥有服务器的公司把服务器放到数据中心，就是我们平
+  常所说的服务器租用和托管以及相关的其他业务。
+CDN
+  Content Delivery Network，即内容分发网络。其基本思路是尽可能避开互联网上有
+  可能影响数据传输速度和稳定性的瓶颈和环节，使内容传输的更快、更稳定。通过在网络各
+  处放置节点服务器所构成的在现有的互联网基础之上的一层智能虚拟网络，CDN系统能够实时
+  地根据网络流量和各节点的连接、负载状况以及到用户的距离和响应时间等综合信息将用户的
+  请求重新导向离用户最近的服务节点上。其目的是使用户可就近取得所需内容，解决 Internet
+  网络拥挤的状况，提高用户访问网站的响应速度。
+</code></pre>
+
+<h1>备注</h1>
+
+<pre><code>IDC和CDN
+  CDN是加速，提供服务，IDC主要是主机托管和带宽租赁，也就是说，IDC是卖产品，而CDN是卖服务。
+  关系是CDN本身是通过分部在全国不同点的IDC来帮助你做加速。
+</code></pre>
+
+<h1>Reference</h1>
+]]></content>
+  </entry>
+  
+</feed>

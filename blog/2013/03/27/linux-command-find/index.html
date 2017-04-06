@@ -1,0 +1,307 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux命令之find - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Introduction find命令的日常使用 Main 概要 find [-H] [-L] [-P] [-D debugopts] [-Olevel] [path...] [expression] --&gt;来自man文档
+-P 是默认的，不跟随软链接
+-L 跟随软链接
+-H 不跟随软链接, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nosea.github.io/blog/2013/03/27/linux-command-find/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="nosea.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Linux命令之find</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-03-27T19:15:00+00:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>7:15 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>Introduction</h1>
+
+<pre><code>find命令的日常使用
+</code></pre>
+
+<!--more--> 
+
+
+<h1>Main</h1>
+
+<pre><code>概要
+   find [-H] [-L] [-P] [-D debugopts] [-Olevel] [path...] [expression]    --&gt;来自man文档
+-P     是默认的，不跟随软链接
+-L     跟随软链接
+-H     不跟随软链接,除了处理命令行参数的时候
+上面参数多个指定的时候，后一个会覆盖前一个
+expression
+-name pattern
+  pattern 为shell pattern
+  * 匹配0或者多个
+  ? 匹配1个
+  [string] 匹配属于string的字符，这个被称为character class
+  例如：[a-z0-9]匹配所有小写字母和数字
+        [!A-Z]或者[^A-Z]匹配所有非大写字母
+-amin  n
+  查找系统中最后n分钟访问的文件
+-atime n
+  查找系统中最后n*24小时访问的文件
+-cmin n
+  查找系统中最后n分钟被改变状态的文件
+-ctime n
+  查找系统中最后n*24小时被改变状态的文件
+-iname pattern
+  与-name类似，只不过忽略文件名的大小写
+-inum n
+  查找制定inode number的文件
+-maxdepth n
+  n为深度，1为当前文件夹
+-type c
+  指定查找文件的类型
+  b(块文件), c(字符文件), d(文件夹), p(命名管道), f(普通文件), l(链接文件), s(socket文件)
+-empty
+  查找系统中空白的文件，或空白的文件目录，或目录中没有子目录的文件夹
+-false
+  查找系统中总是错误的文件
+-fstype type
+  查找系统中存在于指定文件系统的文件，如ext2
+-gid n
+-group groupname
+eg:
+最常用的
+$ find path -name file_to_find
+查找文件长度为0的普通文件
+$ find path -type f -size 0
+查找目录中属主具有读写权限，并且属组和其他有读权限的文件
+$ find path -type f -perm 644
+查找目录中更改时间在7日以前的普通文件，并在删除之前询问他们
+$ find path -type f -mtime +7 -ok rm {} \;
+查找目录中组是root的
+$ find path -group root
+</code></pre>
+
+<h1>Example</h1>
+
+<pre><code>1、查找当前文件夹内10天前的文件(不是目录)
+  find . -mtime +10 -type f
+2、查找当前文件夹内10内的文件(不是目录)
+  find . -mtime -10 -type f
+3、查找当前文件名字为"test.c"的文件，且不区分大小写
+  find . -type f -iname "test.c"
+4、查找目录深度为2，且名字为a.c的文件
+  $ find -maxdepth 1 -type f -name 'a.c' 
+  ./a.c
+  $ find -maxdepth 2 -type f -name 'a.c' 
+  ./a.c
+  ./test/a.c
+5、对于每个查找到的文件执行命令(可以用xargs和exec)
+  $ find . -name 'a.c' | xargs md5sum
+  d41d8cd98f00b204e9800998ecf8427e  ./a.c
+  d41d8cd98f00b204e9800998ecf8427e  ./test/a.c
+  d41d8cd98f00b204e9800998ecf8427e  ./test/a/a.c
+  d41d8cd98f00b204e9800998ecf8427e  ./test/a/b/a.c
+  $ find . -name 'a.c' -exec md5sum {} \;
+  d41d8cd98f00b204e9800998ecf8427e  ./a.c
+  d41d8cd98f00b204e9800998ecf8427e  ./test/a.c
+  d41d8cd98f00b204e9800998ecf8427e  ./test/a/a.c
+  d41d8cd98f00b204e9800998ecf8427e  ./test/a/b/a.c
+  $ find . -name 'a.c' -exec md5sum {} +;
+  d41d8cd98f00b204e9800998ecf8427e  ./a.c
+  d41d8cd98f00b204e9800998ecf8427e  ./test/a.c
+  d41d8cd98f00b204e9800998ecf8427e  ./test/a/a.c
+  d41d8cd98f00b204e9800998ecf8427e  ./test/a/b/a.c
+</code></pre>
+
+<h1>Reference</h1>
+
+<p><a href="http://bbs.chinaunix.net/thread-441883-1-1.html">查找技巧,find及xargs的使用</a> <br/>
+<a href="http://blog.jobbole.com/48856/">15个实用的Linux find命令示例</a>  <br/>
+<a href="http://blog.jobbole.com/48931/">15个极好的Linux find命令示例</a>
+Thanks!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2013-03-27T19:15:00+00:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>7:15 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>linux</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://nosea.github.io/blog/2013/03/27/linux-command-find/" data-via="" data-counturl="http://nosea.github.io/blog/2013/03/27/linux-command-find/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/03/27/file-mode-of-unix/" title="Previous Post: file mode of unix">&laquo; file mode of unix</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/03/27/configure-crontab/" title="Next Post: cron配置">cron配置 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-propertytree/">Boost PropertyTree</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-filesystem/">Boost Filesystem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/tools-eclipse/">Eclipse 相关</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/boost-program-options/">Boost Program Options</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/fix-windows-7-bootmbr/">修复win7的引导</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

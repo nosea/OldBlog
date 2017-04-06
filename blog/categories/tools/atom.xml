@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Tools | My Octopress Blog]]></title>
+  <link href="http://nosea.github.io/blog/categories/tools/atom.xml" rel="self"/>
+  <link href="http://nosea.github.io/"/>
+  <updated>2017-04-06T15:21:27+00:00</updated>
+  <id>http://nosea.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Eclipse 相关]]></title>
+    <link href="http://nosea.github.io/blog/2015/01/26/tools-eclipse/"/>
+    <updated>2015-01-26T12:41:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2015/01/26/tools-eclipse</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>eclipse 相关内容
+</code></pre>
+
+<!--more-->    
+
+
+<h1>Content</h1>
+
+<h2>设置pupop弹出框的背景颜色</h2>
+
+<pre><code>1、偏好设置 &gt; C/C++ &gt; Editor 栏，然后在右边的Appearance color options下，
+选择Source hover background，然后点击System_default即可使用主题的配置。
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

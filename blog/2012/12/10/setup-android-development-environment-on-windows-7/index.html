@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>在win7上搭建Android开发环境 - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="一.System Requirements, 来自官方文档 Eclipse IDE Eclipse 3.6.2 (Helios) or greater Note: Eclipse 3.5 (Galileo) is no longer supported with the latest &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nosea.github.io/blog/2012/12/10/setup-android-development-environment-on-windows-7/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="nosea.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">在win7上搭建Android开发环境</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-12-10T22:13:00+00:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>10:13 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>一.System Requirements, 来<a href="http://developer.android.com/sdk/index.html">自官方文档</a> <br/>
+    <em>Eclipse IDE
+        </em>Eclipse 3.6.2 (Helios) or greater
+        <em>Note: Eclipse 3.5 (Galileo) is no longer supported with the latest version of ADT.
+    </em>Eclipse JDT plugin (included in most Eclipse IDE packages)
+    <em>JDK 6 (JRE alone is not sufficient)
+    </em>Android Development Tools plugin (recommended)
+    *Not compatible with GNU Compiler for Java (gcj)</p>
+
+<!-- more -->
+
+
+<p>二.安装Java SDK <br/>
+   1.下载<a href="http://java.sun.com/">Java SDK</a>, 找到最近更新JDK 6即可. <br/>
+   2.安装目录自选，建议路径不留空格, 留意安装程序是否设置了环境变量等, 没有则自己设置.</p>
+
+<p>三.安装Eclipse  <br/>
+   1.下载<a href="http://eclipse.org/downloads/packages/release/helios/sr2">Eclipse Helios</a>, 下载Eclipse IDE for Java Developers.     <br/>
+   2.安装目录自选, 解压到一个目录就行了. 简单起见, 建议根目录.</p>
+
+<p>四.安装Android SDK  <br/>
+   1.下载<a href="http://developer.android.com/sdk/index.html">Android SDK</a>.  <br/>
+   2.有两种方法可以安装: ADT Bundle 和 SDK Tools Only. 还是直接下SDK Tools Only吧.  <br/>
+   3.下载后解压到任意目录, 建议根目录.  <br/>
+   4.进入android-sdk-windows, 运行SDk Setup.exe, 全接受, 安装.  <br/>
+   5.把android-sdk-windows下tool目录加入环境变量.</p>
+
+<p>五.配置Eclipse  <br/>
+   1.安装ADT插件, 参考方法见<a href="http://developer.android.com/sdk/installing/installing-adt.html">官方文档</a>  <br/>
+   2.按照自己需求, 增加所需的虚拟机即可.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2012-12-10T22:13:00+00:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>10:13 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>android</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://nosea.github.io/blog/2012/12/10/setup-android-development-environment-on-windows-7/" data-via="" data-counturl="http://nosea.github.io/blog/2012/12/10/setup-android-development-environment-on-windows-7/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/12/10/configure-octopress/" title="Previous Post: 配置 Octopress">&laquo; 配置 Octopress</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/12/11/basic-knowledge-of-android/" title="Next Post: Android的一些基本概念">Android的一些基本概念 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-propertytree/">Boost PropertyTree</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-filesystem/">Boost Filesystem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/tools-eclipse/">Eclipse 相关</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/boost-program-options/">Boost Program Options</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/fix-windows-7-bootmbr/">修复win7的引导</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

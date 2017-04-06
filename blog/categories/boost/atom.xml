@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Boost | My Octopress Blog]]></title>
+  <link href="http://nosea.github.io/blog/categories/boost/atom.xml" rel="self"/>
+  <link href="http://nosea.github.io/"/>
+  <updated>2017-04-06T15:21:27+00:00</updated>
+  <id>http://nosea.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Boost PropertyTree]]></title>
+    <link href="http://nosea.github.io/blog/2015/01/26/boost-propertytree/"/>
+    <updated>2015-01-26T23:08:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2015/01/26/boost-propertytree</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>The Property Tree library provides a data structure that stores an arbitrarily deeply nested tree of values, 
+indexed at each level by some key. 
+可以很方便的解析xml，ini，json，info文件
+</code></pre>
+
+<!--more-->
+
+
+<h1>Content</h1>
+
+<pre><code class="c++">#include &lt;iostream&gt;
+#include &lt;string&gt;
+#include &lt;set&gt;
+#include &lt;boost/foreach.hpp&gt; // for BOOST_FOREACH
+#include &lt;boost/property_tree/ptree.hpp&gt;
+#include &lt;boost/property_tree/xml_parser.hpp&gt;
+
+/*
+ * 例子来自boost property的five minute tutorial，我稍微修改了下
+ *  &lt;debug&gt;
+ *      &lt;filename&gt;debug.log&lt;/filename&gt;
+ *    &lt;modules&gt;
+ *        &lt;module&gt;Finance&lt;/module&gt;
+ *        &lt;module&gt;Admin&lt;/module&gt;
+ *        &lt;module&gt;HR&lt;/module&gt;
+ *    &lt;/modules&gt;
+ *    &lt;level&gt;2&lt;/level&gt;
+ *  &lt;/debug&gt;
+ */
+class xml_demo
+{
+public:
+    void load();
+    void save();
+    xml_demo(std::string&amp; config_name):
+        config_(config_name){}
+
+    void show();
+
+private:
+    const std::string config_;
+    std::string log_; // log filename
+    int level_;  // log level
+    std::set&lt;std::string&gt; modules_; // modules where logging is enabled
+};
+
+void xml_demo::show()
+{
+    std::cout &lt;&lt; "the config info is below: \n";
+    std::cout &lt;&lt; "log file name is: " &lt;&lt; log_ &lt;&lt; std::endl;
+    std::cout &lt;&lt; "log level is: " &lt;&lt; level_ &lt;&lt; std::endl;
+    std::cout &lt;&lt; "the module info is : \n";
+    for (std::set&lt;std::string&gt;::iterator it=modules_.begin();
+         it!=modules_.end(); it++)
+    {
+
+        std::cout &lt;&lt; "\t" &lt;&lt; *it &lt;&lt; std::endl;
+    }
+}
+
+void xml_demo::load()
+{
+    boost::property_tree::ptree pt; // Create an empty property tree object
+
+    // Load the XML file into the property tree. If reading fails
+    // (cannot open file, parse error), an exception is thrown.
+    boost::property_tree::read_xml(config_, pt);
+
+    // Get the filename of log and store it in the level_ variable
+    // if the debug.filename key is not found, an exception is thrown.
+    log_ = pt.get&lt;std::string&gt;("debug.filename");
+
+    // Get the debug level and store it in the level_ variable.
+    // This is another version of the get method; if the value is not
+    // found, the default value (specified by the second parameter) is
+    // returned instead.
+    // 注意，因为抽取的数据类型与默认值一致，因此使用了get(...)而不是
+    // get&lt;int&gt;(...)
+    level_ = pt.get("debug.level", 0);
+
+    // 遍历读取 debug.modules 的值
+    BOOST_FOREACH(boost::property_tree::ptree::value_type&amp; v,
+                  pt.get_child("debug.modules"))
+    {
+        modules_.insert(v.second.data());
+    }
+}
+
+void xml_demo::save()
+{
+    log_ = "new_debug.log";
+    level_ = 10;
+
+    boost::property_tree::ptree pt;
+
+    pt.put("debug.filename", log_);
+    pt.put("debug.level", level_);
+
+    BOOST_FOREACH(const std::string&amp; name, modules_)
+    {
+        pt.add("debug.modules.module", "NEW " + name);
+    }
+
+    boost::property_tree::write_xml(config_, pt);
+}
+
+
+int main(int argc, char* argv[])
+{
+    std::string conf_file("config.xml");
+
+    xml_demo demo(conf_file);
+
+    demo.load();
+    demo.show();
+
+    std::cout &lt;&lt; "Now modifing... \n";
+    demo.save();
+    demo.load();
+    demo.show();
+
+    return 0;
+}
+</code></pre>
+
+<h1>Reference</h1>
+
+<p>Boost propertytree tutorial</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Boost Filesystem]]></title>
+    <link href="http://nosea.github.io/blog/2015/01/26/boost-filesystem/"/>
+    <updated>2015-01-26T12:46:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2015/01/26/boost-filesystem</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>The Boost.Filesystem library provides facilities to manipulate files and 
+directories, and the paths that identify them.
+可移植，不用为不同平台编写不同的代码。
+</code></pre>
+
+<!--more-->
+
+
+<h1>Content</h1>
+
+<pre><code class="c++">#include &lt;iostream&gt;
+#include &lt;boost/filesystem.hpp&gt;
+
+void handle_file(const boost::filesystem::path&amp; p)
+{
+    try
+    {
+        if (boost::filesystem::exists(p))
+        {
+            if (boost::filesystem::is_regular_file(p)) // p 是一个普通的文件
+                std::cout &lt;&lt; p &lt;&lt; " size is " &lt;&lt; boost::filesystem::file_size(p) &lt;&lt; "\n";
+            else if (boost::filesystem::is_directory(p)) // p 是一个目录
+                std::cout &lt;&lt; p &lt;&lt; " is a directory \n";
+            else
+                std::cout &lt;&lt; p &lt;&lt; " exists, but is neither a reqular file nor a direcotry\n";
+        }
+        else
+            std::cout &lt;&lt; p &lt;&lt; " does not exist\n";
+    }
+    catch (const boost::filesystem::filesystem_error&amp; e)
+    {
+        std::cout &lt;&lt; e.what() &lt;&lt; "\n";
+    }
+}
+
+int main(int argc, char* argv[])
+{
+    if (argc &lt; 2)
+    {
+        std::cout &lt;&lt; "usage: " &lt;&lt; argv[0] &lt;&lt; " filepath\n";
+        return -1;
+    }
+
+    boost::filesystem::path p(argv[1]);
+    handle_file(p);
+
+    return 0;
+}
+</code></pre>
+
+<h1>Reference</h1>
+
+<p>boost filesystem tutorial</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Lexical_Cast]]></title>
+    <link href="http://nosea.github.io/blog/2014/08/04/lexical-cast/"/>
+    <updated>2014-08-04T23:21:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2014/08/04/lexical-cast</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>数值与字符串转换之用，更方便，安全，有效。
+</code></pre>
+
+<!--more--> 
+
+
+<h1>使用</h1>
+
+<pre><code class="c++">#include &lt;boost/lexical_cast.hpp&gt;
+#include &lt;boost/random.hpp&gt;
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+string number_to_string(const vector&lt;int&gt; &amp;ivec);
+vector&lt;int&gt; gen_ivec(const int &amp;low, const int &amp;top);
+vector&lt;int&gt; string_to_number(const string &amp;s);
+
+int main(int argc, char **argv)
+{
+    vector&lt;int&gt; ivec = gen_ivec(1, 100);
+
+
+    cout &lt;&lt; "Begin int to string..." &lt;&lt; endl;
+    string res = number_to_string(ivec);
+    cout &lt;&lt; res &lt;&lt; endl;
+
+    cout &lt;&lt; "Begin string to int..." &lt;&lt; endl;
+    vector&lt;int&gt; ivec_handle = string_to_number(res);
+
+    for (vector&lt;int&gt;::iterator iter=ivec_handle.begin();
+        iter!=ivec_handle.end(); ++iter)
+    {
+        cout &lt;&lt; *iter;
+    }
+    cout &lt;&lt; endl;
+
+    return 0;
+}
+
+/*
+*   convert an array of integers to string whiche divided by "="
+*/
+string number_to_string(const vector&lt;int&gt; &amp;ivec)
+{
+    string ret;
+
+    for (vector&lt;int&gt;::const_iterator iter=ivec.begin(); 
+        iter!=ivec.end(); ++iter)
+    {
+        ret = ret + boost::lexical_cast&lt;string&gt;(*iter) + "=";
+    }
+
+    return ret;
+}
+
+
+/*
+*   convert string to an array of integers
+*/
+vector&lt;int&gt; string_to_number(const string &amp;s)
+{
+    vector&lt;int&gt; ivec;
+
+    for (string::const_iterator iter=s.begin();
+        iter!=s.end(); ++iter)
+    {
+        try
+        {
+            ivec.push_back(boost::lexical_cast&lt;int&gt;(*iter));
+        }
+        catch (const boost::bad_lexical_cast&amp;){} // skip it
+    }
+
+    return ivec;
+}
+
+
+/*
+* generate random number
+*/
+vector&lt;int&gt; gen_ivec(const int &amp;low, const int &amp;top)
+{
+    vector&lt;int&gt; ivec; 
+
+    boost::uniform_int&lt;&gt; distribution(low, top) ;
+    boost::mt19937 engine;
+    boost::variate_generator&lt;boost::mt19937, boost::uniform_int&lt;&gt;&gt; irandom (engine, distribution);
+
+    for (int i=low; i&lt;top; ++i)
+    {
+        ivec.push_back(irandom());
+        //cout &lt;&lt; irandom() &lt;&lt; ", ";
+    }
+
+    return ivec;
+}
+</code></pre>
+
+<h1>Reference</h1>
+
+<p><a href="http://www.boost.org/doc/libs/1_55_0/doc/html/boost_lexical_cast.html">boost</a></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Django | My Octopress Blog]]></title>
+  <link href="http://nosea.github.io/blog/categories/django/atom.xml" rel="self"/>
+  <link href="http://nosea.github.io/"/>
+  <updated>2017-04-06T15:21:27+00:00</updated>
+  <id>http://nosea.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Django笔记-视图和URL配置]]></title>
+    <link href="http://nosea.github.io/blog/2012/12/18/views-and-urlconfs-of-django/"/>
+    <updated>2012-12-18T15:22:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2012/12/18/views-and-urlconfs-of-django</id>
+    <content type="html"><![CDATA[<p>一.基础知识
+    1.什么是视图(view)
+      I.视图(函数)：接受一个Web请求并返回Web响应的Python函数。
+        该响应可以是一份网页的HTML内容、一次重定向、一条404错误、一份XML文档、
+        一幅图片，或其他任何东西。
+      II.每个视图函数都以一个 HttpRequest 对象为第一个参数，该参数通常命名为 request
+      III.每个视图函数都负责返回一个 HttpResponse 对象(也有例外)
+    2.将URL映射到视图
+      URLconf像是Django所支撑网站的目录，本质是URL模式以及要为该URL模式调用
+      的视图函数的映射表。即告诉Django，对于某个URL调用哪个视图函数。
+    3.修改生成项目目录下的urls.py文件，添加URL和视图的映射。
+      I.里面调用patterns()函数将返回结果保存到urlpatterns变量中，Django从目录下
+        的settings.py中得到这个结果。
+    4.添加URLpattern - 这是一个Python元组，第一个元素是url(在书里是简单的正则
+      表达式)，第二个元素是为该模式应用的视图函数。</p>
+
+<!-- more -->
+
+
+<p>二.Tips
+    1.使用HttpResponse类
+      from django.http import HttpResponse
+    2.Python标准库的datetime 模块
+      含几个处理日期和时间的函数（functions）和类(classes)，其中就包括返回当前时间的函数。
+      datetime.datetime.now()  -  得到当前时间
+    3.若要从URL中取得数据然后当作参数传递给view函数，用圆括号把参数在URL模式里标识出来
+    4.所有的Django项目在创建后都是在调试模式下的
+    5.关于常用的正则表达式
+      符号                 匹配
+      .(dot)               任意字符
+      \d                   任意数字
+      [A-Z]                任意字符，A-Z(大写)
+      [a-z]                任意字符，a-z(小写)
+      [A-Za-z]             任意字符，a-z(不区分大小写)
+      +                    匹配一个或更多(例如，\d+ 匹配一个或多个数字字符)
+      [^/]+                不是/的任意字符
+      *                    匹配0个或更多(例如，\d*匹配0个或更多数字字符)
+      {1,3}                匹配1个到3个(包含)
+      $                    行尾
+      ^                    行首</p>
+
+<p>学习书籍：
+   <a href="http://djangobook.py3k.cn/">The Django Book</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Django笔记 - 开始Django]]></title>
+    <link href="http://nosea.github.io/blog/2012/12/18/notes-of-start-django/"/>
+    <updated>2012-12-18T10:11:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2012/12/18/notes-of-start-django</id>
+    <content type="html"><![CDATA[<p>一.到<a href="https://www.djangoproject.com/">官网</a>下载最新稳定版,关于哪个版本好, 官网右侧有说明，安装  <br/>
+Linux
+<code>bash
+tar xzvf Django-1.4.3.tar.gz
+cd Django-1.4.3
+sudo python setup.py install
+</code>
+Windows
+     If you&rsquo;re using Windows, start a command shell with administrator privileges
+     and run the command python setup.py install
+安装好后，检查下
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>python&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;blockquote&gt;&lt;blockquote&gt;&lt;blockquote&gt;&lt;p&gt;import django
+</span><span class='line'>django.VERSION
+</span></code></pre></td></tr></table></div></figure></p></blockquote></blockquote></blockquote>
+
+<!-- more -->
+
+
+<p>二.新建一个项目
+    1.在想要新建项目的地方运行命令
+      django-admin.py startproject project_name
+      $ django-admin.py startproject mydjsite
+      $ ls
+      manage.py  mydjsite
+      mydjsite目录里包含
+      <strong>init</strong>.py  <strong>init</strong>.pyc  settings.py  settings.pyc  urls.py  urls.pyc  wsgi.py  wsgi.pyc文件
+      关于这些文件:
+      *  <strong>init</strong>.py ：让 Python 把该目录当成一个开发包 (即一组模块)所需的文件。
+      *  manage.py ：一种命令行工具，可让你以多种方式与该 Django 项目进行交互。
+      *  settings.py ：该 Django 项目的设置或配置。
+      *  urls.py ：该 Django 项目的 URL 声明，即 Django 所支撑站点的内容列表
+    2.开发服务器 - 调试的话，默认即可
+       $ python manage.py runserver <br/>
+       如要更改主机或端口
+       $ python manage.py runserver 8080   # 默认是8000
+       改变服务器监听的 IP 地址。要和其他开发人员共享同一开发站点的话，该功能特别有用
+       # 下面会让 Django 监听所有网络接口，因此也就让其它电脑可连接到开发服务器了
+       $ python manage.py runserver 0.0.0.0:8080</p>
+
+<p>学习书籍:  <br/>
+   <a href="http://djangobook.py3k.cn/">The Django Book</a></p>
+]]></content>
+  </entry>
+  
+</feed>

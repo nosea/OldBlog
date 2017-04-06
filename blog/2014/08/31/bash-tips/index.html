@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Bash Tips - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Introduction long time tips Content logging in file 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+export _LOG_FILE=&quot;test.log&quot;
+export _INFO_FLAG=&quot;[ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nosea.github.io/blog/2014/08/31/bash-tips/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="nosea.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Bash Tips</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-08-31T22:58:00+00:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>10:58 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>Introduction</h1>
+
+<pre><code>long time tips
+</code></pre>
+
+<!--more--> 
+
+
+<h1>Content</h1>
+
+<h2>logging in file</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">_LOG_FILE</span><span class="o">=</span><span class="s2">&quot;test.log&quot;</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">_INFO_FLAG</span><span class="o">=</span><span class="s2">&quot;[INFO]&quot;</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">_ERROR_FLAG</span><span class="o">=</span><span class="s2">&quot;[ERROR]&quot;</span>
+</span><span class='line'><span class="nb">export </span><span class="nv">_LOG_FORMAT</span><span class="o">=</span><span class="s2">&quot;%Y-%m-%d %H:%M:%S&quot;</span>
+</span><span class='line'>
+</span><span class='line'>LOG_INFO<span class="o">()</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="k">$(</span>date +<span class="s2">&quot;${_LOG_FORMAT} ${_INFO_FLAG} (${BASH_SOURCE[1]##*/}:${BASH_LINENO[0]}) &quot;</span><span class="k">)</span> <span class="nv">$*</span> &gt;&gt; <span class="nv">$_LOG_FILE</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>LOG_ERROR<span class="o">()</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="k">$(</span>date +<span class="s2">&quot;${_LOG_FORMAT} ${_ERROR_FLAG} (${BASH_SOURCE[1]##*/}:${BASH_LINENO[0]}) &quot;</span><span class="k">)</span> <span class="nv">$*</span> &gt;&gt; <span class="nv">$_LOG_FILE</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>function decorator</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">export </span><span class="nv">_ERROR_LOG</span><span class="o">=</span><span class="s2">&quot;err.log&quot;</span>
+</span><span class='line'>RUN<span class="o">()</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="c"># every function will append some infomation to debug or logging</span>
+</span><span class='line'>    <span class="nb">local </span><span class="nv">_func</span><span class="o">=</span><span class="s2">&quot;$1&quot;</span><span class="p">;</span> <span class="nb">shift </span>1
+</span><span class='line'>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;start ${_func} ...&quot;</span>
+</span><span class='line'>    <span class="c"># run the function </span>
+</span><span class='line'>    <span class="k">${</span><span class="nv">_func</span><span class="k">}</span> <span class="nv">$@</span> 2&gt;&gt;<span class="k">${</span><span class="nv">_ERROR_LOG</span><span class="k">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c"># logging</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;done ${_func} ...&quot;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">test</span><span class="o">()</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;param is :&quot;</span> <span class="nv">$@</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>reverse the order of lines in a file</h2>
+
+<pre><code>1、use command tac
+   tac filename
+2、sed tricks
+   sed '1!G;h;$!d' filename
+   sed -n '1!G;h;$p' filename
+3、pelr
+   perl -e 'print reverse &lt;&gt;' filename
+</code></pre>
+
+<h2>exit shell script from a subshell</h2>
+
+<h3>use kill &amp;&amp; or kill 0</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sub_proc<span class="o">()</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;start sub process...&quot;</span>
+</span><span class='line'>    <span class="nb">kill</span> <span class="nv">$$</span>
+</span><span class='line'>  <span class="c"># the same as kill 0</span>
+</span><span class='line'>  <span class="c"># for detail see kill(2) manpage</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>base_proc<span class="o">()</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nv">var</span><span class="o">=</span><span class="k">$(</span>sub_proc<span class="k">)</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;this will never be printed&quot;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>base_proc
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>use set -E and trap</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'><span class="nb">set</span> -E <span class="c"># -E  If set, the ERR trap is inherited by shell functions</span>
+</span><span class='line'><span class="nb">trap</span> <span class="s1">&#39;[ &quot;$?&quot; -eq 99 ] &amp;&amp; exit 99&#39;</span> ERR
+</span><span class='line'>sub_proc<span class="o">()</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;start sub process...&quot;</span>
+</span><span class='line'>    <span class="nb">exit </span><span class="m">99</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>base_proc<span class="o">()</span>
+</span><span class='line'><span class="o">{</span>
+</span><span class='line'>    <span class="nv">var</span><span class="o">=</span><span class="k">$(</span>sub_proc<span class="k">)</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s2">&quot;this will never be printed&quot;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>base_proc
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-08-31T22:58:00+00:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2014</span></span> <span class='time'>10:58 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/shell/'>shell</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://nosea.github.io/blog/2014/08/31/bash-tips/" data-via="" data-counturl="http://nosea.github.io/blog/2014/08/31/bash-tips/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/08/04/lexical-cast/" title="Previous Post: Lexical_Cast">&laquo; Lexical_Cast</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/12/16/install-octopress-on-mac/" title="Next Post: 在mac上安装octopress">在mac上安装octopress &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-propertytree/">Boost PropertyTree</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-filesystem/">Boost Filesystem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/tools-eclipse/">Eclipse 相关</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/boost-program-options/">Boost Program Options</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/fix-windows-7-bootmbr/">修复win7的引导</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

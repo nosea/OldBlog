@@ -1,0 +1,528 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Shell 命令行参数解析 - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Introduction 命令行参数的处理是最常用的需求，主要处理长选项和短选项
+目前常用的是getopt和getopts getopt getopt的使用1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nosea.github.io/blog/2013/10/13/command-line-arguments-process-in-shell/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="nosea.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Shell 命令行参数解析</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-10-13T15:31:00+00:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>3:31 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>Introduction</h1>
+
+<pre><code>    命令行参数的处理是最常用的需求，主要处理长选项和短选项
+目前常用的是getopt和getopts
+</code></pre>
+
+<!--more--> 
+
+
+<h1>getopt</h1>
+
+<figure class='code'><figcaption><span>getopt的使用</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'>:<span class="s">&lt;&lt;EOF</span>
+</span><span class='line'><span class="s"> $ type getopt</span>
+</span><span class='line'><span class="s"> getopt is /usr/bin/getopt</span>
+</span><span class='line'><span class="s"> ## 通过下面的可以看出getopt是外部命令</span>
+</span><span class='line'>
+</span><span class='line'><span class="s"> 使用:</span>
+</span><span class='line'><span class="s">   getopt optstring parameters</span>
+</span><span class='line'><span class="s">   optstring:</span>
+</span><span class='line'><span class="s">   -o 后跟单个字符的短选项，如-o ab:c::</span>
+</span><span class='line'><span class="s">      单个字符，表示选项</span>
+</span><span class='line'><span class="s">      1 后跟一个冒号，表示后面必须紧跟一个参数，选项后或者</span>
+</span><span class='line'><span class="s">        以空格隔开</span>
+</span><span class='line'><span class="s">      2 后跟两个冒号，表示后面必须跟一个参数，且不能以空格隔开</span>
+</span><span class='line'><span class="s">    ############# 在我测试的情况中发现，两个冒号如果没有带参数，并不会报错</span>
+</span><span class='line'><span class="s">      ############# 但是单个冒号的情况会报错</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">   --long 后跟长选项，如--long a-long,b-long:,c-long::</span>
+</span><span class='line'><span class="s">      冒号的说明跟短选项一致</span>
+</span><span class='line'><span class="s">   -n 出错时的信息</span>
+</span><span class='line'><span class="s">   -- 作用是让后面的不被解释成选项，因为&quot;$@&quot;带有&#39;-&#39;等参数</span>
+</span><span class='line'><span class="s">      eg: 比如想touch一个名为“-x”的文件</span>
+</span><span class='line'><span class="s">         touch -x  ## 这样会出现：touch: invalid option -- &#39;x&#39;，因为解释成选项了</span>
+</span><span class='line'><span class="s">         touch -- -x ## 这样就可以了</span>
+</span><span class='line'><span class="s">         当然，删除也是：rm -- -x</span>
+</span><span class='line'><span class="s"> ## 下面的例子参照了/usr/share/doc/util-linux/examples/getopt-parse.bash</span>
+</span><span class='line'><span class="s">EOF</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">TEMP</span><span class="o">=</span><span class="k">$(</span>getopt -o ab:c:: --long along,blong:,clong:: -n <span class="s1">&#39;Error:&#39;</span> -- <span class="s2">&quot;$@&quot;</span><span class="k">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> !<span class="o">=</span> <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span><span class='line'>    <span class="nb">exit </span>1
+</span><span class='line'><span class="k">fi</span>
+</span><span class='line'><span class="c"># Note the quotes around `$TEMP&#39;: they are essential!</span>
+</span><span class='line'><span class="nb">eval set</span> -- <span class="s2">&quot;$TEMP&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">while</span> <span class="nb">true</span>
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'>    <span class="k">case</span> <span class="s2">&quot;$1&quot;</span> in
+</span><span class='line'>  -a<span class="p">|</span>--along<span class="o">)</span>
+</span><span class='line'>      <span class="nb">echo</span> <span class="s2">&quot;Option a:&quot;</span>
+</span><span class='line'>      <span class="nb">shift</span>
+</span><span class='line'>      <span class="p">;;</span>
+</span><span class='line'>  -b<span class="p">|</span>--blong<span class="o">)</span>
+</span><span class='line'>      <span class="nb">echo</span> <span class="s2">&quot;Option b: Argument is: $2&quot;</span>
+</span><span class='line'>      <span class="nb">shift </span>2
+</span><span class='line'>      <span class="p">;;</span>
+</span><span class='line'>  -c<span class="p">|</span>--clong<span class="o">)</span>
+</span><span class='line'>      <span class="nb">echo</span> <span class="s2">&quot;Option c: argument is: $2&quot;</span>
+</span><span class='line'>      <span class="nb">shift </span>2
+</span><span class='line'>      <span class="p">;;</span>
+</span><span class='line'>  --<span class="o">)</span>
+</span><span class='line'>      <span class="nb">shift</span>
+</span><span class='line'><span class="nb">     break</span>
+</span><span class='line'>      <span class="p">;;</span>
+</span><span class='line'>  *<span class="o">)</span>
+</span><span class='line'>      <span class="nb">echo</span> <span class="s2">&quot;Internal error!&quot;</span>
+</span><span class='line'>      <span class="nb">exit </span>1
+</span><span class='line'>    <span class="k">esac</span>
+</span><span class='line'><span class="k">done</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Remaining arguments:&quot;</span>
+</span><span class='line'><span class="k">for</span> arg
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'>    <span class="nb">echo</span> <span class="s1">&#39;--&gt; &#39;</span><span class="s2">&quot;\`$arg&#39;&quot;</span>
+</span><span class='line'><span class="k">done</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>getopts</h1>
+
+<figure class='code'><figcaption><span>getopts使用示例</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash</span>
+</span><span class='line'>:<span class="s">&lt;&lt;EOF</span>
+</span><span class='line'><span class="s">  $ type getopts</span>
+</span><span class='line'><span class="s">  getopts is a shell builtin</span>
+</span><span class='line'><span class="s">  ## 从上面可以看出getopts是shell内置的</span>
+</span><span class='line'><span class="s">  getopts只能处理短选项，使用相对getopt简单点,我把s看成simple</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">  OPTIND:</span>
+</span><span class='line'><span class="s">    变量存储$*中下一个要处理的位置，对于没有参数的选项，getopts</span>
+</span><span class='line'><span class="s">将OPTIND加1，对于有参数的选项，将OPTIND加2</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">  OPTARG:</span>
+</span><span class='line'><span class="s">    变量存储选项的参数值</span>
+</span><span class='line'><span class="s">  eg:</span>
+</span><span class='line'><span class="s">  -a -b s arg1</span>
+</span><span class='line'><span class="s">  $#值为4，当</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">  当getopts遇到一个非选项参数时，会将OPTINT设置为</span>
+</span><span class='line'><span class="s">这个参数的索引，并且停止解析</span>
+</span><span class='line'><span class="s">EOF</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">declare</span> -a NOA <span class="c">## 声明一个数组，用来存储非选项参数</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">while</span> <span class="o">[</span> <span class="nv">$# </span>-ne <span class="m">0</span> <span class="o">]</span>
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'>   <span class="nv">OPTIND</span><span class="o">=</span><span class="m">0</span> <span class="c"># 索引为0</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="c">## 处理选项参数</span>
+</span><span class='line'>   <span class="k">while</span> <span class="nb">getopts</span> <span class="s2">&quot;:abc:d::&quot;</span> opt
+</span><span class='line'>   <span class="k">do</span>
+</span><span class='line'>       <span class="k">case</span> <span class="nv">$opt</span> in
+</span><span class='line'>  a<span class="o">)</span>
+</span><span class='line'>      <span class="nb">echo</span> <span class="s2">&quot;Option a&quot;</span>
+</span><span class='line'>      <span class="p">;;</span>
+</span><span class='line'>      b<span class="o">)</span>
+</span><span class='line'>          <span class="nb">echo</span> <span class="s2">&quot;Option b&quot;</span>
+</span><span class='line'>          <span class="p">;;</span>   
+</span><span class='line'>      c<span class="o">)</span>
+</span><span class='line'>          <span class="nb">echo</span> <span class="s2">&quot;Option c: Argument is: $OPTARG&quot;</span>
+</span><span class='line'>          <span class="p">;;</span>
+</span><span class='line'>      d<span class="o">)</span>
+</span><span class='line'>          <span class="nb">echo</span> <span class="s2">&quot;Option d: Argument is: $OPTARG&quot;</span>
+</span><span class='line'>          <span class="p">;;</span>
+</span><span class='line'>      <span class="se">\?</span><span class="o">)</span>
+</span><span class='line'>          <span class="nb">echo</span> <span class="s2">&quot;Invalid option: -$OPTARG&quot;</span> &gt;<span class="p">&amp;</span>2
+</span><span class='line'>          <span class="nb">exit </span>1
+</span><span class='line'>          <span class="p">;;</span>
+</span><span class='line'>      :<span class="o">)</span>
+</span><span class='line'>          <span class="nb">echo</span> <span class="s2">&quot;Option: -$OPTARG requires an argument.&quot;</span> &gt;<span class="p">&amp;</span>2
+</span><span class='line'>          <span class="nb">exit </span>1
+</span><span class='line'>          <span class="p">;;</span>
+</span><span class='line'>       <span class="k">esac</span>
+</span><span class='line'>   <span class="k">done</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="c">## 处理非选项参数</span>
+</span><span class='line'>   <span class="k">if</span> <span class="o">[</span> <span class="nv">$OPTIND</span> -ne <span class="k">$((</span><span class="nv">$#+</span><span class="m">1</span><span class="k">))</span> <span class="o">]</span>
+</span><span class='line'>   <span class="k">then</span>
+</span><span class='line'>       <span class="nb">shift</span> <span class="k">$((</span><span class="nv">$OPTIND</span><span class="o">-</span><span class="m">1</span><span class="k">))</span> <span class="c">## 把前面的都去掉</span>
+</span><span class='line'>       <span class="c">## 把参数加入数组</span>
+</span><span class='line'>       <span class="nv">NOA</span><span class="o">=(</span><span class="sb">`</span><span class="nb">echo</span> <span class="k">${</span><span class="nv">NOA</span><span class="p">[*]</span><span class="k">}</span><span class="sb">`</span> <span class="nv">$1</span><span class="o">)</span>
+</span><span class='line'>       <span class="nb">shift</span>
+</span><span class='line'><span class="nb">   </span><span class="k">else</span>
+</span><span class='line'>       <span class="nb">break</span><span class="p">;</span>
+</span><span class='line'>   <span class="k">fi</span>
+</span><span class='line'><span class="k">done</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> <span class="s2">&quot;Remaining arguments:&quot;</span>
+</span><span class='line'><span class="k">for</span> arg in <span class="k">${</span><span class="nv">NOA</span><span class="p">[*]</span><span class="k">}</span>
+</span><span class='line'><span class="k">do</span>
+</span><span class='line'>  <span class="nb">echo</span> <span class="s1">&#39;--&gt;&#39;</span> <span class="s2">&quot;${arg}&quot;</span>
+</span><span class='line'><span class="k">done</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>Reference</h1>
+
+<p><a href="http://www.cnblogs.com/FrankTan/archive/2010/03/01/1634516.html">Bash Shell中命令行选项/参数处理</a>  <br/>
+Thanks!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2013-10-13T15:31:00+00:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>3:31 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/shell/'>shell</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://nosea.github.io/blog/2013/10/13/command-line-arguments-process-in-shell/" data-via="" data-counturl="http://nosea.github.io/blog/2013/10/13/command-line-arguments-process-in-shell/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/10/12/shell-multiprocess/" title="Previous Post: Shell 多进程">&laquo; Shell 多进程</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/10/14/shell-conditional-expression/" title="Next Post: shell 条件表达式">shell 条件表达式 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-propertytree/">Boost PropertyTree</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-filesystem/">Boost Filesystem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/tools-eclipse/">Eclipse 相关</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/boost-program-options/">Boost Program Options</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/fix-windows-7-bootmbr/">修复win7的引导</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

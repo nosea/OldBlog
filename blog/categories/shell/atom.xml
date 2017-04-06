@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Shell | My Octopress Blog]]></title>
+  <link href="http://nosea.github.io/blog/categories/shell/atom.xml" rel="self"/>
+  <link href="http://nosea.github.io/"/>
+  <updated>2017-04-06T15:21:27+00:00</updated>
+  <id>http://nosea.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Bash Tips]]></title>
+    <link href="http://nosea.github.io/blog/2014/08/31/bash-tips/"/>
+    <updated>2014-08-31T22:58:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2014/08/31/bash-tips</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>long time tips
+</code></pre>
+
+<!--more--> 
+
+
+<h1>Content</h1>
+
+<h2>logging in file</h2>
+
+<pre><code class="bash">export _LOG_FILE="test.log"
+export _INFO_FLAG="[INFO]"
+export _ERROR_FLAG="[ERROR]"
+export _LOG_FORMAT="%Y-%m-%d %H:%M:%S"
+
+LOG_INFO()
+{
+    echo $(date +"${_LOG_FORMAT} ${_INFO_FLAG} (${BASH_SOURCE[1]##*/}:${BASH_LINENO[0]}) ") $* &gt;&gt; $_LOG_FILE
+}
+
+LOG_ERROR()
+{
+    echo $(date +"${_LOG_FORMAT} ${_ERROR_FLAG} (${BASH_SOURCE[1]##*/}:${BASH_LINENO[0]}) ") $* &gt;&gt; $_LOG_FILE
+}
+</code></pre>
+
+<h2>function decorator</h2>
+
+<pre><code class="bash">export _ERROR_LOG="err.log"
+RUN()
+{
+    # every function will append some infomation to debug or logging
+    local _func="$1"; shift 1
+
+    echo "start ${_func} ..."
+    # run the function 
+    ${_func} $@ 2&gt;&gt;${_ERROR_LOG}
+
+    # logging
+    echo "done ${_func} ..."
+}
+
+test()
+{
+    echo "param is :" $@
+}
+</code></pre>
+
+<h2>reverse the order of lines in a file</h2>
+
+<pre><code>1、use command tac
+   tac filename
+2、sed tricks
+   sed '1!G;h;$!d' filename
+   sed -n '1!G;h;$p' filename
+3、pelr
+   perl -e 'print reverse &lt;&gt;' filename
+</code></pre>
+
+<h2>exit shell script from a subshell</h2>
+
+<h3>use kill &amp;&amp; or kill 0</h3>
+
+<pre><code class="bash">sub_proc()
+{
+    echo "start sub process..."
+    kill $$
+    # the same as kill 0
+    # for detail see kill(2) manpage
+}
+
+base_proc()
+{
+    var=$(sub_proc)
+    echo "this will never be printed"
+}
+
+base_proc
+</code></pre>
+
+<h3>use set -E and trap</h3>
+
+<pre><code class="bash">#!/bin/bash
+set -E # -E  If set, the ERR trap is inherited by shell functions
+trap '[ "$?" -eq 99 ] &amp;&amp; exit 99' ERR
+sub_proc()
+{
+    echo "start sub process..."
+    exit 99 
+}
+
+base_proc()
+{
+    var=$(sub_proc)
+    echo "this will never be printed"
+}
+
+base_proc
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Shell Color Format]]></title>
+    <link href="http://nosea.github.io/blog/2014/01/01/shell-color-format/"/>
+    <updated>2014-01-01T21:59:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2014/01/01/shell-color-format</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>终端颜色打印
+</code></pre>
+
+<!--more-->
+
+
+<h1>Preview</h1>
+
+<pre><code>通过转义序列(escape sequences)来实现颜色的输出，这些序列需要搭配转义字符，
+用"^[" 或者"&lt;Esc&gt;"来表示。在bash里，转义字符通过如下语法获取
+* \e
+* \033
+* \x1B
+通过man 7 ascii可以看出
+Oct   Dec   Hex   Char           
+------------------------------
+033   27    1B    ESC (escape)
+
+格式：
+    echo -e "\e[XXmString\e[0m"  
+    or
+    echo -e "\033[XXmString\033[0m"
+说明：
+    echo的-e选项是开启解析转义序列
+    "\e[0m"序列是去掉所有颜色输出属性
+    "XX"代表颜色打印控制码
+</code></pre>
+
+<h1>Set Code</h1>
+
+<pre><code>----------------Set----------------
+Code    说明                    
+1       加粗和明亮(Bold/Bright)       
+2       变暗(Dim)
+4       加下划线(Underlined)
+5       闪烁(Blink)
+7       取反(Reverse)，将字体颜色(前景)和背景互换
+8       隐藏(Hidden)，可以用于密码隐藏
+        PS: 密码的隐藏可以 stty -echo后再stty echo
+----------------Reset-------------- 
+Code    说明   # 全部加2    
+0       重置所有属性(Reset all attributes)
+21      重置加粗和明亮(Reset bold/bright)
+22      重置变暗(Reset dim)
+24      重置加下划线(Reset underlined)
+25      重置闪烁(Reset blink)
+27      重置取反(Reset reverse)
+28      重置隐藏(Reset hidden)
+</code></pre>
+
+<h1>Color Code</h1>
+
+<h2>8/16位颜色</h2>
+
+<pre><code>适用大多数terminal
+----------------Foreground--------------        
+Code    说明                    
+39      默认前景颜色(Default foreground color)
+30      黑色(Black)
+31      红色(Red)
+32      绿色(Green)
+33      黄色(Yellow)
+34      蓝色(Blue)
+35      品红(Magenta)
+36      青色(Cyan)
+37      浅灰(Light gray)
+90      深灰(Dark gray)
+91      淡红(Light red)
+92      淡绿(Light green)
+93      淡黄(Light yellow)
+94      淡蓝(Light blue)
+95      淡品红(Light magenta)
+96      淡青(Light cyan)
+97      白色(White)
+----------------Background--------------        
+Code    说明                    
+49      默认背景色(Default background color)
+40      黑色(Black)
+41      红色(Red)
+42      绿色(Green)
+43      黄色(Yellow)
+44      蓝色(Blue)
+45      品红(Magenta)
+46      青色(Cyan)
+47      淡灰(Light gray)
+100      深灰(Dark gray)
+101      淡红(Light red)
+102      淡绿(Light green)
+103      淡黄(Light yellow)
+104      淡蓝(Light blue)
+105      淡品红(Light magenta)
+106      淡青(Light cyan)
+107      白色(White)  
+</code></pre>
+
+<h1>Reference</h1>
+
+<p>译自<a href="http://misc.flogisoft.com/bash/tip_colors_and_formatting">Bash tips: Colors and formatting (ANSI/VT100 Control sequences)</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Shell 条件表达式]]></title>
+    <link href="http://nosea.github.io/blog/2013/10/14/shell-conditional-expression/"/>
+    <updated>2013-10-14T22:40:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/10/14/shell-conditional-expression</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>Shell条件测试
+</code></pre>
+
+<!--more-->
+
+
+<h1>说明</h1>
+
+<pre><code>常用的测试主要有文件状态测试、字符串测试、数值测试
+</code></pre>
+
+<h2>测试表达式</h2>
+
+<pre><code>## 使用"if" + "[]"
+if [ -f /etc/rc.local ]; then
+    echo "OK"
+fi
+## 使用"if" + "test"命令
+if test -f /etc/rc.local; then
+    echo "OK"
+fi
+## 使用"[]" + "&amp;&amp;"
+[ -f /etc/rc.local ] &amp;&amp; echo "OK"
+</code></pre>
+
+<h2>逻辑表达式</h2>
+
+<pre><code>## 测试连接
+-a : 逻辑与
+-o : 逻辑或
+!  : 逻辑非
+## 外部连接
+&amp;&amp; : 逻辑与
+|| : 逻辑或
+eg:
+  [ -z ${MSG} -a -z ${USER} ] &amp;&amp; echo "OK"  
+</code></pre>
+
+<h2>文件状态</h2>
+
+<pre><code>-b FILE
+    文件存在，并且是块文件，返回True
+-c FILE
+    文件存在，并且是字符文件，返回True
+-d FILE
+    文件存在，并且是目，返回True录
+-e FILE
+    文件存在，返回True
+-f FILE
+    文件存在，并且是普通文件，返回True
+-g FILE
+    文件存在，并且是set-group-ID，返回True
+-G FILE
+    文件存在，并且属于有效组ID，返回True
+-h FILE
+    文件存在，并且是软链接(Symbolic Links)，等于-L，返回True
+-k FILE
+    文件存在，并且设置了粘住位，返回True
+-L FILE
+    同-h
+-O FILE
+    文件存在，并且属于有效用户ID，返回True
+-p FILE
+    文件存在，并且是命名管道，返回True
+-r FILE
+    文件存在，并且赋予了读权限，返回True
+-s FILE
+    文件存在，并且文件大小大于0，返回True
+-S FILE
+    文件存在，并且是socket文件，返回True
+-t FD
+    文件描述符在终端中打开，返回True
+-u FILE
+    文件存在，并且set-user-ID位被设置了，返回True
+-w FILE
+    文件存在，并且赋予了写权限，返回True
+-x FILE
+    文件存在，并且赋予了执行(搜索)权限，返回True
+FILE1 -nt FILE2
+    FILE1比FILE2新(根据最新修改时间)，或者FILE1存在，但是FILE2不存在，返回True
+FILE1 -ot FILE2
+    FILE1比FILE2旧，或者FILE2存在而FILE1不存在，返回True
+FILE1 -ef FILE2
+    FILE1和FILE2引用同一个设备或者同一个inode数字，返回True
+</code></pre>
+
+<h2>字符串测试</h2>
+
+<pre><code>-z string
+    字符串的长度为0，返回True
+-n string
+    字符串的长度不为0，返回True
+string1 == string2
+    字符串相等，返回True
+string1 != string2
+    字符串不相等，返回True
+string1 &lt; string2
+    这个比较按照通用字符串比较
+string1 &gt; string2
+    同上
+</code></pre>
+
+<h2>数字测试</h2>
+
+<pre><code>arg1 OP arg2  ##arg1和arg2可以是正负数
+  OP:
+    -eq ## 相等
+    -ne ## 不相等
+    -lt ## 小于
+    -le ## 小于等于
+    -gt ## 大于
+    -ge ## 大于等于
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Shell 命令行参数解析]]></title>
+    <link href="http://nosea.github.io/blog/2013/10/13/command-line-arguments-process-in-shell/"/>
+    <updated>2013-10-13T15:31:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/10/13/command-line-arguments-process-in-shell</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>    命令行参数的处理是最常用的需求，主要处理长选项和短选项
+目前常用的是getopt和getopts
+</code></pre>
+
+<!--more--> 
+
+
+<h1>getopt</h1>
+
+<pre><code class="bash getopt的使用">#!/bin/bash
+:&lt;&lt;EOF
+ $ type getopt
+ getopt is /usr/bin/getopt
+ ## 通过下面的可以看出getopt是外部命令
+
+ 使用:
+   getopt optstring parameters
+   optstring:
+   -o 后跟单个字符的短选项，如-o ab:c::
+      单个字符，表示选项
+      1 后跟一个冒号，表示后面必须紧跟一个参数，选项后或者
+        以空格隔开
+      2 后跟两个冒号，表示后面必须跟一个参数，且不能以空格隔开
+      ############# 在我测试的情况中发现，两个冒号如果没有带参数，并不会报错
+      ############# 但是单个冒号的情况会报错
+
+   --long 后跟长选项，如--long a-long,b-long:,c-long::
+      冒号的说明跟短选项一致
+   -n 出错时的信息
+   -- 作用是让后面的不被解释成选项，因为"$@"带有'-'等参数
+      eg: 比如想touch一个名为“-x”的文件
+         touch -x  ## 这样会出现：touch: invalid option -- 'x'，因为解释成选项了
+         touch -- -x ## 这样就可以了
+         当然，删除也是：rm -- -x
+ ## 下面的例子参照了/usr/share/doc/util-linux/examples/getopt-parse.bash
+EOF
+
+TEMP=$(getopt -o ab:c:: --long along,blong:,clong:: -n 'Error:' -- "$@")
+
+if [ $? != 0 ]; then
+    exit 1
+fi
+# Note the quotes around `$TEMP': they are essential!
+eval set -- "$TEMP"
+
+while true
+do
+    case "$1" in
+    -a|--along)
+        echo "Option a:"
+        shift
+        ;;
+    -b|--blong)
+        echo "Option b: Argument is: $2"
+        shift 2
+        ;;
+    -c|--clong)
+        echo "Option c: argument is: $2"
+        shift 2
+        ;;
+    --)
+        shift
+        break
+        ;;
+    *)
+        echo "Internal error!"
+        exit 1
+    esac
+done
+
+echo "Remaining arguments:"
+for arg
+do
+    echo '--&gt; '"\`$arg'"
+done
+</code></pre>
+
+<h1>getopts</h1>
+
+<pre><code class="bash getopts使用示例">#!/bin/bash
+:&lt;&lt;EOF
+  $ type getopts
+  getopts is a shell builtin
+  ## 从上面可以看出getopts是shell内置的
+  getopts只能处理短选项，使用相对getopt简单点,我把s看成simple
+
+  OPTIND:
+    变量存储$*中下一个要处理的位置，对于没有参数的选项，getopts
+将OPTIND加1，对于有参数的选项，将OPTIND加2
+
+  OPTARG:
+    变量存储选项的参数值
+  eg:
+  -a -b s arg1
+  $#值为4，当
+
+  当getopts遇到一个非选项参数时，会将OPTINT设置为
+这个参数的索引，并且停止解析
+EOF
+
+declare -a NOA ## 声明一个数组，用来存储非选项参数
+
+while [ $# -ne 0 ]
+do
+   OPTIND=0 # 索引为0
+
+   ## 处理选项参数
+   while getopts ":abc:d::" opt
+   do
+       case $opt in
+    a)
+        echo "Option a"
+        ;;
+    b)
+        echo "Option b"
+        ;;     
+    c)
+        echo "Option c: Argument is: $OPTARG"
+        ;;
+    d)
+        echo "Option d: Argument is: $OPTARG"
+        ;;
+    \?)
+        echo "Invalid option: -$OPTARG" &gt;&amp;2
+        exit 1
+        ;;
+    :)
+        echo "Option: -$OPTARG requires an argument." &gt;&amp;2
+        exit 1
+        ;;
+       esac
+   done
+
+   ## 处理非选项参数
+   if [ $OPTIND -ne $(($#+1)) ]
+   then
+       shift $(($OPTIND-1)) ## 把前面的都去掉
+       ## 把参数加入数组
+       NOA=(`echo ${NOA[*]}` $1)
+       shift
+   else
+       break; 
+   fi  
+done
+
+echo "Remaining arguments:"
+for arg in ${NOA[*]}
+do
+    echo '--&gt;' "${arg}"
+done
+</code></pre>
+
+<h1>Reference</h1>
+
+<p><a href="http://www.cnblogs.com/FrankTan/archive/2010/03/01/1634516.html">Bash Shell中命令行选项/参数处理</a>  <br/>
+Thanks!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Shell 多进程]]></title>
+    <link href="http://nosea.github.io/blog/2013/10/12/shell-multiprocess/"/>
+    <updated>2013-10-12T14:50:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/10/12/shell-multiprocess</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>  Shell没有多进程的概念，但是可以通过将任务放在后台以及命名管道实现
+多进程的功能
+</code></pre>
+
+<!--more--> 
+
+
+<h1>后台执行</h1>
+
+<pre><code>进程放在subshell中执行，需要用到()，注意()和{}的区别
+</code></pre>
+
+<pre><code class="bash 不放在后台执行">#!/bin/bash
+
+sub_func()
+{
+    ID=$1
+    echo "Start Process ${ID}..."
+    sleep 3
+    echo "Done Process ${ID}..."
+}
+
+for pid in $(seq 5)
+do
+    sub_func ${pid}
+done
+echo "Done"
+</code></pre>
+
+<pre><code>执行结果如下：
+$ sh test.sh 
+Start Process 1...
+Done Process 1...
+Start Process 2...
+Done Process 2...
+Start Process 3...
+Done Process 3...
+Start Process 4...
+Done Process 4...
+Start Process 5...
+Done Process 5...
+Done
+</code></pre>
+
+<pre><code class="bash 多个同时进行">#!/bin/bash
+
+sub_func()
+{
+    ID=$1
+    echo "Start Process ${ID}..."
+    sleep 3
+    echo "Done Process ${ID}..."
+}
+
+for pid in $(seq 5)
+do
+    sub_func ${pid}
+done
+wait  ## wait的作用是等待所有子进程都执行完了再执行下面的语句
+echo "Done"
+</code></pre>
+
+<pre><code>执行结果如下
+$ sh test.sh 
+Start Process 1...
+Start Process 3...
+Start Process 4...
+Start Process 5...
+Start Process 2...
+Done Process 4...
+Done Process 3...
+Done Process 2...
+Done Process 5...
+Done Process 1...
+Done
+</code></pre>
+
+<h1>进程间的通信</h1>
+
+<pre><code>子进程和父进程之间的通信可以通过命名管道(FIFO)来实现.
+</code></pre>
+
+<pre><code class="bash 通信示例">#!/bin/bash
+
+sub_func()
+{
+    ID=$1
+    sleep 3
+    echo "Start Process ${ID}..."
+    sleep 2
+    echo "Done Process ${ID}..."
+}
+
+FIFO_FILE=./test.$$.fifo
+mkfifo ${FIFO_FILE}
+for pid in $(seq 5)
+do
+    (
+    sub_func ${pid} &gt; ${FIFO_FILE} 2&gt;&amp;1;
+    )&amp;
+done
+echo "Start Read FIFO..."
+while read line
+do
+    echo $line
+done &lt; ${FIFO_FILE}
+echo "Done Read FIFO..."
+rm -r ${FIFO_FILE}
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

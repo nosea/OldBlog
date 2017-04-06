@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Windows | My Octopress Blog]]></title>
+  <link href="http://nosea.github.io/blog/categories/windows/atom.xml" rel="self"/>
+  <link href="http://nosea.github.io/"/>
+  <updated>2017-04-06T15:21:27+00:00</updated>
+  <id>http://nosea.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[修复win7的引导]]></title>
+    <link href="http://nosea.github.io/blog/2015/01/25/fix-windows-7-bootmbr/"/>
+    <updated>2015-01-25T14:47:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2015/01/25/fix-windows-7-bootmbr</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>案例：装有双系统(win7 和 Linux)，其中引导由linux得grub引导，且win7和linux的引导
+分别在不同的磁盘分区，如果删除了Linux， 如何修复win7的mbr引导
+</code></pre>
+
+<!-- more -->
+
+
+<h1>Content</h1>
+
+<pre><code>正常情况下:
+1、制作一个win7的启动U盘，或者PE也行，进入修复界面，启动cmd窗口
+bootrec /fixmbr     //执行这个即可修复
+
+2、如果还是不行，比如出现了"找不到元素", 执行下面的命令
+Diskpart
+LIST DISK
+SELECT DISK (followed by the number of the disk . most likely 0)
+LIST PARTITION
+SELECT PARTITION (followed by your partition number. most likely 0)
+ACTIVE
+EXIT
+
+Windows startup recovery should now work.
+</code></pre>
+
+<h1>Reference</h1>
+
+<p><a href="https://social.technet.microsoft.com/Forums/zh-CN/7791044e-db7f-4144-a96c-945299811f58/bootmgr-not-found-bootrec-rebuildbcd-and-fixboot-give-element-not-found-error">bootmgr not found. bootrec /rebuildbcd and /fixboot give &lsquo;Element not found" error</a></p>
+]]></content>
+  </entry>
+  
+</feed>

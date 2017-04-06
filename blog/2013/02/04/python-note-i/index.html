@@ -1,0 +1,456 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Python Note I - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Introduction Dictionary, List, Tuple Dictionary 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+&gt;&gt;&gt; d = {&#39;name&#39;:&#39;Tom &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nosea.github.io/blog/2013/02/04/python-note-i/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="nosea.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Python Note I</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-02-04T15:10:00+00:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>3:10 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>Introduction</h1>
+
+<pre><code>Dictionary, List, Tuple
+</code></pre>
+
+<!--more-->
+
+
+<h1>Dictionary</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span><span class="s">&#39;Tom&#39;</span><span class="p">,</span> <span class="s">&#39;age&#39;</span><span class="p">:</span><span class="mi">16</span><span class="p">}</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span>
+</span><span class='line'><span class="p">{</span><span class="s">&#39;age&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;Tom&#39;</span><span class="p">}</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;age&#39;</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+</span><span class='line'><span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="s">&#39;Tom&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+</span><span class='line'><span class="p">[(</span><span class="s">&#39;age&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;Tom&#39;</span><span class="p">)]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="s">&#39;Tom&#39;</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;Tony&#39;</span> <span class="c"># 修改值</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span>
+</span><span class='line'><span class="p">{</span><span class="s">&#39;age&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;Tony&#39;</span><span class="p">}</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span><span class="p">[</span><span class="s">&#39;gender&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;male&#39;</span> <span class="c"># 添加</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span>
+</span><span class='line'><span class="p">{</span><span class="s">&#39;gender&#39;</span><span class="p">:</span> <span class="s">&#39;male&#39;</span><span class="p">,</span> <span class="s">&#39;age&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;Tony&#39;</span><span class="p">}</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="k">del</span> <span class="n">d</span><span class="p">[</span><span class="s">&#39;age&#39;</span><span class="p">]</span> <span class="c"># 删除一个key-value</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span>
+</span><span class='line'><span class="p">{</span><span class="s">&#39;gender&#39;</span><span class="p">:</span> <span class="s">&#39;male&#39;</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">:</span> <span class="s">&#39;Tony&#39;</span><span class="p">}</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span> <span class="c"># 清除所有key-value</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">d</span>
+</span><span class='line'><span class="p">{}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<h1>List</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;mom&#39;</span><span class="p">,</span> <span class="s">&#39;dad&#39;</span><span class="p">,</span> <span class="s">&#39;son&#39;</span><span class="p">,</span> <span class="s">&#39;sky&#39;</span><span class="p">,</span> <span class="s">&#39;blue&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;mom&#39;</span><span class="p">,</span> <span class="s">&#39;dad&#39;</span><span class="p">,</span> <span class="s">&#39;son&#39;</span><span class="p">,</span> <span class="s">&#39;sky&#39;</span><span class="p">,</span> <span class="s">&#39;blue&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'><span class="s">&#39;mom&#39;</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span><span class='line'><span class="s">&#39;blue&#39;</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;dad&#39;</span><span class="p">,</span> <span class="s">&#39;son&#39;</span><span class="p">,</span> <span class="s">&#39;sky&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;mom&#39;</span><span class="p">,</span> <span class="s">&#39;dad&#39;</span><span class="p">,</span> <span class="s">&#39;son&#39;</span><span class="p">,</span> <span class="s">&#39;sky&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;dad&#39;</span><span class="p">,</span> <span class="s">&#39;son&#39;</span><span class="p">,</span> <span class="s">&#39;sky&#39;</span><span class="p">,</span> <span class="s">&#39;blue&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span><span class="p">[:]</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;mom&#39;</span><span class="p">,</span> <span class="s">&#39;dad&#39;</span><span class="p">,</span> <span class="s">&#39;son&#39;</span><span class="p">,</span> <span class="s">&#39;sky&#39;</span><span class="p">,</span> <span class="s">&#39;blue&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;new&#39;</span><span class="p">)</span> <span class="c"># 在末尾追加</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;mom&#39;</span><span class="p">,</span> <span class="s">&#39;dad&#39;</span><span class="p">,</span> <span class="s">&#39;son&#39;</span><span class="p">,</span> <span class="s">&#39;sky&#39;</span><span class="p">,</span> <span class="s">&#39;blue&#39;</span><span class="p">,</span> <span class="s">&#39;new&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">18</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;mom&#39;</span><span class="p">,</span> <span class="s">&#39;dad&#39;</span><span class="p">,</span> <span class="s">&#39;son&#39;</span><span class="p">,</span> <span class="s">&#39;sky&#39;</span><span class="p">,</span> <span class="s">&#39;blue&#39;</span><span class="p">,</span> <span class="s">&#39;new&#39;</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;boy&#39;</span><span class="p">)</span> <span class="c"># 在任意位置插入</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;mom&#39;</span><span class="p">,</span> <span class="s">&#39;dad&#39;</span><span class="p">,</span> <span class="s">&#39;boy&#39;</span><span class="p">,</span> <span class="s">&#39;son&#39;</span><span class="p">,</span> <span class="s">&#39;sky&#39;</span><span class="p">,</span> <span class="s">&#39;blue&#39;</span><span class="p">,</span> <span class="s">&#39;new&#39;</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">si</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;tiny&#39;</span><span class="p">,</span> <span class="s">&#39;huge&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">si</span><span class="p">)</span> <span class="c"># 扩展(连接一个list)</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;mom&#39;</span><span class="p">,</span> <span class="s">&#39;dad&#39;</span><span class="p">,</span> <span class="s">&#39;boy&#39;</span><span class="p">,</span> <span class="s">&#39;son&#39;</span><span class="p">,</span> <span class="s">&#39;sky&#39;</span><span class="p">,</span> <span class="s">&#39;blue&#39;</span><span class="p">,</span> <span class="s">&#39;new&#39;</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&#39;tiny&#39;</span><span class="p">,</span> <span class="s">&#39;huge&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&#39;tiny&#39;</span><span class="p">)</span> <span class="c"># 删除一个值(若有相同值，仅删除首次出现)</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;mom&#39;</span><span class="p">,</span> <span class="s">&#39;dad&#39;</span><span class="p">,</span> <span class="s">&#39;boy&#39;</span><span class="p">,</span> <span class="s">&#39;son&#39;</span><span class="p">,</span> <span class="s">&#39;sky&#39;</span><span class="p">,</span> <span class="s">&#39;blue&#39;</span><span class="p">,</span> <span class="s">&#39;new&#39;</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="s">&#39;huge&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span> <span class="c"># 删除最后一个元素，并返回其值</span>
+</span><span class='line'><span class="s">&#39;huge&#39;</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;mom&#39;</span><span class="p">,</span> <span class="s">&#39;dad&#39;</span><span class="p">,</span> <span class="s">&#39;boy&#39;</span><span class="p">,</span> <span class="s">&#39;son&#39;</span><span class="p">,</span> <span class="s">&#39;sky&#39;</span><span class="p">,</span> <span class="s">&#39;blue&#39;</span><span class="p">,</span> <span class="s">&#39;new&#39;</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">20</span> <span class="c"># 修改值</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;mom&#39;</span><span class="p">,</span> <span class="s">&#39;dad&#39;</span><span class="p">,</span> <span class="s">&#39;boy&#39;</span><span class="p">,</span> <span class="s">&#39;son&#39;</span><span class="p">,</span> <span class="s">&#39;sky&#39;</span><span class="p">,</span> <span class="s">&#39;blue&#39;</span><span class="p">,</span> <span class="s">&#39;new&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;mom&#39;</span><span class="p">,</span> <span class="s">&#39;dad&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;mom&#39;</span><span class="p">,</span> <span class="s">&#39;dad&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span> <span class="o">=</span> <span class="n">li</span> <span class="o">+</span> <span class="n">si</span> <span class="c"># 约等于 li.extend(si)，但&#39;+&#39;返回新list，而extend修改原值</span>
+</span><span class='line'>                 <span class="c"># 因此对于大型list，extend速度快于&#39;+&#39;</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;mom&#39;</span><span class="p">,</span> <span class="s">&#39;dad&#39;</span><span class="p">,</span> <span class="s">&#39;tiny&#39;</span><span class="p">,</span> <span class="s">&#39;huge&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s">&#39;mom&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="mi">0</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="s">&#39;dad&#39;</span> <span class="ow">in</span> <span class="n">li</span>
+</span><span class='line'><span class="bp">True</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span> <span class="o">+=</span> <span class="p">[</span><span class="s">&#39;small&#39;</span><span class="p">,</span> <span class="s">&#39;large&#39;</span><span class="p">]</span> <span class="c"># &#39;+=&#39; 等同于extend</span>
+</span><span class='line'>                             <span class="c"># &#39;+=&#39; 可用于string list 数字 和用户自定义类</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;mom&#39;</span><span class="p">,</span> <span class="s">&#39;dad&#39;</span><span class="p">,</span> <span class="s">&#39;tiny&#39;</span><span class="p">,</span> <span class="s">&#39;huge&#39;</span><span class="p">,</span> <span class="s">&#39;small&#39;</span><span class="p">,</span> <span class="s">&#39;large&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span> <span class="c"># 等同于 li = [1, 2] + [1, 2]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>Tuple</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">tu</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">tu</span>
+</span><span class='line'><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">tu</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'><span class="mi">1</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">tu</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span><span class='line'><span class="mi">5</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">tu</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+</span><span class='line'><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="mi">2</span> <span class="ow">in</span> <span class="n">tu</span>
+</span><span class='line'><span class="bp">True</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>List Tuple 相互转换</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">tu</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">tu</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">li</span>
+</span><span class='line'><span class="p">[</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">tu</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">li</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">tu</span>
+</span><span class='line'><span class="p">(</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="s">&#39;d&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2013-02-04T15:10:00+00:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>3:10 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/python/'>python</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://nosea.github.io/blog/2013/02/04/python-note-i/" data-via="" data-counturl="http://nosea.github.io/blog/2013/02/04/python-note-i/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/02/02/python-docstring/" title="Previous Post: python docstring">&laquo; python docstring</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/03/25/emacs-summary/" title="Next Post: emacs summary">emacs summary &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-propertytree/">Boost PropertyTree</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-filesystem/">Boost Filesystem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/tools-eclipse/">Eclipse 相关</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/boost-program-options/">Boost Program Options</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/fix-windows-7-bootmbr/">修复win7的引导</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux命令rsync - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Introduction rsync —— remote sync 说明 rsync通常有两种方式：
+1、通过远程shell(ssh、rsh) Pull: rsync [OPTION...] [USER@]HOST:SRC... [DEST] Push: rsync [OPTION...] SRC &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nosea.github.io/blog/2013/10/31/linux-command-rsync/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="nosea.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Linux命令rsync</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-10-31T22:21:00+00:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2013</span></span> <span class='time'>10:21 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>Introduction</h1>
+
+<pre><code>rsync —— remote sync
+</code></pre>
+
+<!--more--> 
+
+
+<h1>说明</h1>
+
+<pre><code>rsync通常有两种方式：
+1、通过远程shell(ssh、rsh)
+    Pull: rsync [OPTION...] [USER@]HOST:SRC... [DEST]
+    Push: rsync [OPTION...] SRC... [USER@]HOST:DEST
+2、通过rsync daemon：
+    Pull: rsync [OPTION...] [USER@]HOST::SRC... [DEST]
+        rsync [OPTION...] rsync://[USER@]HOST[:PORT]/SRC... [DEST]
+    Push: rsync [OPTION...] SRC... [USER@]HOST::DEST
+        rsync [OPTION...] SRC... rsync://[USER@]HOST[:PORT]/DEST
+</code></pre>
+
+<h2>选项</h2>
+
+<pre><code>如下几个选项是常用的:
+-q, --quiet                 suppress non-error messages
+-a, --archive               archive mode; equals -rlptgoD (no -H,-A,-X)
+                            -a &lt;==&gt; -rlptgoD就能满足绝大多数需求
+-r, --recursive             recurse into directories
+-t, --times                 preserve modification times
+-z, --compress              compress file data during the transfer
+-e, --rsh=COMMAND           specify the remote shell to use
+--delete                    delete extraneous files from dest dirs
+--progress                  show progress during transfer
+--bwlimit=KBPS              limit socket I/O bandwidth
+</code></pre>
+
+<h2>远程shell方式</h2>
+
+<pre><code>一、push
+1、镜像
+    rsync -az --delete -e "ssh -l tommy -p 22" /home/tommy/srcfile 192.168.1.2:/home/danny/
+or:
+    rsync -az --delete /home/tommy/srcfile tommy@192.168.1.2:/home/danny/
+注意：如果srcfile是文件夹，记住不能加"/"
+
+2、增量同步
+    rsync -az -e "ssh -l tommy -p 22" /home/tommy/srcfile 192.168.1.2:/home/danny/
+or:
+    rsync -az /home/tommy/srcfile tommy@192.168.1.2:/home/danny/
+
+二、pull
+1、镜像
+    rsync -az --delete -e "ssh -l danny -p 22" 192.168.1.1:/home/tommy/srcfile /home/danny/
+or:
+    rsync -az --delete danny@192.168.1.1:/home/tommy/srcfile /home/danny/
+注意：如果srcfile是文件夹，记住不能加"/"
+
+2、增量同步
+    rsync -az -e "ssh -l danny -p 22" 192.168.1.1:/home/tommy/srcfile /home/danny/
+or:
+    rsync -az danny@192.168.1.1:/home/tommy/srcfile /home/danny/
+</code></pre>
+
+<h2>Tips</h2>
+
+<pre><code>1、镜像test目录，但是想排除test目录里的log目录
+    rsync -az --delete --exclude='test/log' test danny@192.168.8.2:/home/danny/  
+2、传输过程中限速500K/s
+    rsync -az --delete --exclude='test/log' --bwlimit=500 test danny@192.168.8.2:/home/danny/  
+</code></pre>
+
+<h1>Reference</h1>
+
+<p><a href="http://haili.me/archives/638.html">Rsync使用注意事项</a>  <br/>
+Thanks!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2013-10-31T22:21:00+00:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2013</span></span> <span class='time'>10:21 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>linux</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://nosea.github.io/blog/2013/10/31/linux-command-rsync/" data-via="" data-counturl="http://nosea.github.io/blog/2013/10/31/linux-command-rsync/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/10/20/linux-command-iwconfig/" title="Previous Post: Linux命令iwconfig">&laquo; Linux命令iwconfig</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/11/02/raid/" title="Next Post: Raid">Raid &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-propertytree/">Boost PropertyTree</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-filesystem/">Boost Filesystem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/tools-eclipse/">Eclipse 相关</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/boost-program-options/">Boost Program Options</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/fix-windows-7-bootmbr/">修复win7的引导</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

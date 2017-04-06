@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Mysql | My Octopress Blog]]></title>
+  <link href="http://nosea.github.io/blog/categories/mysql/atom.xml" rel="self"/>
+  <link href="http://nosea.github.io/"/>
+  <updated>2017-04-06T15:21:27+00:00</updated>
+  <id>http://nosea.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[MySQL Skills]]></title>
+    <link href="http://nosea.github.io/blog/2013/12/08/mysql-skills/"/>
+    <updated>2013-12-08T11:02:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/12/08/mysql-skills</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>纯记录
+</code></pre>
+
+<!--more--> 
+
+
+<h1>Content</h1>
+
+<pre><code>1、对一个网段赋权限
+  grant all privileges on testdb.* to 'testuser'@'192.168.1.%'  identified by 'test123';
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Mysql Statistical Analysis Exercise]]></title>
+    <link href="http://nosea.github.io/blog/2013/04/17/mysql-statistical-analysis-exercise/"/>
+    <updated>2013-04-17T10:26:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/04/17/mysql-statistical-analysis-exercise</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>MySQL查询练习题
+</code></pre>
+
+<!--more--> 
+
+
+<h1>Content</h1>
+
+<h2>第一题</h2>
+
+<pre><code>I:环境准备
+  $ mysql -h localhost -u root -p
+
+  mysql&gt; CREATE DATABASE learn DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+  Query OK, 1 row affected (0.00 sec)
+
+  mysql&gt; grant all privileges on learn.* to 'tiger'@'localhost' 
+      -&gt; identified by '123456' with grant option;
+  Query OK, 0 rows affected (0.00 sec)
+
+  mysql&gt; select * from mysql.user \G;
+
+  mysql&gt; flush privileges;
+  Query OK, 0 rows affected (0.00 sec)
+
+  $ mysql -u tiger -p
+
+  mysql&gt; show databases;
+  +--------------------+
+  | Database           |
+  +--------------------+
+  | information_schema |
+  | learn              |
+  | test               |
+  +--------------------+
+  3 rows in set (0.00 sec)
+
+  mysql&gt; use learn;
+  Database changed
+  mysql&gt; show tables;
+  Empty set (0.00 sec)
+
+  mysql&gt; create table event(
+      -&gt; event_time date,
+      -&gt; type int(11),
+    -&gt; uid int(11),
+    -&gt; score int(11));
+  Query OK, 0 rows affected (0.19 sec)
+
+  mysql&gt; show tables;
+  +-----------------+
+  | Tables_in_learn |
+  +-----------------+
+  | event           |
+  +-----------------+
+  1 row in set (0.01 sec)
+
+  mysql&gt; load data local infile 'data1.txt' into table event;
+  ERROR 1148 (42000): The used command is not allowed with this MySQL version
+
+  $ mysql -u tiger -p --local-infile=1
+
+  mysql&gt; load data local infile 'data1.txt' into table event;
+  Query OK, 30 rows affected (0.08 sec)
+  Records: 30  Deleted: 0  Skipped: 0  Warnings: 0
+
+  mysql&gt; select * from event limit 3;
+  +------------+------+------+-------+
+  | event_time | type | uid  | score |
+  +------------+------+------+-------+
+  | 2013-04-01 |    1 | 2344 |    34 |
+  | 2013-04-02 |    2 | 2122 |    21 |
+  | 2013-04-03 |    3 | 6744 |     9 |
+  +------------+------+------+-------+
+  3 rows in set (0.00 sec)
+
+  mysql&gt; create table work(test_time date, test_type int(11), uid int(11));
+  Query OK, 0 rows affected (0.16 sec)
+
+  mysql&gt; load data local infile 'data2.txt' into table work;
+  Query OK, 35 rows affected (0.08 sec)
+  Records: 35  Deleted: 0  Skipped: 0  Warnings: 0
+
+  mysql&gt; select * from work limit 3;
+  +------------+-----------+------+
+  | test_time  | test_type | uid  |
+  +------------+-----------+------+
+  | 2013-04-01 |        12 | 2344 |
+  | 2014-04-01 |        13 | 2122 |
+  | 2014-04-02 |        14 | 6744 |
+  +------------+-----------+------+
+  3 rows in set (0.00 sec)
+
+
+II:说明
+  event表里存放事件发生时间， 发生的种类，user的id，以及user的分数
+  work表里存放测试时间，测试类型的编号，user的id
+  题目: 
+    1.在event表里找出4月4号到4月29号的user，统计他们发生event的次数以及总的分数(score),和
+    socre的最大值
+
+    mysql&gt; select uid as '用户', count(*) as '事件发生次数',
+        -&gt; sum(score) as '总成绩', max(score) as '最高分'
+        -&gt; from event where event_time &gt;= '2013-04-04' &amp;&amp;
+        -&gt; event_time &lt;= '2013-04-29' group by uid;
+    +--------+--------------------+-----------+-----------+
+    | 用户   | 事件发生次数       | 总成绩    | 最高分    |
+    +--------+--------------------+-----------+-----------+
+    |   2122 |                  3 |        44 |        23 |
+    |   2123 |                  1 |        23 |        23 |
+    |   2134 |                  1 |        45 |        45 |
+    |   2189 |                  2 |       159 |        87 |
+    |   2342 |                  1 |        24 |        24 |
+    |   2344 |                  5 |        84 |        34 |
+    |   3111 |                  1 |        23 |        23 |
+    |   3211 |                  2 |       281 |       272 |
+    |   3232 |                  1 |        76 |        76 |
+    |   3412 |                  1 |        21 |        21 |
+    |   3444 |                  1 |        32 |        32 |
+    |   4522 |                  3 |        75 |        45 |
+    |   5422 |                  1 |        65 |        65 |
+    |   6522 |                  1 |        76 |        76 |
+    |   6744 |                  2 |        24 |        22 |
+    +--------+--------------------+-----------+-----------+
+    15 rows in set (0.00 sec)
+
+  2.在event表里找出4月4号到4月29号的user，统计他们发生event的次数以及总的分数(score),和
+    socre的最大值，以及这个user在work表里这段时间参加test为11，12的次数
+
+
+    mysql&gt; select event.uid as '用户', count(*) as '事件发生次数', 
+        -&gt; sum(event.score) as '总成绩', max(event.score) as '最高分', 
+        -&gt; count(case when  work.test_type = 11 then 1 else NULL end) as 'TEST11次数', 
+        -&gt; count(case when work.test_type = 12 then 1 else NULL end) as 'TEST12次数'  
+        -&gt; from event left join work on event.uid = work.uid where 
+        -&gt; event.event_time &gt;= '2013-04-04' &amp;&amp; event.event_time &lt;= '2013-04-29' 
+        -&gt; group by event.uid;
+    +--------+--------------------+-----------+-----------+--------------+--------------+
+    | 用户   | 事件发生次数       | 总成绩    | 最高分    | TEST11次数   | TEST12次数   |
+    +--------+--------------------+-----------+-----------+--------------+--------------+
+    |   2122 |                  9 |       132 |        23 |            0 |            0 |
+    |   2123 |                  1 |        23 |        23 |            0 |            1 |
+    |   2134 |                  1 |        45 |        45 |            0 |            1 |
+    |   2189 |                  4 |       318 |        87 |            0 |            2 |
+    |   2342 |                  1 |        24 |        24 |            0 |            1 |
+    |   2344 |                 25 |       420 |        34 |            5 |            5 |
+    |   3111 |                  1 |        23 |        23 |            0 |            0 |
+    |   3211 |                  2 |       281 |       272 |            0 |            0 |
+    |   3232 |                  1 |        76 |        76 |            0 |            0 |
+    |   3412 |                  1 |        21 |        21 |            0 |            0 |
+    |   3444 |                  1 |        32 |        32 |            0 |            0 |
+    |   4522 |                  9 |       225 |        45 |            0 |            3 |
+    |   5422 |                  1 |        65 |        65 |            0 |            0 |
+    |   6522 |                  1 |        76 |        76 |            0 |            1 |
+    |   6744 |                  4 |        48 |        22 |            0 |            0 |
+    +--------+--------------------+-----------+-----------+--------------+--------------+
+    15 rows in set (0.00 sec)
+</code></pre>
+
+<h2>第一题数据</h2>
+
+<pre><code>#===========data2.txt========       ===============data1.txt=========
+2013-04-01      12      2344   |    2013-04-01      1       2344    34
+2014-04-01      13      2122   |    2013-04-02      2       2122    21
+2014-04-02      14      6744   |    2013-04-03      3       6744    09
+2014-04-02      14      2344   |    2013-04-04      2       2344    11
+2014-04-03      15      3214   |    2013-04-05      2       3211    9
+2014-04-03      12      2384   |    2013-04-06      3       2344    7
+2014-04-03      15      6744   |    2013-04-07      2       6744    2
+2014-04-06      16      2142   |    2013-04-08      1       2122    4
+2014-04-09      18      2344   |    2013-04-09      4       2344    10
+2014-04-11      15      4522   |    2013-04-10      5       4522    12
+2014-04-11      13      2122   |    2013-04-11      1       2122    17
+2014-04-14      12      4522   |    2013-04-12      3       4522    18
+2014-04-15      11      2344   |    2013-04-13      2       2344    34
+2014-04-18      12      6774   |    2013-04-14      1       6744    22
+2014-04-18      12      2189   |    2013-04-15      5       2189    87
+2014-04-19      14      5422   |    2013-04-16      3       5422    65
+2014-04-19      16      4522   |    2013-04-17      4       4522    45
+2014-04-22      17      2189   |    2013-04-18      1       2189    72
+2014-04-24      13      3211   |    2013-04-19      2       3211    272
+2014-04-24      12      2134   |    2013-04-20      3       2134    45
+2014-04-25      16      2344   |    2013-04-21      8       2344    22
+2014-04-25      18      3111   |    2013-04-22      9       3111    23
+2014-04-28      15      3432   |    2013-04-23      6       3232    76
+2014-04-28      13      3412   |    2013-04-24      1       3412    21
+2014-04-29      12      2123   |    2013-04-25      4       2123    23
+2014-04-30      14      2122   |    2013-04-26      5       2122    23
+2014-04-30      12      6522   |    2013-04-27      6       6522    76
+2014-04-30      16      2242   |    2013-04-28      3       2342    24
+2014-04-30      17      3444   |    2013-04-29      5       3444    32
+2014-05-01      12      2342   |    2013-04-30      2       2342    23
+2014-05-02      14      4834   |
+2014-05-02      18      8379   |
+2014-05-03      13      8373   |
+2014-05-04      19      2277   |
+2014-05-04      16      8631   |
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Mysql Basic]]></title>
+    <link href="http://nosea.github.io/blog/2013/04/08/mysql-basic/"/>
+    <updated>2013-04-08T15:31:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/04/08/mysql-basic</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>MySQL 笔记
+</code></pre>
+
+<!--more--> 
+
+
+<h1>Content</h1>
+
+<h2>速览</h2>
+
+<pre><code>mysql&gt; show databases; # 显示数据库
+mysql&gt; create database temptest; # 创建数据库
+mysql&gt; create database game default character set utf8 collate utf8_general_ci;
+mysql&gt; use temptest; # 使用数据库
+mysql&gt; drop database temptest; # 删除数据库
+mysql&gt; show tables; # 有多少个表
+mysql&gt; describe table_name; # 显示表结构
+mysql&gt; select version(); # 显示MySQL版本
+mysql&gt; select current_date, current_time; # 显示当前日期和时间
+mysql&gt; insert into mysql.user(host,user,password)values("localhost","username",password("your passwd"));
+       # 如果要新建一个用户，可以不用insert，直接grant一个用户适合的权限，然后mysql.user表里会添加这个
+       # 用户，如果赋予权限有指定的数据库，那么这个数据库如果没有创建，这个user可以自己去创建
+
+mysql&gt; flush privileges; # 刷新
+mysql&gt; grant all privileges on db_name.* to username@localhost identified by 'user_pass';
+       # 关键是"username@localhost" 要当成一个整体来看
+       # grant 与 on之间的是各种权限，如insert, select, update
+       # on 之后是数据库和表名
+       # @之后的ip是登录ip，这里设置的是localhost，那么只能通过本地登录        
+mysql&gt; grant all privileges on *.* to 'username'@'%' identified by 'user_pass';
+       # 这个就是任何ip都可以登录了
+# REVOKE privileges ON 数据库名[.表名] FROM user_name[@ip]
+mysql&gt; revoke all privileges on *.* from username@xx;
+mysql&gt; delete from user where user="username" and host="hostname";
+mysql&gt; alter table 原表名 rename 要修改的表名; # 修改表名
+$ mysqldump -h localhost -u username -p dbname &gt; dbbackup.sql # 备份数据库
+$ mysqldump -h localhost -u username -p dbname &lt; dbbackup.sql # 恢复数据库，前提先建好数据库
+</code></pre>
+
+<h2>远程访问</h2>
+
+<pre><code>1、查看3306端口状态
+$ netstat -an | grep 3306
+tcp        0      0 127.0.0.1:3306            0.0.0.0:*               LISTEN 
+# 3306只在127.0.0.1上可以访问
+2、修改/etc/mysql/my.cnf
+将"bind-address  = 127.0.0.1" 注释掉或者ip填成其他的ip，这里注释掉
+3、重启mysqld服务，再次查看
+$ netstat -an | grep 3306
+tcp        0      0 0.0.0.0:3306            0.0.0.0:*               LISTEN
+</code></pre>
+
+<h2>使用</h2>
+
+<pre><code>1、连接服务器
+shell&gt; mysql -h host -u user -p # host和user分别代表MySQL服务器运行的主机名和MySQL账户用户名
+Enter password: ********
+2、退出服务器
+mysql&gt; QUIT   # &lt;=&gt; Ctrl+d 
+3、MySQL当前版本和当前日期
+mysql&gt; SELECT VERSION(), CURRENT_DATE;   # 还有函数now()
+4、将mysql用作一个简单的计算器
+mysql&gt; SELECT SIN(PI()/4), (4+1)*5;
+5、\c可以取消正在输入过程中的命令
+6、test数据库存在，尝试访问它
+mysql&gt; USE test # USE，类似QUIT，不需要一个分号,当然，加了也没错
+</code></pre>
+
+<h2>查询</h2>
+
+<pre><code>1、Unix时间戳和日期的相互转换
+  mysql&gt; select now();
+  +---------------------+
+  | now()               |
+  +---------------------+
+  | 2013-04-22 14:52:04 |
+  +---------------------+
+  1 row in set (0.00 sec)
+
+  日期转换为UNIX时间戳用函数： UNIX_TIMESTAMP()
+  mysql&gt; SELECT UNIX_TIMESTAMP(NOW());
+  +-----------------------+
+  | UNIX_TIMESTAMP(NOW()) |
+  +-----------------------+
+  |            1366613937 |
+  +-----------------------+
+  1 row in set (0.00 sec)
+
+  UNIX时间戳转换为日期用函数： FROM_UNIXTIME()
+  mysql&gt; SELECT FROM_UNIXTIME(1366614028);
+  +---------------------------+
+  | FROM_UNIXTIME(1366614028) |
+  +---------------------------+
+  | 2013-04-22 15:00:28       |
+  +---------------------------+
+  1 row in set (0.00 sec)
+</code></pre>
+
+<h2>ERROR</h2>
+
+<pre><code>1、ERROR 1148 (42000): The used command is not allowed with this MySQL version
+   mysql -u user -p --local-infile your_database
+</code></pre>
+
+<h1>Reference</h1>
+
+<p>MySQL 5.1官方简体中文参考手册  <br/>
+Thanks!</p>
+]]></content>
+  </entry>
+  
+</feed>

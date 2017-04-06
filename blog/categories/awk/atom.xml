@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Awk | My Octopress Blog]]></title>
+  <link href="http://nosea.github.io/blog/categories/awk/atom.xml" rel="self"/>
+  <link href="http://nosea.github.io/"/>
+  <updated>2017-04-06T15:21:27+00:00</updated>
+  <id>http://nosea.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Awk常用函数]]></title>
+    <link href="http://nosea.github.io/blog/2013/11/24/awk-funclib/"/>
+    <updated>2013-11-24T14:52:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/11/24/awk-funclib</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>收集些我觉得有用的函数
+</code></pre>
+
+<!--more--> 
+
+
+<h1>Content</h1>
+
+<pre><code class="awk">#!/usr/bin/awk -f
+
+############################################################
+# description: print column sums
+# parameter:
+#     filename: the file to be processed
+#     sum: Local variable
+#     maxln: Local variables
+# return value: None
+############################################################
+function sum_col(filename, sum, maxln)
+{
+    while (getline &lt; filename &gt; 0)
+    {
+    for (i=1; i&lt;=NF; i++)
+        sum[i] += $i
+    if (NF &gt; maxln)
+        maxln = NF
+    }
+
+    for (i=1; i&lt;=maxln;  i++)
+        printf("%d ", sum[i]);
+    print ""
+    close(filename)
+}
+############################################################
+# description: print row sums
+# parameter:
+#     filename: the file to be processed
+#     sum: Local variable
+#     maxln: Local variables
+# return value: None
+############################################################
+function sum_row(filename, sum, N)
+{
+    while (getline &lt; filename &gt; 0)
+    {
+    N++
+    for (i=1; i&lt;=NF; i++)
+        sum[N] += $i
+    }
+    for(i=1; i&lt;=N; i++)
+    printf("row %d: %d\n", i, sum[i]);
+    close(filename)
+}
+
+
+function isnum(n)
+{
+    # Note: in awk, xx.0 &lt;=&gt; xx
+    # so, '4.0' will be automatically transformed '4'
+    return n ~ /^[+-]?[0-9]+$/
+}
+
+
+function isdecnum(n)
+{
+    return n ~ /^[+-]?[0-9]+[.]?[0-9]*$/
+}
+
+
+function isfloatnum(n)
+{
+    return n ~ /^[+-]?([0-9]+[.]?[0-9]*|[.][0-9]+)([eE][+-]?[0-9]+)?$/
+}
+
+BEGIN {
+    testfile = "data"
+    sum_col(testfile)
+    sum_row(testfile)
+
+    print isnum(45.0)
+    print isnum(-45.01)
+    print isdecnum(-45.234)
+    print isfloatnum(-42.2e8)
+}
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Awk Skills]]></title>
+    <link href="http://nosea.github.io/blog/2013/03/26/awk-skills/"/>
+    <updated>2013-03-26T16:50:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/03/26/awk-skills</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>Awk 常用技巧
+</code></pre>
+
+<!--more-->
+
+
+<h1>Content</h1>
+
+<h2>One-liners</h2>
+
+<pre><code>1、打印行数
+    END {print NR}
+2、打印第N行
+    NR == N
+3、打印每行的最后一个Field
+    {print $NF}
+4、打印最后一行的最后一个Field
+    {field = $NF}
+    END {print field}
+5、打印超过4个field的行
+    NF &gt; 4
+6、打印最后一个field大于4的行
+    $NF &gt; 4
+7、统计所有field的个数
+    {nf = nf + NF}
+    END {print nf}
+8、统计包含xxx的行数
+    /xxx/ {nlines = nlines + 1}
+    END {print nlines}
+9、打印第一个field最大的field和它所在的行(假设$1有大于0的行)
+    $1 &gt; max {max = $1; maxline = $0}
+    END {print max, maxline}
+10、打印至少有一个field的行
+    NF &gt; 0
+11、打印超过80个字符的行
+    length($0) &gt; 80
+12、打印field个数和行
+    {print NF, $0}
+13、打印头两个field，逆序
+    {print $2, $1}
+14、交换每行的头两个field，然后打印行
+    {temp = $1; $1 = $2; $2 = temp; print}
+15、将第一个field替换为行号，然后打印
+    {$1 = NR; print}
+16、将第二个field清空，然后打印
+    {$2 = ""; print}
+17、将每行的field逆序打印
+    {   for(i=NF; i&gt;0; i=i-1) printf("%s ", $i)
+        printf("\n")
+    }    
+18、计算每行field值的和，并打印(假设都是数字)
+    {   sum = 0
+        for(i=1; i&lt;=NF; i=i+1) sum = sum + $i
+        print sum
+    }
+19、将所有的field值加起来，打印
+    {for(i=1; i&lt;=NF; i=i+1) sum = sum + $i}
+    END {print sum}
+20、将每行的field都换成绝对值后再打印
+    {   for(i=1; i&lt;=NF; i=i+1) if($i &lt; 0) $i = -$i
+        print 
+    }
+21、去除相同的行
+    awk '!a[$0]++'
+22、打印第一个field是以M之后的字母开头的单词的行
+    awk '$1 &gt; "M"'
+23、获取机器的公网IP
+    ifconfig | awk -F'[ ]+|:' '/inet addr/{if($4 !~ /^192\.168|^172\.(1[6-9]|2[0-9]|3[0-1])|^10\.|^127|^0/) print $4}' 
+24、去掉每行中的第一个field
+    awk '{print substr($0, index($0, $2))}'
+</code></pre>
+
+<h2>在awk中引用shell变量</h2>
+
+<pre><code>$ name='Tom'
+$ awk 'BEGIN{print "'$name'"}'
+Tom
+$ awk -v s_name=$name 'BEGIN{print s_name}'
+Tom
+注意：如果变量中包含空格，应该这样使用, 即两边双引号，中间单引号
+a=$(date  +"%Y-%m-%d %H:%M:%S" -d"3 days")
+b=$(date  +"%Y-%m-%d %H:%M:%S")
+echo "good" | awk  '{if("'"$a"'" != "'"$b"'")print "llll"}'
+</code></pre>
+
+<h2>在awk中使用shell命令</h2>
+
+<pre><code>awk 'BEGIN{system("echo \"Enter number:\""); getline num; print "num is: " num}'
+# 注意引号的转义
+awk 'BEGIN{"whoami" | getline ; print "Your name is: " $0}'
+</code></pre>
+
+<h1>Exercises</h1>
+
+<pre><code>$ cat a.txt 
+111 org
+222 edu
+333 gov 
+444 net 
+$ cat b.txt 
+111 Tom Green.
+444 Ani Teen.
+888 Dany Cross. 
+# 结果要求
+----------------------------------------------------
+111--org--Tom--Green.
+444--net--Ani--Teen.
+----------------------------------------------------
+$ awk -v OFS='--' 'NR==FNR{a[$1]=$2}; NR!=FNR &amp;&amp; a[$1]{print $1, a[$1], $2, $3}' a.txt b.txt 
+</code></pre>
+
+<h1>Reference</h1>
+
+<p>The Awk Programming Language</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Awk 基础]]></title>
+    <link href="http://nosea.github.io/blog/2013/03/26/awk-basic/"/>
+    <updated>2013-03-26T15:09:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/03/26/awk-basic</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>Awk 基础知识
+</code></pre>
+
+<!--more-->
+
+
+<h1>基础知识</h1>
+
+<h2>两个基本概念</h2>
+
+<pre><code>1.记录(record): 一般而言，一个数据行就相当于文件上的一行
+2.字段(Field): 为数据行上被分隔开来的子字符串
+3.两种执行方式:
+  I. $awk 'awk程序' filename
+  II. $awk -f somefile.awk filename
+4.
+  $0 ——  awk所读入的数据行，为一整行字符串
+  $1 —— $0 上第一个字段的数据
+  $2 —— $0 上第二个字段的数据
+  ......
+</code></pre>
+
+<h2>常用Options</h2>
+
+<pre><code>-F fs
+    &lt;=&gt; FS
+-v var=val
+    --通常在BEGIN块中设置此类变量
+-f program-file   
+</code></pre>
+
+<h2>常量</h2>
+
+<pre><code>ARGC        命令行参数个数
+ARGV        命令行参数数组
+FILENAME    当前输入文件名
+NF          当前行field个数
+NR          总的record数
+FNR         当前文件record数
+FS          输入field分隔符
+OFS         输出record分隔符
+RS          输入record分隔符
+ORS         输出record分隔符
+--------------------------------------------------
+FS -- 输入field分隔符，默认是space
+   -- FS也可以用正则表达式
+   -- 当FS为空时
+OFS -- 输出field分隔符，默认space
+  [nosea@nosea test]$ awk -v OFS="|" '{print $0}' to.txt 
+  111 222
+  333 444
+  555 666
+  [nosea@nosea test]$ awk -v OFS="|" '{print $1,$2}' to.txt 
+  111|222
+  333|444
+  555|666
+RS -- 输入record分隔符，默认newline
+   -- 也可能是正则表达式
+RT -- 当RS为固定值，RT就是RS的值，
+  eg:echo '111 222|333 444|555 666' | awk -v RS='|' '{print $0, RT}'
+  111 222 |
+  333 444 |
+  555 666
+  -- 当RS为正则表达式时，RT就是匹配出来的值
+  eg:echo '111 222a333 444b555 666' | awk -v RS='[a-z]' '{print $0, RT}' 
+  111 222 a
+  333 444 b
+  555 666
+  -- 当RS为空时，即RS=""时，awk会把空白行当成文件中的record分隔符
+ORS -- 输出record分隔符，默认newline
+  echo '111 222|333 444|555 666' | awk -v RS='|' -v ORS='@' '{print $0}' 
+  111 222@333 444@555 666
+  @[nosea@nosea test]$   -- 注意此处有一个@，会多打一个空行！！
+</code></pre>
+
+<h2>Pattern，Action</h2>
+
+<pre><code>BEGIN{ action }
+    BEGIN为true的时候 -- 程序开始执行，尚未读取任何数据之前
+    一般将 "与数据内容无关" 和 "只需执行一次" 的部分放置在这里
+    注:
+      执行只含BEGIN{ action }的程序时，awk不会进行任何数据文件处理
+
+END{ action }
+    END为true的时候 -- 程序处理完所有的数据，即将离开程序的时候
+
+/regular expression/{ action }
+  String Match Pattern
+  /regexpr/  &lt;=&gt;  $0 /regexpr/
+  expression ～ /regexpr/
+  expression !~ /regexpr/
+
+relational expression{ action }
+    &gt;  &lt;  &gt;=  &lt;= == !=  ~   !~
+
+Compound pattern{ action }
+    &amp;&amp;   ||  !
+
+pattern ? pattern : pattern{ action }
+
+pattern1, pattern2{ action }
+    当pattern1成立时，switch打开
+    当pattern2成立时，switch关闭
+    如果两个pattern在同一行都满足，那么swtich在一行里打开后马上关闭
+        如果接下来的行里有满足pattern1的，switch才会打开
+</code></pre>
+
+<h2>流程控制</h2>
+
+<pre><code>if、for、while与c语言类似
+next:
+    执行next时，awk会忽略next后的所有指令，接着读取下一笔数据，继续从第一个
+    pattern { Action }执行
+exit:
+    执行exit时，awk立刻退出程序
+自定义函数
+function name(parameter-list) {
+    statements
+}
+</code></pre>
+
+<h2>I/O控制</h2>
+
+<pre><code>打印输出
+    print  ---  注意这个会自动添加换行符
+    printf ---  类似C语言，记住这个不自动加换行符
+    print 和 printf之后可以用 "&gt;" 或者 "&gt;&gt;" 重定向到数据文件
+    eg: print "data to print" &gt; "data.txt"
+getline
+    getline var &lt; file  —— 由file读数据，存储在var中
+    getline var         —— 由pipe读数据，存储在var中
+    getline var         —— 当Pattern为BEGIN或END时，getline将由stdin读取数据，
+                           否则由awk正在处理的数据文件上读取数据
+    getline一次读取一行数据，若读取成功则返回1，失败为-1，遇到文件结束则为0
+
+awk借助管道与shell命令交互
+awk可接受下列两种语法:
+  1、awk output command | "shell command"
+     这里awk输出的数据会交给shell命令处理
+  2、"shell command" | awk input command
+     这里shell命令的输出将会交给awk处理
+  ——注
+     awk input指令只有getline 一个
+     awk output指令有 print，printf()两个
+</code></pre>
+
+<h2>BUILT-IN FUNCTION</h2>
+
+<pre><code>1.index(str, b)
+  若b在str中存在，返回其首次出现位置，否则返回0
+
+2.length(str)
+  返回str的长度
+  # 如果要计算一个行的长度，即length($0)的时候，记得 nc=length($0)+1, “+1”是因为还有newline
+
+3.match(str, regxp)
+  寻找在str中匹配regxp表达式的子串，若有多个符合，则以最左方为准
+  RSTART = 满足条件的子串在原串中的位置
+  RLENGTH = 满足条件的子串的长度
+
+4.split(str, arr, s)
+  awk会根据分隔符s将str分割成一个个field然后以数组arr记录每个field
+
+5.sprintf(str, opt1, opt2)
+  功能与printf相同，不同是将打印的结果当成一个字符串返回而不是打印到屏幕
+
+5.sub(regexp, rstr, sourcestr)
+  sub()将原字符串中第一个合乎指定的regexp的子串用rstr替代
+  通过sub()与match()的搭配使用，可逐次取出原串中合乎指定条件的所有子串
+
+6.gsub(regexp, rstr, sourcestr)
+  功能和sub一样，区别是：
+  gsub()会取代所有满足条件的的子串
+  gsub()会返回被替换子串的个数
+
+7.substr(str, begin, len)
+  返回从begin位置起，指定len长度的子串，若未指定len，返回整个str
+</code></pre>
+
+<h2>Regular Expressions</h2>
+
+<pre><code>1、metacharacters
+  \ ^ $ . [ ] | ( ) * + ?
+
+  ^        match开头
+  $        match尾部
+  .        match任何单个字符
+  [abc]    match字符a，b，c中的任何一个
+           注意: 在[]里的字符，除了"\", 开头的"^"，以及两个字符间的"-"
+           都代表其字符意义，即[.]就匹配一个"."，而不是任意单个字符
+           hyphen: "-", 仅在两边都有字符的时候，才代表连续字符集的简写，否则就是其字面意思
+  combine
+  A|B      match A或者B
+  AB       match A紧接着是B
+  A*       0个或多个A
+  A+       1一个多个A
+  A？      null string 或者 A, 即要么没有，要么只有一个
+  (r)      等同表达式r， 好处是可以对整个()里的内容用*, + 等之类的
+           (r1)(r2)匹配xy，其中x match r1， y match r2
+
+  匹配确定个数
+  $ echo "aaaaaa|aa dd|dd aaaa" | awk -v RS="|" --posix '/a{6}/{print NR, $0}'
+  1 aaaaaa
+
+  ~        匹配
+  !~       不匹配
+  如果不小心写成了 ~!  
+  比如 $0~!/re/, 那么只有可能是$0 ~ 1, 或者 $0 ~ 0, 但是0还是1由/re/来确定
+2.例子
+  /^[0-9]+$/
+      匹配只含有数字的行
+  /^[0-9][0-9][0-9]$/
+      匹配只有三个数字的行
+  /^(\+|-)?[0-9]+\.?[0-9]*$/
+      匹配带可选正负号的十进制数
+  /^[+-]?[0-9][.]?[0-9]*$/
+      同上一条
+  /^[A-Za-z][A-Za-z0-9]*$/   # 在ASCII中，a &gt; A
+      匹配一个字母后面接一个字母或者数字或者不接
+</code></pre>
+
+<h2>备忘</h2>
+
+<pre><code>1.在使用print打印的时候，用逗号分隔，默认打印出来是被空格分隔
+  eg:
+  awk '{print $1, $3}' log.data  # 如果不加逗号，就连在一起
+  tomy 2
+  simy 2
+2.$ 之后是可以跟表达式的
+  eg: 打印第一个field 和最后一个field
+  awk '{print $1, $NF}'
+3.A missing pattern matches every input line
+  A pattern-action consisting only a pattern prints each input line
+  matched by pattern.
+  print本身代表打印当前行
+  { print } &lt;=&gt; { print $0 }
+4.因为action和pattern都是可选的，所以actions要放在{}里以区别pattern
+5.BEGIN match的是before the first line of first file is read
+  END match的是after the last line of last file  has been processed
+6.分号";" 和 newline 都可以分割statement
+7.awk的变量无需初始化，初次用值为0或null string
+8.字符串连接
+  name = name $1 " "
+9.pattern和"{" 必须紧挨
+10.长语句可以用backslash"\"分隔多行
+11.在BEGIN和END里，没有NR，但有NF，$0, $1....(如果指定了$0)
+12.sub只替换满足条件的第一个，gsub是替换一行里所有满足条件的
+13.字符串作为正则表达式
+    BEGIN {digits = "^[0-9]+$"}
+    $2 ~ digits
+14.注意以下的区别
+   $0 ~ /(\+|-)[0-9]+/
+   and
+   $0 ~ "(\\+|-)[0-9]+"
+15.gsub(/a/, "&amp;b&amp;", "banana")   # 把每个a替换成aba
+16.exit如果后面没有跟退出状态，那么退出状态是0
+17.string作为regexp
+   BEGIN {digit = "^[0-9]+$"}
+   $1 ~ digit
+   NOTE：
+     "^[0-9]+$" &lt;=&gt; /^[0-9]+$/
+     "(\\+|-)][0-9]+"  &lt;=&gt;  /(\+|-)[0-9]+/
+</code></pre>
+
+<h1>Reference</h1>
+
+<p>Awk 手册   <br/>
+The Awk Programming Language  <br/>
+Thanks!</p>
+]]></content>
+  </entry>
+  
+</feed>

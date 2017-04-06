@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>HTML Basic - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Introduction html基础 Content Basic terminology HTML —— HyperText Markup Language(超文本标记语言), Hypertext means "text with links in it."
+&lt;!DOCTYPE html& &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nosea.github.io/blog/2014/01/05/html-basic/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="nosea.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">HTML Basic</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-01-05T22:44:00+00:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:44 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>Introduction</h1>
+
+<pre><code>html基础
+</code></pre>
+
+<!--more-->
+
+
+<h1>Content</h1>
+
+<h2>Basic terminology</h2>
+
+<pre><code>HTML —— HyperText Markup Language(超文本标记语言),
+       Hypertext means "text with links in it."
+&lt;!DOCTYPE html&gt;  —— 放在第一行，用于告诉浏览器是什么类型的文件        
+Tag —— 由尖括号包围的词，如&lt;html&gt;,&lt;body&gt;，几乎总是成对出现
+       &lt;html&gt; —— 类似这种的为开始标签(opening tag)
+       &lt;/html&gt; —— 类似这种的为结束标签(closing tag）
+       标签可以有属性
+       标签可以嵌套
+element —— 标签和标签之间内容合起来为元素，
+    即element = &lt;opening tag&gt; + content + &lt;closing tag&gt;
+注释 —— &lt;!--  这个之间的为注释  --&gt;
+</code></pre>
+
+<h2>Attribute</h2>
+
+<pre><code>style —— 修饰字体颜色，大小，页面背景等，多个以分号相隔
+    eg: style="font-size:20px; color:green"
+    style="font-size:10px" -- 字体大小
+    style="color:green" —— 字体颜色
+    style="font-family:Garamond" —— 字体类型
+    style="background-color:green" —— 背景颜色，设置body对应整个网页，其他则局部
+    style="text-align:center" —— 居中，也可以是左对齐或者右对齐
+colspan -- 表格头占用格数
+    eg: &lt;th colspan="3"&gt;xxxx&lt;th&gt;  ## 占用3格
+height -- 高度
+width -- 宽度
+border -- 边框
+text-decoration: none   —— 去掉链接的下划线
+margin: auto; -- div居中
+</code></pre>
+
+<h2>Tags</h2>
+
+<pre><code>&lt;html&gt; —— 用于开始html文件，所有的内容都应在html标签内
+&lt;head&gt; -- 里面的文本描述网页的重要信息，如标题等
+&lt;title&gt; -- 网页标题，在标题栏可见
+&lt;body&gt; -- 里面的内容为可见的页面内容
+&lt;p&gt; —— 里面的内容为段落
+&lt;h1&gt; —— 里面的内容显示为标题，html提供了6个标题标签，即&lt;h1&gt;到&lt;h6&gt;，&lt;h1&gt;最高
+&lt;img&gt; —— 显示图片，必须包含src属性告诉html哪里去获得图片，即&lt;img src="url"/&gt; ，注意是自关闭的
+&lt;a&gt; —— 显示链接，用href属性说明链接是哪一个，即&lt;a href="url"&gt;
+       href stands for "hypertext reference." 
+       里面的内容可以是文本或者图片之类的
+&lt;ol&gt; —— 顺序列表
+&lt;li&gt; —— 列表项
+&lt;ul&gt; —— 无序列表
+&lt;strong&gt; —— 加粗
+&lt;em&gt; —— 强调(倾斜)
+&lt;table&gt; -- 定义表格
+  &lt;thead&gt; -- table head
+    &lt;th&gt; -- table head data
+  &lt;tbody&gt; -- table body
+  &lt;tr&gt; -- 创建表的行
+    &lt;td&gt; -- table data  # 多个td即多个列
+&lt;div&gt; -- divide webpage into pieces
+&lt;span&gt; -- control styling for smaller parts
+</code></pre>
+
+<h2>CSS</h2>
+
+<pre><code>1、放置的方式有两种:
+  I、放置在style里 eg:
+  &lt;head&gt;
+    &lt;style&gt;
+        p {
+            color: red
+        }
+    &lt;/style&gt;
+  &lt;/head&gt;
+  II、使用&lt;link&gt;标签，并且link标签必须包含三个属性 # 自关闭标签
+  type="text/css"  # 必须为这样
+  rel="stylesheet" # 必须为这样
+  href="" # 指定CSS文件地址
+  eg:
+  &lt;head&gt;
+    &lt;link type="text/css"; rel="stylesheet"; href="stylesheet.css"/&gt;
+  &lt;/head&gt;
+2、CSS语法
+  1) 通用语法
+  selector {
+      property: value;
+  }
+  2) 注释
+  /* This is a comment */
+3、class
+  .name {
+      color: red
+  }
+4、id
+  #name {
+      color: red
+  }
+5、pseudo-class selectors
+  selector:pseudo-class_selector {
+      property: value;
+  }
+  1) for a:
+    link -- unvisited
+    visited -- visited
+    hover -- 鼠标经过时
+  2) first child
+    p:first-child {
+        color: red
+    }
+  3) nth child
+    p:nth-child(3) {
+        color: red
+    }
+6、margin --&gt; border --&gt; pandding --&gt; content
+7、float:left/right
+8、clear:left/right/both
+9、z-index: 1  # 一直在页面前
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-01-05T22:44:00+00:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>10:44 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/html/'>html</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://nosea.github.io/blog/2014/01/05/html-basic/" data-via="" data-counturl="http://nosea.github.io/blog/2014/01/05/html-basic/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/01/01/shell-color-format/" title="Previous Post: shell color format">&laquo; shell color format</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/08/04/lexical-cast/" title="Next Post: Lexical_Cast">Lexical_Cast &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-propertytree/">Boost PropertyTree</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-filesystem/">Boost Filesystem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/tools-eclipse/">Eclipse 相关</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/boost-program-options/">Boost Program Options</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/fix-windows-7-bootmbr/">修复win7的引导</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

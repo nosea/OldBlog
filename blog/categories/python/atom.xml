@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Python | My Octopress Blog]]></title>
+  <link href="http://nosea.github.io/blog/categories/python/atom.xml" rel="self"/>
+  <link href="http://nosea.github.io/"/>
+  <updated>2017-04-06T15:21:27+00:00</updated>
+  <id>http://nosea.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Python多线程无法接收Keyboard Interrupt信号]]></title>
+    <link href="http://nosea.github.io/blog/2013/10/11/python-multithread-kill/"/>
+    <updated>2013-10-11T13:25:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/10/11/python-multithread-kill</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>如何让线程相应Keyborad interrupt信号
+</code></pre>
+
+<!--more--> 
+
+
+<h1>说明</h1>
+
+<pre><code>在写通信程序时，当在线程里监听时，对父线程进行Ctrl+C是无法停掉程序的，
+每次都只能用kill -9来杀掉，后发现网上有人用如下的方法实现，感觉挺好：
+原来的情况：main  --开启--&gt; 线程
+现在的情况：main --fork--&gt; 子进程 --开启--&gt;线程
+                       --&gt; main监听keyborad interrupt
+                           --&gt; 有 --&gt; kill 子进程
+                           --&gt; 无 --&gt; 等待
+</code></pre>
+
+<h1>例子</h1>
+
+<pre><code class="python ">#!/usr/bin/env python  
+#_*_ coding: utf-8 _*_
+# nosea 2013-05-03
+
+"""Use this demo to show how to exit in multithread case
+when Ctrl+c are pressed."""
+
+import sys
+import socket
+import threading
+import signal,traceback,os
+
+SERVER = '127.0.0.1'   
+PORT = 8280  
+MAXTHREADS = 10
+RECVBUF = 1024
+
+class EchoMsg(threading.Thread):
+    def __init__(self, cs, addr):
+        threading.Thread.__init__(self)
+        self.socket = cs
+        self.addr = addr
+        print 'Establish a connection with %s with port %s' % self.addr
+
+    def run(self):
+        while True:
+            data = self.socket.recv(RECVBUF)
+            if not data:
+                break
+            self.socket.send('Message has been recieved.')
+
+        # I could not find a way to detect whether a connection is closed.
+        print "Connection from %s:%s has been broken" % self.addr
+        self.socket.close()
+
+class ListenSvr(threading.Thread):
+    """Listen thread.
+    Once a new connection established, will use EchoMsg to start
+    a new thread to handle this connection."""
+    def __init__(self):
+        threading.Thread.__init__(self)
+        self.socket = None
+        print 'Start Listen...'
+
+    def run(self):
+        try:
+            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            # reuse a local socket in TIME_WAIT state
+            # if not--&gt;socket.error: [Errno 98] Address already in use
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            self.socket.bind((SERVER,PORT))
+            self.socket.listen(2)
+        except socket.error, msg:
+            self.srv_sock = None
+            print "[Listen Error:] %s" % msg
+            sys.exit(1)
+
+        while True:
+            cs,addr = self.socket.accept()
+            cs_td = EchoMsg(cs, addr)
+            cs_td.setDaemon(True)
+            cs_td.start()
+
+        self.socket.close()
+
+
+
+class Watcher:
+    """this class solves two problems with multithreaded
+    programs in Python, (1) a signal might be delivered
+    to any thread (which is just a malfeature) and (2) if
+    the thread that gets the signal is waiting, the signal
+    is ignored (which is a bug).
+
+    The watcher is a concurrent process (not thread) that
+    waits for a signal and the process that contains the
+    threads.  See Appendix A of The Little Book of Semaphores.
+    http://greenteapress.com/semaphores/
+
+    I have only tested this on Linux.  I would expect it to
+    work on the Macintosh and not work on Windows.
+    """
+
+    def __init__(self):
+        """ Creates a child thread, which returns.  The parent
+            thread waits for a KeyboardInterrupt and then kills
+            the child thread.
+        """
+        self.child = os.fork()
+        if self.child == 0:
+            return
+        else:
+            self.watch()
+
+    def watch(self):
+        try:
+            os.wait()
+        except KeyboardInterrupt:
+            # I put the capital B in KeyBoardInterrupt so I can
+            # tell when the Watcher gets the SIGINT
+            print 'KeyBoardInterrupt'
+            self.kill()
+        sys.exit()
+
+    def kill(self):
+        try:
+            os.kill(self.child, signal.SIGKILL)
+        except OSError: pass
+
+
+if __name__ == '__main__':
+    Watcher()          
+    asvr = ListenSvr()
+    asvr.start()
+</code></pre>
+
+<h1>Reference</h1>
+
+<p><a href="http://greenteapress.com/semaphores/">http://greenteapress.com/semaphores/</a>  <br/>
+Thanks!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Python中文编码问题]]></title>
+    <link href="http://nosea.github.io/blog/2013/10/10/python-code-problem/"/>
+    <updated>2013-10-10T21:26:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/10/10/python-code-problem</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>因折腾过好几次python在中文的处理乱码的情况，特此记录
+</code></pre>
+
+<!--more--> 
+
+
+<h1>说明</h1>
+
+<pre><code>1、Python本身对各种语言支持都很好，字符串在python内部是用unicode编码表示的。
+   python支持两种编码格式，一个是UCS-2，一个是UCS-4，可以通过如下方式查看是那种：
+&gt;&gt;&gt; import sys
+&gt;&gt;&gt; print sys.maxunicode
+65535   ## 这个就是UCS-2
+1114111  ## 这个就是UCS-4
+
+2、如果要做编码转换，需要借助内部编码(unicode)作为中转来转换，通常过程是这样的：
+   原编码 --decode--&gt; 内部编码(unicode) --encode--&gt; 要转换的编码
+   str.decode的作用是将其他编码的字符串转换为unicode编码
+   unicode.encode的作用是将unicode编码转为其他编码
+
+3、在转为unicode时，首先得知道原来字符串的编码是什么，否则将会提示decode异常，例如：
+  &gt;&gt;&gt; a="非常好"  ## 这里默认的字符串是gb2312编码
+  &gt;&gt;&gt; a.decode('utf-8')  ## 如果用'utf-8' 就会提示错误
+
+  Traceback (most recent call last):
+    File "&lt;pyshell#9&gt;", line 1, in &lt;module&gt;
+      a.decode('utf-8')
+    File "D:\Python27\lib\encodings\utf_8.py", line 16, in decode
+      return codecs.utf_8_decode(input, errors, True)
+  UnicodeDecodeError: 'utf8' codec can't decode byte 0xb7 in position 0: invalid start byte
+  &gt;&gt;&gt; a.decode('gb2312')  ## 参数为正确的编码，就没有出错
+  u'\u975e\u5e38\u597d'
+
+4、但是在很多情况下，并不知道字符串到底是何种编码，如果不能知道字符串正确的编码，就不能把它转为
+   需要的编码，要查询字符串的编码，可以使用chardet这个字符串编码识别模块，因为是python第三方库，
+   默认没有安装，所以需要手动安装下。
+   下载地址：https://pypi.python.org/pypi/chardet
+   安装方法：
+       （1）：python setup.py install  ## 使用setup.py安装文件
+       （2）：将解压后目录下chardet文件夹放在应用程序目录下，就可以使用
+             import chardet开始使用chardet了。## 这种不用安装
+
+   使用：
+    &gt;&gt;&gt; a="非常好"
+    &gt;&gt;&gt; import chardet
+    &gt;&gt;&gt; chardet.detect(a)
+    {'confidence': 0.99, 'encoding': 'GB2312'}
+    &gt;&gt;&gt; a.decode(chardet.detect(a)['encoding']).encode('UTF-8')  ## 字符串用GB2312转为UTF-8
+    '\xe9\x9d\x9e\xe5\xb8\xb8\xe5\xa5\xbd'
+
+5、有些时候，需要读文本文件，需要将读出来的数据转为unicode，比如文本文件是utf-8的文件，这个时候可以
+   使用codecs模块，codecs是标准库，提供了许多方法和类，用于编码转换。
+   例子：
+   （1）先用enca -L zh xx.txt 检测文件的编码类型
+   （2）然后
+       fd = codecs.open("dddd.txt", 'r', "UTF-8") ##UTF-8就是文件的编码
+       print fd.readlines()   ## 从打印的字符串就可以看出了
+</code></pre>
+
+<h1>Reference</h1>
+
+<p><a href="http://www.pythonclub.org/modules/chardet">Python chardet 字符编码判断</a>  <br/>
+<a href="http://blog.csdn.net/zhaoweikid/article/details/1642015">python模块之codecs: 自然语言编码转换</a>  <br/>
+Thanks!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Python Note I]]></title>
+    <link href="http://nosea.github.io/blog/2013/02/04/python-note-i/"/>
+    <updated>2013-02-04T15:10:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/02/04/python-note-i</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>Dictionary, List, Tuple
+</code></pre>
+
+<!--more-->
+
+
+<h1>Dictionary</h1>
+
+<pre><code class="python">&gt;&gt;&gt; d = {'name':'Tom', 'age':16} 
+&gt;&gt;&gt; d
+{'age': 16, 'name': 'Tom'}
+&gt;&gt;&gt; d.keys()
+['age', 'name']
+&gt;&gt;&gt; d.values()
+[16, 'Tom']
+&gt;&gt;&gt; d.items()
+[('age', 16), ('name', 'Tom')]
+&gt;&gt;&gt; d['name']
+'Tom'
+&gt;&gt;&gt; d['name'] = 'Tony' # 修改值
+&gt;&gt;&gt; d
+{'age': 16, 'name': 'Tony'}
+&gt;&gt;&gt; d['gender'] = 'male' # 添加
+&gt;&gt;&gt; d
+{'gender': 'male', 'age': 16, 'name': 'Tony'}
+&gt;&gt;&gt; del d['age'] # 删除一个key-value
+&gt;&gt;&gt; d
+{'gender': 'male', 'name': 'Tony'}
+&gt;&gt;&gt; d.clear() # 清除所有key-value
+&gt;&gt;&gt; d
+{}
+</code></pre>
+
+<h1>List</h1>
+
+<pre><code class="python">&gt;&gt;&gt; li = ['mom', 'dad', 'son', 'sky', 'blue']
+&gt;&gt;&gt; li
+['mom', 'dad', 'son', 'sky', 'blue']
+&gt;&gt;&gt; li[0]
+'mom'
+&gt;&gt;&gt; li[-1]
+'blue'
+&gt;&gt;&gt; li[1:4]
+['dad', 'son', 'sky']
+&gt;&gt;&gt; li[:4]
+['mom', 'dad', 'son', 'sky']
+&gt;&gt;&gt; li[1:]
+['dad', 'son', 'sky', 'blue']
+&gt;&gt;&gt; li[:]
+['mom', 'dad', 'son', 'sky', 'blue']
+&gt;&gt;&gt; li.append('new') # 在末尾追加
+&gt;&gt;&gt; li
+['mom', 'dad', 'son', 'sky', 'blue', 'new']
+&gt;&gt;&gt; li.append(18)
+&gt;&gt;&gt; li
+['mom', 'dad', 'son', 'sky', 'blue', 'new', 18]
+&gt;&gt;&gt; li.insert(2, 'boy') # 在任意位置插入
+&gt;&gt;&gt; li
+['mom', 'dad', 'boy', 'son', 'sky', 'blue', 'new', 18]
+&gt;&gt;&gt; si = ['tiny', 'huge']
+&gt;&gt;&gt; li.extend(si) # 扩展(连接一个list)
+&gt;&gt;&gt; li
+['mom', 'dad', 'boy', 'son', 'sky', 'blue', 'new', 18, 'tiny', 'huge']
+&gt;&gt;&gt; li.remove('tiny') # 删除一个值(若有相同值，仅删除首次出现)
+&gt;&gt;&gt; li
+['mom', 'dad', 'boy', 'son', 'sky', 'blue', 'new', 18, 'huge']
+&gt;&gt;&gt; li.pop() # 删除最后一个元素，并返回其值
+'huge'
+&gt;&gt;&gt; li
+['mom', 'dad', 'boy', 'son', 'sky', 'blue', 'new', 18]
+&gt;&gt;&gt; li[-1] = 20 # 修改值
+&gt;&gt;&gt; li
+['mom', 'dad', 'boy', 'son', 'sky', 'blue', 'new', 20]
+&gt;&gt;&gt; li = ['mom', 'dad']
+&gt;&gt;&gt; li
+['mom', 'dad']
+&gt;&gt;&gt; li = li + si # 约等于 li.extend(si)，但'+'返回新list，而extend修改原值
+                 # 因此对于大型list，extend速度快于'+'
+&gt;&gt;&gt; li
+['mom', 'dad', 'tiny', 'huge']
+&gt;&gt;&gt; li.index('mom')
+0
+&gt;&gt;&gt; 'dad' in li
+True
+&gt;&gt;&gt; li += ['small', 'large'] # '+=' 等同于extend
+                             # '+=' 可用于string list 数字 和用户自定义类
+&gt;&gt;&gt; li
+['mom', 'dad', 'tiny', 'huge', 'small', 'large']
+&gt;&gt;&gt; li = [1, 2] * 2 # 等同于 li = [1, 2] + [1, 2]
+&gt;&gt;&gt; li
+[1, 2, 1, 2]
+</code></pre>
+
+<h1>Tuple</h1>
+
+<pre><code class="python">&gt;&gt;&gt; tu = (1, 2, 3, 4, 5)
+&gt;&gt;&gt; tu
+(1, 2, 3, 4, 5)
+&gt;&gt;&gt; tu[0]
+1
+&gt;&gt;&gt; tu[-1]
+5
+&gt;&gt;&gt; tu[1:4]
+(2, 3, 4)
+&gt;&gt;&gt; 2 in tu
+True
+</code></pre>
+
+<h1>List Tuple 相互转换</h1>
+
+<pre><code class="python">&gt;&gt;&gt; tu = (1, 2, 3, 4, 5)
+&gt;&gt;&gt; li = list(tu)
+&gt;&gt;&gt; li
+[1, 2, 3, 4, 5]
+&gt;&gt;&gt; li = ['a', 'b', 'c', 'd']
+&gt;&gt;&gt; li
+['a', 'b', 'c', 'd']
+&gt;&gt;&gt; tu = tuple(li)
+&gt;&gt;&gt; tu
+('a', 'b', 'c', 'd')
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Python Docstring]]></title>
+    <link href="http://nosea.github.io/blog/2013/02/02/python-docstring/"/>
+    <updated>2013-02-02T16:10:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/02/02/python-docstring</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>docstring 使用
+</code></pre>
+
+<!--more-->
+
+
+<h1>Specification</h1>
+
+<pre><code>1.docstring(文档字符串)位于module，function，class，method定义后，即":"之后。
+  它是上述object要定义的第一个内容
+2.object的__doc__属性为docstring
+3.模块正常情况下应有docstring
+4.All functions and classes exported by a module should also have docstrings
+  --&gt;~_~不知道给如何翻译exported，悲剧
+5.公有方法(包括__init__constructor)应该有docstring
+6.一个package的docstring应位于package目录下的__init__.py文件里
+7.两个概念
+ * 紧随模块或类等声明之后的字符串为"attribute docstrings"
+ * 紧随"attribute docstrings"的字符串为"additional docstrings"
+8.文档字符串通常用三引号括起来
+  如果字符串里有任何反斜杠，用r"""xxxx"""防止转义
+  对于Unicode docstring，用u"""xxx"""
+9.有两种形式的文档字符串:单行和多行
+  单行 -- 针对仅单行的字符串就足够了
+  * 在docstring前后不要有空格，三引号在同一行，字符串结束时应有句号
+  * 应该用command的方式指出函数或者方法的作用而不是以说明的方式
+    eg:
+    """简要的说明."""
+  多行 
+  * 包含一行类似单行的总结字符串，总结行之后应有一空行，空行之后时更详细的说明
+  * 三引号的缩进要一致
+  * 对于类的文档字符串，类的成员函数应与docstring有一个空行隔开，对称起见，
+    文档字符串开头也空一行.eg:
+    class Example:
+
+    """Multi-line Docstrings
+
+    xxxxxxxxxxxxxxxxxxxx
+    ....
+    """
+
+        def foo():
+        ...
+10.一段脚本的docstring应该位于其usage中
+11.模块的docstring应该列出其类，异常，函数或者任何其他对象，每个对象以一行总结
+   包的docstring也应该在__init__.py如上列出
+12.函数或方法的docstring应
+   总结其行为、说明其参数以、返回值、影响、引发的异常和调用的限制条件
+13.类的docstring应
+   总结其行为、列出公有方法和实例变量
+   如果类被设计来继承而且对子类含有额外的接口，那么接口应在docstring中分别列出
+   如果子类与父类行为差不多，docstring应指出不同点
+       用"override"指明子类方法覆盖父类方法
+       用"extend"指明子类方法调用父类方法
+</code></pre>
+
+<h1>Reference</h1>
+
+<p><a href="http://www.python.org/peps/pep-0257.html">PEP 257 - docstring 规范</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Python标准库configparser]]></title>
+    <link href="http://nosea.github.io/blog/2013/02/01/python-stdlib-configparser/"/>
+    <updated>2013-02-01T16:47:00+00:00</updated>
+    <id>http://nosea.github.io/blog/2013/02/01/python-stdlib-configparser</id>
+    <content type="html"><![CDATA[<h1>Introduction</h1>
+
+<pre><code>模块作用：读取/写入配置文件
+</code></pre>
+
+<!--more-->
+
+
+<h1>说明</h1>
+
+<pre><code>ConfigParser模块共有三个类
+RawConfigParser、ConfigParser、SafeConfigParser，关系为依次继承
+</code></pre>
+
+<pre><code class="cfg example.cfg">[user] ; &lt;-- []括起来的是section，下面的是option键值对
+first_name = vin
+last_name = swan
+age = 30
+weight = 80kg
+height = 180cm ; 这种注释可以不独占一行
+# tel = xxxx 这种注释只能单独一行
+
+; 重写之后，好像所有的注释被去掉了以及用name: value格式的都变成了name = value
+[tool]
+database: mysql ; 这种格式也可以
+editor: emacs
+
+[env]
+os = Linux
+lang = en_us
+</code></pre>
+
+<pre><code class="python">#!/usr/bin/env python
+#coding:utf-8
+
+"""
+ConfigParser模块使用示例
+模块作用：读取/写入配置文件，配置文件的格式类似windows的ini配置文件
+在3.0中ConfigParser模块改名为configparser。
+"""
+from ConfigParser import ConfigParser
+
+CONF = "example.cfg"
+
+# 创建实例
+config = ConfigParser()
+
+# 读取配置文件
+config.read(CONF)
+
+# sections函数返回所有section名字列表，不包括DEFAULT
+st = config.sections()
+print "section:", st
+
+# 每个section所有的options
+for i in st:
+    print "the options of section %s:" % i
+    print config.options(i)
+
+# items函数返回指定section的所有键值对
+for i in st:
+    print "list of (name, value) pairs for each option in the section %s" % i
+    print config.items(i)
+
+# 获得每个option的值
+for i in st:
+    for j in config.options(i):
+        print "%s = %s" % (j, config.get(i, j))
+
+# 添加一个section
+config.add_section("env")
+# 添加键值对
+config.set("env", "os", "Linux")
+config.set("env", "lang", "en_us")
+# 写入文件
+config.write(open(CONF, "wb"))
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Tcl Note One - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Introduction Tcl 学习笔记1 Cotent 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nosea.github.io/blog/2013/08/04/tcl-note-one/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="nosea.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Tcl Note One</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-08-04T23:07:00+00:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>11:07 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>Introduction</h1>
+
+<pre><code>Tcl 学习笔记1
+</code></pre>
+
+<!--more-->
+
+
+<h1>Cotent</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+</pre></td><td class='code'><pre><code class='tcl'><span class='line'><span class="c">#!/usr/bin/tclsh</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Print</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;print statement&quot;</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;comment after statement&quot;</span><span class="k">;</span> <span class="c"># notice, &quot;;&quot; is needed.</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Assignment</span>
+</span><span class='line'><span class="k">set</span> num <span class="mi">100</span><span class="k">;</span> <span class="c"># assignment statement</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;the number is $num&quot;</span><span class="k">;</span> <span class="c"># use the varible</span>
+</span><span class='line'><span class="nb">puts</span> <span class="k">{</span><span class="nv">dddd</span><span class="s2">&quot;ddd&quot;</span>ddd<span class="s2">&quot;ddd&quot;</span><span class="nv">$num</span> <span class="nv">$sss</span><span class="k">};</span> <span class="c"># remmember this.</span>
+</span><span class='line'><span class="c"># all content in [] is just a string, will not escape or reference</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Execute command</span>
+</span><span class='line'><span class="c"># &quot;[]&quot; just like &quot; `` &quot; or &quot; $() &quot; in shell, execute the content it contains and return the result of the command.</span>
+</span><span class='line'><span class="nb">puts</span> <span class="k">[set</span> num <span class="mi">200</span><span class="k">]</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;the number is [set num 300]&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">set</span> var_1 <span class="mi">10</span>
+</span><span class='line'><span class="k">set</span> var_2 <span class="mi">20</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;the sum of var_1 and var_2 is [expr $var_1 + $var_2]&quot;</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;the square root of var_2 is [expr sqrt($var_2)]&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># switch</span>
+</span><span class='line'><span class="k">set</span> var_3 <span class="mi">300</span>
+</span><span class='line'><span class="c"># see the above, content in {} will not escape or reference</span>
+</span><span class='line'><span class="k">switch</span> <span class="nv">$var_3</span> <span class="err">\</span>
+</span><span class='line'>    <span class="s2">&quot;$num&quot;</span> <span class="k">{</span><span class="nb">puts</span> <span class="s2">&quot;the sum of a and b is [expr $var_2 + $var_1]&quot;</span><span class="k">}</span><span class="err">\</span>
+</span><span class='line'>    <span class="s2">&quot;300&quot;</span> <span class="k">{set</span> var_1 <span class="mi">100</span><span class="k">;</span> <span class="nb">puts</span> <span class="s2">&quot;oh, the var_1 is $var_1&quot;</span><span class="k">}</span><span class="err">\</span>
+</span><span class='line'>    <span class="s2">&quot;abc&quot;</span> <span class="k">{</span><span class="nb">puts</span> <span class="s2">&quot;abc&quot;</span><span class="k">}</span><span class="err">\</span>
+</span><span class='line'>    <span class="s2">&quot;default&quot;</span> <span class="k">{</span><span class="nb">puts</span> <span class="s2">&quot;this is the default value.&quot;</span><span class="k">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">switch</span> <span class="nv">$var_3</span> <span class="k">{</span>
+</span><span class='line'>    <span class="s2">&quot;$num&quot;</span> <span class="k">{</span><span class="nb">puts</span> <span class="s2">&quot;the sum of a and b is [expr $var_2 + $var_1]&quot;</span><span class="k">}</span>
+</span><span class='line'>    <span class="s2">&quot;300&quot;</span> <span class="k">{set</span> var_1 <span class="mi">100</span><span class="k">;</span> <span class="nb">puts</span> <span class="s2">&quot;oh, the var_1 is $var_1&quot;</span><span class="k">}</span>
+</span><span class='line'>    <span class="s2">&quot;abc&quot;</span> <span class="k">{</span><span class="nb">puts</span> <span class="s2">&quot;abc&quot;</span><span class="k">}</span>
+</span><span class='line'>    <span class="s2">&quot;default&quot;</span> <span class="k">{</span><span class="nb">puts</span> <span class="s2">&quot;this is the default value.&quot;</span><span class="k">}</span>
+</span><span class='line'><span class="k">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># if statement</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;$num, $var_1&quot;</span>
+</span><span class='line'><span class="k">if</span> <span class="k">{</span><span class="nv">$num</span> <span class="o">==</span> <span class="nv">$var_1</span><span class="k">}</span> <span class="k">{</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;oh, this is unbelievable&quot;</span>
+</span><span class='line'><span class="k">}</span> <span class="k">else</span> <span class="k">{</span>   <span class="c"># the space around the else is need.</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;shit, damn you.&quot;</span>
+</span><span class='line'><span class="k">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># if statement</span>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;$num, $var_1&quot;</span>
+</span><span class='line'><span class="k">if</span> <span class="s2">&quot;$num == $var_1&quot;</span> <span class="k">{</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;oh, this is unbelievable&quot;</span>
+</span><span class='line'><span class="k">}</span> <span class="k">else</span> <span class="k">{</span>   <span class="c"># the space around the else is need.</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;shit, damn you.&quot;</span>
+</span><span class='line'><span class="k">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="c"># while loop</span>
+</span><span class='line'><span class="k">while</span> <span class="k">{</span><span class="nv">$var_2</span> <span class="o">&gt;=</span> <span class="nv">1</span><span class="k">}</span> <span class="k">{</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;$var_2&quot;</span>
+</span><span class='line'>    <span class="k">set</span> var_2 <span class="k">[expr</span> <span class="nv">$var_2</span> <span class="o">-</span> <span class="mi">1</span><span class="k">]</span>
+</span><span class='line'><span class="k">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># for loop</span>
+</span><span class='line'><span class="c"># set x [expr $x + 1] is equal to incr x</span>
+</span><span class='line'><span class="k">for</span> <span class="k">{</span><span class="nb">puts</span> <span class="s2">&quot;start:&quot;</span><span class="k">;</span> <span class="k">set</span> i <span class="mi">0</span><span class="k">}</span> <span class="k">{</span><span class="nv">$i</span> <span class="o">&lt;</span> <span class="nv">3</span><span class="k">}</span> <span class="k">{</span><span class="nb">incr</span> i<span class="k">;</span> <span class="nb">puts</span> <span class="s2">&quot;i after incr: $i&quot;</span><span class="k">}</span> <span class="k">{</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;ok&quot;</span>
+</span><span class='line'><span class="k">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># proc</span>
+</span><span class='line'><span class="c"># format -- proc name args body</span>
+</span><span class='line'><span class="k">proc</span> sum_total <span class="k">{</span><span class="nv">arg_1</span> arg_2<span class="k">}</span> <span class="k">{</span>
+</span><span class='line'>    <span class="k">set</span> dax <span class="k">[expr</span> <span class="nv">$arg_1</span> <span class="o">+</span> <span class="nv">$arg_2</span><span class="k">]</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="nv">$dax</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$dax</span>
+</span><span class='line'><span class="k">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># how to call the proc</span>
+</span><span class='line'><span class="nv">sum_total</span> <span class="nv">$var_1</span> <span class="nv">$var_2</span>
+</span><span class='line'><span class="nb">puts</span> <span class="k">[</span><span class="nv">sum_total</span> <span class="nv">$var_1</span> <span class="nv">$var_2</span><span class="k">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>Reference</h1>
+
+<p>TCL 脚本入门教程</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2013-08-04T23:07:00+00:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>11:07 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/tcl/'>tcl</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://nosea.github.io/blog/2013/08/04/tcl-note-one/" data-via="" data-counturl="http://nosea.github.io/blog/2013/08/04/tcl-note-one/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/07/07/gaoe-terminology/" title="Previous Post: GAOE：术语">&laquo; GAOE：术语</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/10/10/python-code-problem/" title="Next Post: Python中文编码问题">Python中文编码问题 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-propertytree/">Boost PropertyTree</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-filesystem/">Boost Filesystem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/tools-eclipse/">Eclipse 相关</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/boost-program-options/">Boost Program Options</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/fix-windows-7-bootmbr/">修复win7的引导</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

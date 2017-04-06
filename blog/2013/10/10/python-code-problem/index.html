@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Python中文编码问题 - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Introduction 因折腾过好几次python在中文的处理乱码的情况，特此记录 说明 1、Python本身对各种语言支持都很好，字符串在python内部是用unicode编码表示的。 python支持两种编码格式，一个是UCS-2，一个是UCS-4，可以通过如下方式查看是那种：
+&gt;& &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nosea.github.io/blog/2013/10/10/python-code-problem/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="nosea.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Python中文编码问题</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-10-10T21:26:00+00:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>9:26 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>Introduction</h1>
+
+<pre><code>因折腾过好几次python在中文的处理乱码的情况，特此记录
+</code></pre>
+
+<!--more--> 
+
+
+<h1>说明</h1>
+
+<pre><code>1、Python本身对各种语言支持都很好，字符串在python内部是用unicode编码表示的。
+   python支持两种编码格式，一个是UCS-2，一个是UCS-4，可以通过如下方式查看是那种：
+&gt;&gt;&gt; import sys
+&gt;&gt;&gt; print sys.maxunicode
+65535   ## 这个就是UCS-2
+1114111  ## 这个就是UCS-4
+
+2、如果要做编码转换，需要借助内部编码(unicode)作为中转来转换，通常过程是这样的：
+   原编码 --decode--&gt; 内部编码(unicode) --encode--&gt; 要转换的编码
+   str.decode的作用是将其他编码的字符串转换为unicode编码
+   unicode.encode的作用是将unicode编码转为其他编码
+
+3、在转为unicode时，首先得知道原来字符串的编码是什么，否则将会提示decode异常，例如：
+  &gt;&gt;&gt; a="非常好"  ## 这里默认的字符串是gb2312编码
+  &gt;&gt;&gt; a.decode('utf-8')  ## 如果用'utf-8' 就会提示错误
+
+  Traceback (most recent call last):
+    File "&lt;pyshell#9&gt;", line 1, in &lt;module&gt;
+      a.decode('utf-8')
+    File "D:\Python27\lib\encodings\utf_8.py", line 16, in decode
+      return codecs.utf_8_decode(input, errors, True)
+  UnicodeDecodeError: 'utf8' codec can't decode byte 0xb7 in position 0: invalid start byte
+  &gt;&gt;&gt; a.decode('gb2312')  ## 参数为正确的编码，就没有出错
+  u'\u975e\u5e38\u597d'
+
+4、但是在很多情况下，并不知道字符串到底是何种编码，如果不能知道字符串正确的编码，就不能把它转为
+   需要的编码，要查询字符串的编码，可以使用chardet这个字符串编码识别模块，因为是python第三方库，
+   默认没有安装，所以需要手动安装下。
+   下载地址：https://pypi.python.org/pypi/chardet
+   安装方法：
+       （1）：python setup.py install  ## 使用setup.py安装文件
+       （2）：将解压后目录下chardet文件夹放在应用程序目录下，就可以使用
+             import chardet开始使用chardet了。## 这种不用安装
+
+   使用：
+    &gt;&gt;&gt; a="非常好"
+    &gt;&gt;&gt; import chardet
+    &gt;&gt;&gt; chardet.detect(a)
+    {'confidence': 0.99, 'encoding': 'GB2312'}
+    &gt;&gt;&gt; a.decode(chardet.detect(a)['encoding']).encode('UTF-8')  ## 字符串用GB2312转为UTF-8
+    '\xe9\x9d\x9e\xe5\xb8\xb8\xe5\xa5\xbd'
+
+5、有些时候，需要读文本文件，需要将读出来的数据转为unicode，比如文本文件是utf-8的文件，这个时候可以
+   使用codecs模块，codecs是标准库，提供了许多方法和类，用于编码转换。
+   例子：
+   （1）先用enca -L zh xx.txt 检测文件的编码类型
+   （2）然后
+       fd = codecs.open("dddd.txt", 'r', "UTF-8") ##UTF-8就是文件的编码
+       print fd.readlines()   ## 从打印的字符串就可以看出了
+</code></pre>
+
+<h1>Reference</h1>
+
+<p><a href="http://www.pythonclub.org/modules/chardet">Python chardet 字符编码判断</a>  <br/>
+<a href="http://blog.csdn.net/zhaoweikid/article/details/1642015">python模块之codecs: 自然语言编码转换</a>  <br/>
+Thanks!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2013-10-10T21:26:00+00:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>9:26 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/python/'>python</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://nosea.github.io/blog/2013/10/10/python-code-problem/" data-via="" data-counturl="http://nosea.github.io/blog/2013/10/10/python-code-problem/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/08/04/tcl-note-one/" title="Previous Post: Tcl note one">&laquo; Tcl note one</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/10/11/python-multithread-kill/" title="Next Post: Python多线程无法接收Keyboard interrupt信号">Python多线程无法接收Keyboard interrupt信号 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-propertytree/">Boost PropertyTree</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/boost-filesystem/">Boost Filesystem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/26/tools-eclipse/">Eclipse 相关</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/boost-program-options/">Boost Program Options</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/25/fix-windows-7-bootmbr/">修复win7的引导</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

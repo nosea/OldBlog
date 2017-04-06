@@ -1,0 +1,305 @@
+---
+layout: post
+title: "Linux命令iptables"
+date: 2013-11-13 17:08
+comments: true
+categories: Linux
+toc: true
+---
+# Introduction
+    iptables — administration tool for IPv4 packet filtering and NAT
+<!--more-->	
+# 总览
+## 表和链
+    目前有四个表和五条链
+	表 —— 表包含一系列内置的链，也可以包含用户自定义的链
+    链 —— 每条链都是一张可以匹配报文的规则清单，每条规则说明了对匹配到的报文做何种处理
+{% img /image_tag/linux/iptables_tables_and_chains.png %} 
+### mangle表
+    用来修改数据包，
+	target —— TOS、TTL、MARK、SECMARK、CONNSECMARK
+	注意：不要做数据包的过滤之类的操作
+	TOS —— 修改报文的服务类型(Type of Service)，这个主要用来设置报文如何被路由之类的策略
+	       但是这个实现的并不好，网络中的很多路由器并不处理这个字段的值
+		   
+	TTL —— Time To Live，当通过一台机器共享网络时，转发的报文的TTL实际是各种各样的，运营商
+	       会通过这个来判断你是否共享网络，为了避免被发现，可以设置统一的TTL值
+		   
+	MARK —— 给报文设置指定的标记值，iproute2能够识别报文的这些值来做出不同的路由策略
+	        同时也可以根据这个来做带宽限制和Class Based Queuing
+			
+	SECMARK —— 可以给单个报文设置安全的上下文标记，这些标记可以被SELinux和其他安全系统处理
+	           SECMARK和CONNSECMARK合用可以用来设置整个连接
+	CONNSECMARK —— 可以用来拷贝单个报文的上下文标记给整个连接或者相反，然后供SELinux和其他安全系统
+	        处理
+### nat表
+{% img /image_tag/linux/iptables_nat.png %} 
+    只用来NAT
+	target —— DNAT、SNAT、MASQUERADE、REDIRECT
+	DNAT —— 当你只有一个公网IP时，想通过防火墙重导向到其他内网机器，即改变报文的目的地址并路由到指定的内网服务器
+	SNAT —— 用来改变报文的源地址，与DNAT相反，隐藏本地的网络结构，共享上网，统一出口之类的
+	MASQUERADE —— 跟SNAT一样，区别是使用这个机器负载高点，好处是当公网IP是不固定的，比如dhclient获得的之类的，那么
+	              对于每个匹配的包，MASQUERADE都会去查找可用的IP，而不是指定的				  
+### raw表
+    主要用来做一件事情，就是对报文设置一个标记来告诉连接跟踪系统不对这个报文做处理
+	target —— NOTRACK
+### filter表
+    用来过滤数据包
+	target —— ACCEPT、DROP
+## packet经过流程
+	PREROUTING链 —— 对报文做路由选择前应用这个链的规则，即进来的报文都先经过这个链处理
+	POSTROUTING链 —— 所有报文出去之前应用这个链的规则
+	INPUT链 —— 到本地应用程序之前应用这个链的所有规则
+	OUTPUT链 —— 出了应用程序后应用这个链的所有规则
+	FORWARD链 —— 本机转发的包应用这个链的所有规则
+{% img /image_tag/linux/iptables_map.png %} 
+# 用法
+## 总览
+    说明: 如果没有指定-t 选项，即没有指定表名，默认的操作表为filter表
+    ######################################################
+    iptables [-t table] command [match] [target/jump]
+    ######################################################
+    iptables [-t table] {-A|-C|-D} chain rule-specification
+    iptables [-t table] -I chain [rulenum] rule-specification
+    iptables [-t table] -R chain rulenum rule-specification
+    iptables [-t table] -D chain rulenum
+    iptables [-t table] -S [chain [rulenum]]
+    iptables [-t table] {-F|-L|-Z} [chain [rulenum]] [options...]
+    iptables [-t table] -N chain
+    iptables [-t table] -X [chain]
+    iptables [-t table] -P chain target
+    iptables [-t table] -E old-chain-name new-chain-name
+    rule-specification = [matches...] [target]
+    match = -m matchname [per-match-options]
+    target = -j targetname [per-target-options]
+## command
+	-A, --append chain rule-specification
+	    在链尾追加一条规则
+		  eg: 在filter表INPUT链尾加一条规则
+		  iptables -A INPUT --dport 80 -j ACCEPT
+		  
+	-C, --check chain rule-specification
+	
+	-D, --delete chain rule-specification
+	    删除链里面指定的一条规则，这个是通过输出完整的规则来删除
+		  eg: 删除filter表INPUT链里为'-p udp --dport 8000 -j ACCEPT'的规则
+		  iptables -D INPUT -p udp --dport 8000 -j ACCEPT
+		  
+	-D, --delete chain rulenum
+	    删除链里面指定的一条规则，这个是通过指定规则序号删除，序号1代表第一条规则
+		  eg: 删除filter表里INPUT链的第一条规则
+	      iptables -D INPUT 1
+		  
+	-I, --insert chain [rulenum] rule-specification
+	    在链里插入一条规则，rulenum指明插入的位置，如果没有给出，默认值为1
+		  eg: 在filter表INPUT链的第二个位置插入一条规则
+		  iptables -I INPUT 2 --dport 443 -j DROP
+		  
+	-R, --replace chain rulenum rule-specification
+	    替换指定rulenum的规则
+		  eg: 替换filter表INPUT链的第二个规则
+		  iptables -R INPUT 2 --dport 443 -j ACCEPT
+		  
+	-L, --list [chain]
+	    列出指定链的规则，不指定的话，则列出所有链的规则，常配合n和v选项使用
+		  eg: iptables -nvL
+		  
+	-S, --list-rules [chain]
+	    以iptables-save的格式打印指定链的规则，不指定链的话，则打印所有的
+		
+	-F, --flush [chain]
+	    清空指定链的规则，如果不指定链的话，则清空所有规则，它相比逐条删除更快
+		  eg: 清空INPUT链的所有规则
+		  iptables -F INPUT
+		  
+	-Z, --zero [chain [rulenum]]
+	    清空指定链指定序号的规则的包传输统计值，就是通过这个规则的流量，不指定的话，清空所有规则的统计值
+		
+	-N, --new-chain chain
+	    在指定的表上创建一个新的链(名字不能与内置的链同名)
+		eg: 在filter表上创建一个链
+		iptables -N TEST_CHAIN
+		
+    -X, --delete-chain [chain]
+	    删除指定表的指定用户链(注意，只能删除用户自定义的链)，如果不指定链名，会删除指定表上所有用户
+		自定义链，另外，要删除的链必须是空链，即不能含有任何规则，否则无法删除
+		eg: 删除filter表上的TEST_CHANIN链
+		iptables -X TEST_CHAIN
+		
+	-P, --policy chain target
+	    为内置的链设置默认的规则(ACCEPT DROP)，所有不符合规则的报文都使用这个规则，注意，内置的链和用户自定
+		义的链都不能作为target，即不能出现类似这种：
+		iptables -P INPUT OUTPUT或 iptables -P INPUT TEST_CHAIN
+		
+		eg: 设置filter表INPUT链默认为DROP
+		iptables -P INPUT DROP
+		
+	-E, --rename-chain old-chain new-chain
+	    修改链名
+		
+	-h    Help
+## match
+    指定了表和链，下面就要开始匹配经过这条链的每个数据包，匹配的结果无非是true或者false，true即执
+	行后面的target或jumpfalse则执行下一条规则
+	可以把所有的匹配选项分为5个子类：
+	generic matches —— 可以用于所有的规则
+	TCP matches —— 只能用于TCP包
+	UDP matches —— 只能用于UDP包
+    ICMP matches —— 只能用于ICMP包
+	special matches —— 一些特殊的匹配
+### generic matches
+     -p, --protocol [!] protocol
+	   1) protocol可以是"tcp"、"udp"、"icmp"或者"all"或者其相依的数值，具体数值可以参考/etc/protocols
+	   2) /etc/protocols里的其他协议也可以使用
+	   3) 协议名前可选的"!"为取反，比如 -p ! tcp 代表除tcp之外的协议
+	   4) 数值0等同于"all"
+	   5) "all"代表所有协议，并且当-p选项省略时，"all"为默认值
+	   eg:
+	     iptables -A INPUT -p tcp
+	   
+    -s, --source [!] address[/mask]
+	  用来匹配包的源ip地址，可以是单个ip地址，也可以附加CIDR表示网络，"!"表示取反。默认是匹配全部的ip地址
+	  eg:
+	  	 1、单个ip地址
+      	   iptables -A INPUT -p tcp -s 192.168.1.9 
+	  	 	等同于
+	  	 	iptables -A INPUT -p tcp -s 192.168.1.9/255.255.255.255
+	  	 	等同于
+	  	 	iptables -A INPUT -p tcp -s 192.168.1.9/32
+	  	 2、网络
+	      iptables -A INPUT -p tcp -s 192.168.1.0/24 ## 这个会匹配所有来自192.168.0.x的包
+		
+    -d, --destination [!] address[/mask]
+      用来匹配包的目的ip地址，跟-s相同的语法
+	  
+    -i, --in-interface [!] name
+	  用来匹配包入口的网络接口。这个选项只用于INPUT、FORWARD和PREROUTING三个链，用于其他链会返回错误
+	  注意:
+	    1) 接口可以物理网卡如eth0，也可以是其他如PPP0,或虚拟网卡
+		2) 如果不指定具体的interface，那么会默认以"+"代替所有的interface，另外"eth+"也可以通配
+		   所有以eth开头的，如eth1、eth2...
+		3) "!"为取反，如 "! eth0" 表示出eth0之外的所有包
+		
+    -o, --out-interface [!] name
+	  用来匹配包的出口接口，用法同"-i"，这个选项只用于OUTPUT, FORWARD 和 POSTROUTING链
+
+    [!]  -f, --fragment
+	  用来匹配被分片的包的第二和第三部分，因为包头在第一部分，源地址和目的地址，端口等都无法知道，
+	  上述规则无法匹配，所以才有了这个匹配。注意"! -f"只匹配第一个分片或者不分片的包。为了防止碎片攻击
+	  可以使用这个，但是目前的内核有很好的碎片重组功能可以使用，所以不需要取反来防止碎片攻击。
+	  如果使用连接跟踪选项的话，就不会看到任何分片包，因为在抵达任何链之前包就被处理了
+### Implicit matches
+    iptables可以使用扩展的包匹配模块，必须导入才能使用，导入有两种方法，一种的隐式的导入，当-p 或者
+	--protocol指定了协议类型时，另一种是显式的使用-m 或者 --match选项后面紧跟匹配模块名的方式
+#### TCP matches 
+    下面的选项只有在使用了"--protocol tcp"才有效
+	--sport, --source-port [!] port[:port]
+	  匹配TCP包源端口
+	  注意:
+	   1) 不用此选项，则匹配所有端口
+	   2) port1:port2表示连续端口，如"7000:8000"表示7000到8000端口
+	   3) 省略第一个port时，默认为0，如 ":22"表示0到22端口
+	   4) 省略第二个port时，默认为65535，如"22:"表示22到65535端口
+	   5) "!"取反
+
+    --dport, --destination-port [!] port[:port]
+	  匹配包的目的端口，用法同源端口
+	  
+	--tcp-flags [!] mask comp
+	  匹配TCP的flag。flag可以是: SYN ACK FIN RST URG PSH ALL NONE
+	  有两个参数，mask和comp，每个参数都是一个list，里面的内容以逗号隔开，参数之间以空格隔开。
+	  mask表示要检查的flags有哪些，而comp则说明哪些flag需要被设置
+	  eg: 匹配SYN被设置，而ACK, FIN 和 RST没有被设置的包
+	    iptables -A FORWARD -p tcp --tcp-flags SYN,ACK,FIN,RST SYN
+#### UDP matches 
+    下面的选项只有使用了"--protocol udp"才有效
+	--source-port [!] port[:port]
+	  使用方法同TCP
+	--destination-port [!] port[:port]
+	  使用方法同TCP
+#### ICMP matches
+    下面的选项只有使用了"--protocol icmp"才有效
+	  --icmp-type [!] typename
+	    根据ICMP的类型来匹配包，可以是ICMP类型名，也可以是相对应的类型值。
+		ICMP的类型名可以参考如下命令: iptables -p icmp -h
+		eg: 匹配ICMP类型8的包
+		  iptables -A INPUT -p icmp --icmp-type 8
+#### SCTP matches
+    SCTP(Stream Control Transmission Protocol), 一个较新的协议
+	当指定了"-p sctp" 或者 "--protocol sctp"时，其所属的matches自动被加载
+	  --source-port,--sport [!] port[:port]
+	    匹配SCTP报文头的源端口，使用方法同TCP的
+	  --destination-port,--dport [!] port[:port]
+	    匹配SCTP报文头的目的端口，使用方法同TCP的
+	  --chunk-types [!] {all|any|only} chunktype[:flags] [...]
+	
+### Explicit matches
+    pass
+## target/jump
+    target/jumps指明了当包匹配上了后应该做何种动作
+    -j, --jump target/chain
+	指定要执行的动作，或是跳转到其他链，或是ACCEPT之类的
+
+    ACCEPT 
+	  说明 —— 这个target用来让报文通过
+	  选项 —— 无
+	  eg: 让80端口的tcp包通过
+	    iptables -A INPUT -p tcp --sport 80 -j ACCEPT
+		
+	DNAT
+	  说明 —— 做目的地址转换，因此需要重写目的IP地址，一旦匹配，所有的包都会被转换，然后路由到正确的设备
+	  注意 —— DNAT只在nat表的PREROUTING 和 OUTPUT链中有效，或是从这两条链跳转的任何用户自定义链
+	  选项:
+	    --to-destination ipaddr[-ipaddr][:port-port]
+		  重写ip头的地址，可以是单个ip也可以是一个ip段，如果是ip段的话，会把匹配的包随机分配到这些ip中
+	  eg:
+	    iptables -t nat -A PREROUTING -d 15.45.23.67 -j DNAT --to-destination 192.168.1.1-192.168.1.10
+	      把目的地址为 15.45.23.67 的包发往后面的ip段。单个流会始终分配到同一个ip。
+		iptables -t nat -A PREROUTING -d 15.45.23.67 -j DNAT --to-destination 192.168.1.2
+		  指定单个ip
+		iptables -t nat -A PREROUTING -p tcp -d 15.45.23.67 -j DNAT --to-destination 192.168.1.2:22-443
+		  指定目的端口，注意，要使用端口，必须指定"--protocol"选项
+	
+	DROP: 将报文丢弃掉，不会向发送者返回任何信息
+	
+	MASQUERADE: 同SNAT，但是不需要--to-source选项
+	
+	REJECT: 将报文丢弃掉，但会向发送者返回一个错误信息
+	
+	SNAT:
+	  说明 —— 做源地址转换，因此需要重写源IP地址，常用来共享IP地址。使用这个功能时，首先要在内核里打开IP
+	          转发功能
+	  注意 —— SNAT只在nat表里的POSTROUTING链里有效，另外当同一个连接的第一个包被匹配到后，其余的包自动被
+	          转发
+	  选项:
+	    --to-source [ipaddr[-ipaddr]][:port[-port]]
+		   指定源地址和端口
+	  eg:
+
+# 实例
+## 共享网络
+    linux主机当nat服务器，有多个网卡，其中一个网卡接公网ip，其他的接私网。
+	其中接出来的私网接入路由器，由路由器分配ip。路由器接入交换机，使台式机可以通过有线上网。
+	笔记本可以直接通过无线上网。
+``` bash
+#!/bin/bash
+/etc/init.d/network-manager stop
+killall -9 dhclient
+#开启ip转发功能
+echo 1 >/proc/sys/net/ipv4/ip_forward
+iptables -F
+iptables -t nat -F
+#此处的eth*要改成你的公网ip的接口,而-s后面的ip是人为设定的转发网段的ip。
+iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -o eth* -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -o eth* -j MASQUERADE
+#设置公网ip和子网掩码
+ifconfig eth4 10.75.224.2 netmask 255.255.255.128
+#添加默认网关
+route add default gw 10.75.224.1
+#设置转发的ip
+ifconfig eth$ 192.168.0.1
+ifconfig eth$ 192.168.1.1
+iptables-save 
+```
+# Reference
+[Iptables Tutorial 1.2.2](https://www.frozentux.net/iptables-tutorial/iptables-tutorial.html)

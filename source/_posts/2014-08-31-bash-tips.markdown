@@ -1,0 +1,96 @@
+---
+layout: post
+title: "bash tips"
+date: 2014-08-31 22:58
+comments: true
+categories: Shell
+toc: true
+---
+# Introduction
+    long time tips
+<!--more-->	
+# Content
+## logging in file
+``` bash
+export _LOG_FILE="test.log"
+export _INFO_FLAG="[INFO]"
+export _ERROR_FLAG="[ERROR]"
+export _LOG_FORMAT="%Y-%m-%d %H:%M:%S"
+
+LOG_INFO()
+{
+    echo $(date +"${_LOG_FORMAT} ${_INFO_FLAG} (${BASH_SOURCE[1]##*/}:${BASH_LINENO[0]}) ") $* >> $_LOG_FILE
+}
+
+LOG_ERROR()
+{
+    echo $(date +"${_LOG_FORMAT} ${_ERROR_FLAG} (${BASH_SOURCE[1]##*/}:${BASH_LINENO[0]}) ") $* >> $_LOG_FILE
+}
+```
+## function decorator
+``` bash
+export _ERROR_LOG="err.log"
+RUN()
+{
+    # every function will append some infomation to debug or logging
+    local _func="$1"; shift 1
+
+    echo "start ${_func} ..."
+    # run the function 
+    ${_func} $@ 2>>${_ERROR_LOG}
+
+    # logging
+    echo "done ${_func} ..."
+}
+
+test()
+{
+    echo "param is :" $@
+}
+```
+## reverse the order of lines in a file
+    1、use command tac
+	   tac filename
+	2、sed tricks
+	   sed '1!G;h;$!d' filename
+	   sed -n '1!G;h;$p' filename
+	3、pelr
+	   perl -e 'print reverse <>' filename
+## exit shell script from a subshell
+### use kill && or kill 0
+``` bash
+sub_proc()
+{
+    echo "start sub process..."
+    kill $$
+	# the same as kill 0
+	# for detail see kill(2) manpage
+}
+
+base_proc()
+{
+    var=$(sub_proc)
+    echo "this will never be printed"
+}
+
+base_proc
+```
+### use set -E and trap 
+``` bash
+#!/bin/bash
+set -E # -E  If set, the ERR trap is inherited by shell functions
+trap '[ "$?" -eq 99 ] && exit 99' ERR
+sub_proc()
+{
+    echo "start sub process..."
+    exit 99 
+}
+
+base_proc()
+{
+    var=$(sub_proc)
+    echo "this will never be printed"
+}
+
+base_proc
+```

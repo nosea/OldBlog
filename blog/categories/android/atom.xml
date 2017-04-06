@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Android | My Octopress Blog]]></title>
+  <title><![CDATA[Category: Android | nosea's Blog]]></title>
   <link href="http://nosea.github.io/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://nosea.github.io/"/>
-  <updated>2017-04-06T15:21:27+00:00</updated>
+  <updated>2017-04-06T15:25:38+00:00</updated>
   <id>http://nosea.github.io/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[noseawu]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>

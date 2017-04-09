@@ -4,7 +4,7 @@
   <title><![CDATA[Category: C\c++ | nosea's Blog]]></title>
   <link href="http://nosea.github.io/blog/categories/c-slash-c-plus-plus/atom.xml" rel="self"/>
   <link href="http://nosea.github.io/"/>
-  <updated>2017-04-06T15:25:38+00:00</updated>
+  <updated>2017-04-09T13:26:26+00:00</updated>
   <id>http://nosea.github.io/</id>
   <author>
     <name><![CDATA[noseawu]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Boost Program Options]]></title>
-    <link href="http://nosea.github.io/blog/2015/01/25/boost-program-options/"/>
+    <link href="http://nosea.github.io/blog/2015/01-25/boost-program-options/"/>
     <updated>2015-01-25T18:12:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2015/01/25/boost-program-options</id>
+    <id>http://nosea.github.io/blog/2015/01-25/boost-program-options</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>program_options主要用于方便的从命令行或者配置文件获取程序选项。
@@ -181,9 +181,9 @@ int main(int argc, char* argv[])
   
   <entry>
     <title type="html"><![CDATA[函数返回引用]]></title>
-    <link href="http://nosea.github.io/blog/2015/01/24/returning-a-reference/"/>
+    <link href="http://nosea.github.io/blog/2015/01-24/returning-a-reference/"/>
     <updated>2015-01-24T19:26:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2015/01/24/returning-a-reference</id>
+    <id>http://nosea.github.io/blog/2015/01-24/returning-a-reference</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>函数返回引用
@@ -206,9 +206,9 @@ int main(int argc, char* argv[])
   
   <entry>
     <title type="html"><![CDATA[《C专家编程》读书笔记(三)]]></title>
-    <link href="http://nosea.github.io/blog/2013/01/04/expert-c-programming-reading-notes-three/"/>
+    <link href="http://nosea.github.io/blog/2013/01-04/expert-c-programming-reading-notes-three/"/>
     <updated>2013-01-04T19:44:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/01/04/expert-c-programming-reading-notes-three</id>
+    <id>http://nosea.github.io/blog/2013/01-04/expert-c-programming-reading-notes-three</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>《C专家编程》第三章笔记
@@ -372,9 +372,9 @@ typedef应该用在：
   
   <entry>
     <title type="html"><![CDATA[《C专家编程》读书笔记(二)]]></title>
-    <link href="http://nosea.github.io/blog/2013/01/02/expert-c-programming-reading-notes-two/"/>
+    <link href="http://nosea.github.io/blog/2013/01-02/expert-c-programming-reading-notes-two/"/>
     <updated>2013-01-02T20:04:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/01/02/expert-c-programming-reading-notes-two</id>
+    <id>http://nosea.github.io/blog/2013/01-02/expert-c-programming-reading-notes-two</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>《C专家编程》第二章笔记
@@ -504,9 +504,9 @@ typedef应该用在：
   
   <entry>
     <title type="html"><![CDATA[《C专家编程》读书笔记(一)]]></title>
-    <link href="http://nosea.github.io/blog/2012/12/28/expert-c-programming-reading-notes-one/"/>
+    <link href="http://nosea.github.io/blog/2012/12-28/expert-c-programming-reading-notes-one/"/>
     <updated>2012-12-28T12:04:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2012/12/28/expert-c-programming-reading-notes-one</id>
+    <id>http://nosea.github.io/blog/2012/12-28/expert-c-programming-reading-notes-one</id>
     <content type="html"><![CDATA[<h1>第1章</h1>
 
 <h2>1.1 C语言的史前阶段</h2>

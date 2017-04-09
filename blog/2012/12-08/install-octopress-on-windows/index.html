@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Install Octopress on Windows - nosea's Blog</title>
+  <meta name="author" content="noseawu">
+
+  
+  <meta name="description" content="Environment: OS: Windows 7 SP1 Lang: en Install software Install git Get the latest msysgit and install. Install ruby for windows -1.9.2 or 1.9.3 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nosea.github.io/blog/2012/12-08/install-octopress-on-windows/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="nosea's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">nosea's Blog</a></h1>
+  
+    <h2>Hello 2017.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="nosea.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Install Octopress on Windows</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-12-08T13:01:00+00:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>1:01 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><ul>
+<li>Environment: <br/>
+OS: Windows 7 SP1 <br/>
+Lang: en</li>
+</ul>
+
+
+<!-- more -->
+
+
+<ul>
+<li><p>Install software</p>
+
+<ul>
+<li>Install git
+
+<ul>
+<li>Get the latest <a href="http://code.google.com/p/msysgit/downloads/list">msysgit</a> and install.</li>
+</ul>
+</li>
+<li>Install ruby for windows  -1.9.2 or 1.9.3
+
+<ul>
+<li>Get <a href="http://rubyforge.org/frs/?group_id=167">RubyInstaller</a> and install. <br/>
+Add the bin path to the System environment&rsquo;s path where ruby installed <br/>
+eg: <code>C:\Ruby192\bin</code></li>
+<li>Get <a href="https://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.2-20111229-1559-sfx.exe">RubyInstaller DevKit</a><br/>
+It is a self-extracting file and extract it in a place, such as <code>C:\DevKit</code> <br/>
+run the CMD, enter the <code>C:\DevKit</code> <br/>
+execute command <code>ruby dk.rb init</code> <br/>
+execute command <code>ruby dk.rb install</code></li>
+</ul>
+</li>
+<li>Install python
+
+<ul>
+<li>For windows platform, the <a href="http://www.activestate.com/activepython">ActivePython</a> may be a better choice, get it and install. <br/>
+Put the <code>D:\Python27</code> and the <code>D:\Python27\Scripts</code> to the Os-env-path. <br/>
+That&rsquo;s where I choose to install python.</li>
+<li>In CMD, run <code>easy_install pygments</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Configuration</p>
+
+<ul>
+<li>Configure git<br/>
+<code>git config --global user.name "yourname"</code> <br/>
+<code>git config --global user.email yourname@some.com</code></li>
+<li>Add env value <br/>
+<code>LANG=zh_CN.UTF-8</code> <br/>
+<code>LC_ALL=zh_CN.UTF-8</code></li>
+<li>Change gem upgrade source <br/>
+<code>gem sources --remove http://rubygems.org/</code><br/>
+<code>gem sources -a http://ruby.taobao.org/</code> <br/>
+<code>gem sources -l</code>  check if it is right.</li>
+</ul>
+</li>
+<li><p>Generating ssh keys</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd ~/.ssh   
+</span><span class='line'>ssh-keygen -t rsa -C "your email"   
+</span><span class='line'>put your pub kes to github</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<ul>
+<li>Install octopress</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># Enter a directory where you want to put octopress
+</span><span class='line'>git clone git://github.com/imathis/octopress.git octopress
+</span><span class='line'>cd octopress
+</span><span class='line'>#vim Gemfile and change the source
+</span><span class='line'>turn: source "http://rubygems.org/"
+</span><span class='line'>to: source "http://ruby.taobao.org/"
+</span><span class='line'>gem install rdoc bundler
+</span><span class='line'>bundle install
+</span><span class='line'>rake install</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<ul>
+<li>Error log</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>Error </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake generate
+</span><span class='line'>(in e:/WorkSpace/Blog/octopress)
+</span><span class='line'>## Generating Site with Jekyll
+</span><span class='line'>unchanged sass/screen.scss
+</span><span class='line'>Configuration from e:/WorkSpace/Blog/octopress/_config.yml
+</span><span class='line'>c:/Ruby192/lib/ruby/gems/1.9.1/gems/blankslate-3.1.2/lib/blankslate.rb:51: warning: undefining `object_id' may cause serious problems
+</span><span class='line'>Building site: source -> public
+</span><span class='line'>c:/Ruby192/lib/ruby/gems/1.9.1/gems/jekyll-0.11.2/lib/jekyll/convertible.rb:29:in `read_yaml': invalid byte sequence in UTF-8 (ArgumentError)
+</span><span class='line'>        from c:/Ruby192/lib/ruby/gems/1.9.1/gems/jekyll-0.11.2/lib/jekyll/post.rb:39:in `initialize'
+</span><span class='line'>        from e:/WorkSpace/Blog/octopress/plugins/preview_unpublished.rb:23:in `new'
+</span><span class='line'>        from e:/WorkSpace/Blog/octopress/plugins/preview_unpublished.rb:23:in `block in read_posts'
+</span><span class='line'>        from e:/WorkSpace/Blog/octopress/plugins/preview_unpublished.rb:21:in `each'
+</span><span class='line'>        from e:/WorkSpace/Blog/octopress/plugins/preview_unpublished.rb:21:in `read_posts'
+</span><span class='line'>        from c:/Ruby192/lib/ruby/gems/1.9.1/gems/jekyll-0.11.2/lib/jekyll/site.rb:128:in `read_directories'
+</span><span class='line'>        from c:/Ruby192/lib/ruby/gems/1.9.1/gems/jekyll-0.11.2/lib/jekyll/site.rb:98:in `read'
+</span><span class='line'>        from c:/Ruby192/lib/ruby/gems/1.9.1/gems/jekyll-0.11.2/lib/jekyll/site.rb:38:in `process'
+</span><span class='line'>        from c:/Ruby192/lib/ruby/gems/1.9.1/gems/jekyll-0.11.2/bin/jekyll:250:in `&lt;top (required)>'
+</span><span class='line'>        from c:/Ruby192/bin/jekyll:19:in `load'
+</span><span class='line'>        from c:/Ruby192/bin/jekyll:19:in `&lt;main>'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  <br/>
+   Make sure you&rsquo;ve add this: <br/>
+      # Add env value <br/>
+      <code>LANG=zh_CN.UTF-8</code> <br/>
+      <code>LC_ALL=zh_CN.UTF-8</code>
+   Or edit convertible.rb  <br/>
+   turn the <code>self.content = File.read(File.join(base, name))</code>  <br/>
+   to <code>self.content = File.read(File.join(base, name), :encoding =&gt; "utf-8")</code></p>
+
+<ul>
+<li>  About ssh</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ssh -vT git@github.com
+</span><span class='line'># ...
+</span><span class='line'># Agent admitted failure to sign using the key.
+</span><span class='line'># debug1: No more authentication methods to try.
+</span><span class='line'># Permission denied (publickey).</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://help.github.com/articles/error-agent-admitted-failure-to-sign">Resolution</a></p>
+
+<figure class='code'><figcaption><span>Tips </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1. make sure you've generated the ssh keys correctly
+</span><span class='line'>2. run: ssh-add</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Reference:  <br/>
+1.<a href="http://sinosmond.github.com/blog/2012/03/12/install-and-deploy-octopress-to-github-on-windows7-from-scratch/">http://sinosmond.github.com/blog/2012/03/12/install-and-deploy-octopress-to-github-on-windows7-from-scratch/</a> <br/>
+2.<a href="http://www.freehao123.com/github-pages/">http://www.freehao123.com/github-pages/</a>  <br/>
+Thanks!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">noseawu</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2012-12-08T13:01:00+00:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>1:01 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/octopress/'>octopress</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://nosea.github.io/blog/2012/12-08/install-octopress-on-windows/" data-via="" data-counturl="http://nosea.github.io/blog/2012/12-08/install-octopress-on-windows/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/12-05/deploy-octopress-on-github/" title="Previous Post: 在Github上搭建Octopress">&laquo; 在Github上搭建Octopress</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/12-10/configure-octopress/" title="Next Post: 配置 Octopress">配置 Octopress &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01-26/boost-propertytree/">Boost PropertyTree</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-26/boost-filesystem/">Boost Filesystem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-26/tools-eclipse/">Eclipse 相关</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-25/boost-program-options/">Boost Program Options</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-25/fix-windows-7-bootmbr/">修复win7的引导</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - noseawu -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

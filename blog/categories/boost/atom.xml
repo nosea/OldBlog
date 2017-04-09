@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Boost | nosea's Blog]]></title>
   <link href="http://nosea.github.io/blog/categories/boost/atom.xml" rel="self"/>
   <link href="http://nosea.github.io/"/>
-  <updated>2017-04-06T15:25:38+00:00</updated>
+  <updated>2017-04-09T13:26:26+00:00</updated>
   <id>http://nosea.github.io/</id>
   <author>
     <name><![CDATA[noseawu]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Boost PropertyTree]]></title>
-    <link href="http://nosea.github.io/blog/2015/01/26/boost-propertytree/"/>
+    <link href="http://nosea.github.io/blog/2015/01-26/boost-propertytree/"/>
     <updated>2015-01-26T23:08:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2015/01/26/boost-propertytree</id>
+    <id>http://nosea.github.io/blog/2015/01-26/boost-propertytree</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>The Property Tree library provides a data structure that stores an arbitrarily deeply nested tree of values, 
@@ -153,9 +153,9 @@ int main(int argc, char* argv[])
   
   <entry>
     <title type="html"><![CDATA[Boost Filesystem]]></title>
-    <link href="http://nosea.github.io/blog/2015/01/26/boost-filesystem/"/>
+    <link href="http://nosea.github.io/blog/2015/01-26/boost-filesystem/"/>
     <updated>2015-01-26T12:46:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2015/01/26/boost-filesystem</id>
+    <id>http://nosea.github.io/blog/2015/01-26/boost-filesystem</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>The Boost.Filesystem library provides facilities to manipulate files and 
@@ -216,9 +216,9 @@ int main(int argc, char* argv[])
   
   <entry>
     <title type="html"><![CDATA[Lexical_Cast]]></title>
-    <link href="http://nosea.github.io/blog/2014/08/04/lexical-cast/"/>
+    <link href="http://nosea.github.io/blog/2014/08-04/lexical-cast/"/>
     <updated>2014-08-04T23:21:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2014/08/04/lexical-cast</id>
+    <id>http://nosea.github.io/blog/2014/08-04/lexical-cast</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>数值与字符串转换之用，更方便，安全，有效。

@@ -4,7 +4,7 @@
   <title><![CDATA[nosea's Blog]]></title>
   <link href="http://nosea.github.io/atom.xml" rel="self"/>
   <link href="http://nosea.github.io/"/>
-  <updated>2017-04-06T15:25:38+00:00</updated>
+  <updated>2017-04-09T13:26:26+00:00</updated>
   <id>http://nosea.github.io/</id>
   <author>
     <name><![CDATA[noseawu]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Boost PropertyTree]]></title>
-    <link href="http://nosea.github.io/blog/2015/01/26/boost-propertytree/"/>
+    <link href="http://nosea.github.io/blog/2015/01-26/boost-propertytree/"/>
     <updated>2015-01-26T23:08:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2015/01/26/boost-propertytree</id>
+    <id>http://nosea.github.io/blog/2015/01-26/boost-propertytree</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>The Property Tree library provides a data structure that stores an arbitrarily deeply nested tree of values, 
@@ -267,9 +267,9 @@ indexed at each level by some key.
   
   <entry>
     <title type="html"><![CDATA[Boost Filesystem]]></title>
-    <link href="http://nosea.github.io/blog/2015/01/26/boost-filesystem/"/>
+    <link href="http://nosea.github.io/blog/2015/01-26/boost-filesystem/"/>
     <updated>2015-01-26T12:46:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2015/01/26/boost-filesystem</id>
+    <id>http://nosea.github.io/blog/2015/01-26/boost-filesystem</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>The Boost.Filesystem library provides facilities to manipulate files and 
@@ -369,9 +369,9 @@ directories, and the paths that identify them.
   
   <entry>
     <title type="html"><![CDATA[Eclipse 相关]]></title>
-    <link href="http://nosea.github.io/blog/2015/01/26/tools-eclipse/"/>
+    <link href="http://nosea.github.io/blog/2015/01-26/tools-eclipse/"/>
     <updated>2015-01-26T12:41:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2015/01/26/tools-eclipse</id>
+    <id>http://nosea.github.io/blog/2015/01-26/tools-eclipse</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>eclipse 相关内容
@@ -392,9 +392,9 @@ directories, and the paths that identify them.
   
   <entry>
     <title type="html"><![CDATA[Boost Program Options]]></title>
-    <link href="http://nosea.github.io/blog/2015/01/25/boost-program-options/"/>
+    <link href="http://nosea.github.io/blog/2015/01-25/boost-program-options/"/>
     <updated>2015-01-25T18:12:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2015/01/25/boost-program-options</id>
+    <id>http://nosea.github.io/blog/2015/01-25/boost-program-options</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>program_options主要用于方便的从命令行或者配置文件获取程序选项。
@@ -701,9 +701,9 @@ directories, and the paths that identify them.
   
   <entry>
     <title type="html"><![CDATA[修复win7的引导]]></title>
-    <link href="http://nosea.github.io/blog/2015/01/25/fix-windows-7-bootmbr/"/>
+    <link href="http://nosea.github.io/blog/2015/01-25/fix-windows-7-bootmbr/"/>
     <updated>2015-01-25T14:47:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2015/01/25/fix-windows-7-bootmbr</id>
+    <id>http://nosea.github.io/blog/2015/01-25/fix-windows-7-bootmbr</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>案例：装有双系统(win7 和 Linux)，其中引导由linux得grub引导，且win7和linux的引导
@@ -739,9 +739,9 @@ Windows startup recovery should now work.
   
   <entry>
     <title type="html"><![CDATA[函数返回引用]]></title>
-    <link href="http://nosea.github.io/blog/2015/01/24/returning-a-reference/"/>
+    <link href="http://nosea.github.io/blog/2015/01-24/returning-a-reference/"/>
     <updated>2015-01-24T19:26:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2015/01/24/returning-a-reference</id>
+    <id>http://nosea.github.io/blog/2015/01-24/returning-a-reference</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>函数返回引用
@@ -764,9 +764,9 @@ Windows startup recovery should now work.
   
   <entry>
     <title type="html"><![CDATA[Linux命令tcpdump]]></title>
-    <link href="http://nosea.github.io/blog/2015/01/06/linux-command-tcpdump/"/>
+    <link href="http://nosea.github.io/blog/2015/01-06/linux-command-tcpdump/"/>
     <updated>2015-01-06T17:41:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2015/01/06/linux-command-tcpdump</id>
+    <id>http://nosea.github.io/blog/2015/01-06/linux-command-tcpdump</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>tcpdump命令日常使用
@@ -945,9 +945,9 @@ $ sudo tcpdump -nlv -c10 'tcp and src host 192.168.9.73 and less 100'
   
   <entry>
     <title type="html"><![CDATA[在mac上安装octopress]]></title>
-    <link href="http://nosea.github.io/blog/2014/12/16/install-octopress-on-mac/"/>
+    <link href="http://nosea.github.io/blog/2014/12-16/install-octopress-on-mac/"/>
     <updated>2014-12-16T22:30:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2014/12/16/install-octopress-on-mac</id>
+    <id>http://nosea.github.io/blog/2014/12-16/install-octopress-on-mac</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>在Mac上安装Octopress记录
@@ -1034,9 +1034,9 @@ rake generate
   
   <entry>
     <title type="html"><![CDATA[Bash Tips]]></title>
-    <link href="http://nosea.github.io/blog/2014/08/31/bash-tips/"/>
+    <link href="http://nosea.github.io/blog/2014/08-31/bash-tips/"/>
     <updated>2014-08-31T22:58:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2014/08/31/bash-tips</id>
+    <id>http://nosea.github.io/blog/2014/08-31/bash-tips</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>long time tips
@@ -1210,9 +1210,9 @@ rake generate
   
   <entry>
     <title type="html"><![CDATA[Lexical_Cast]]></title>
-    <link href="http://nosea.github.io/blog/2014/08/04/lexical-cast/"/>
+    <link href="http://nosea.github.io/blog/2014/08-04/lexical-cast/"/>
     <updated>2014-08-04T23:21:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2014/08/04/lexical-cast</id>
+    <id>http://nosea.github.io/blog/2014/08-04/lexical-cast</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>数值与字符串转换之用，更方便，安全，有效。
@@ -1414,9 +1414,9 @@ rake generate
   
   <entry>
     <title type="html"><![CDATA[HTML Basic]]></title>
-    <link href="http://nosea.github.io/blog/2014/01/05/html-basic/"/>
+    <link href="http://nosea.github.io/blog/2014/01-05/html-basic/"/>
     <updated>2014-01-05T22:44:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2014/01/05/html-basic</id>
+    <id>http://nosea.github.io/blog/2014/01-05/html-basic</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>html基础
@@ -1547,9 +1547,9 @@ margin: auto; -- div居中
   
   <entry>
     <title type="html"><![CDATA[Shell Color Format]]></title>
-    <link href="http://nosea.github.io/blog/2014/01/01/shell-color-format/"/>
+    <link href="http://nosea.github.io/blog/2014/01-01/shell-color-format/"/>
     <updated>2014-01-01T21:59:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2014/01/01/shell-color-format</id>
+    <id>http://nosea.github.io/blog/2014/01-01/shell-color-format</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>终端颜色打印
@@ -1655,9 +1655,9 @@ Code    说明
   
   <entry>
     <title type="html"><![CDATA[MySQL Skills]]></title>
-    <link href="http://nosea.github.io/blog/2013/12/08/mysql-skills/"/>
+    <link href="http://nosea.github.io/blog/2013/12-08/mysql-skills/"/>
     <updated>2013-12-08T11:02:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/12/08/mysql-skills</id>
+    <id>http://nosea.github.io/blog/2013/12-08/mysql-skills</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>纯记录
@@ -1676,9 +1676,9 @@ Code    说明
   
   <entry>
     <title type="html"><![CDATA[Shell Trap]]></title>
-    <link href="http://nosea.github.io/blog/2013/12/02/shell-trap/"/>
+    <link href="http://nosea.github.io/blog/2013/12-02/shell-trap/"/>
     <updated>2013-12-02T22:35:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/12/02/shell-trap</id>
+    <id>http://nosea.github.io/blog/2013/12-02/shell-trap</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>有些错误犯一次就够了
@@ -1716,9 +1716,9 @@ Code    说明
   
   <entry>
     <title type="html"><![CDATA[Awk常用函数]]></title>
-    <link href="http://nosea.github.io/blog/2013/11/24/awk-funclib/"/>
+    <link href="http://nosea.github.io/blog/2013/11-24/awk-funclib/"/>
     <updated>2013-11-24T14:52:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/11/24/awk-funclib</id>
+    <id>http://nosea.github.io/blog/2013/11-24/awk-funclib</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>收集些我觉得有用的函数
@@ -1888,9 +1888,9 @@ Code    说明
   
   <entry>
     <title type="html"><![CDATA[Perl Basic]]></title>
-    <link href="http://nosea.github.io/blog/2013/11/23/perl-basic/"/>
+    <link href="http://nosea.github.io/blog/2013/11-23/perl-basic/"/>
     <updated>2013-11-23T00:15:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/11/23/perl-basic</id>
+    <id>http://nosea.github.io/blog/2013/11-23/perl-basic</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>Perl —— Practical Extraction and Report Language
@@ -2079,9 +2079,9 @@ if (expression) {
   
   <entry>
     <title type="html"><![CDATA[Linux命令xargs]]></title>
-    <link href="http://nosea.github.io/blog/2013/11/21/linux-command-xargs/"/>
+    <link href="http://nosea.github.io/blog/2013/11-21/linux-command-xargs/"/>
     <updated>2013-11-21T22:32:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/11/21/linux-command-xargs</id>
+    <id>http://nosea.github.io/blog/2013/11-21/linux-command-xargs</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>xargs - build and execute command lines from standard input
@@ -2101,9 +2101,9 @@ command_1 | xargs command_2
   
   <entry>
     <title type="html"><![CDATA[Linux命令iptables]]></title>
-    <link href="http://nosea.github.io/blog/2013/11/13/linux-command-iptables/"/>
+    <link href="http://nosea.github.io/blog/2013/11-13/linux-command-iptables/"/>
     <updated>2013-11-13T17:08:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/11/13/linux-command-iptables</id>
+    <id>http://nosea.github.io/blog/2013/11-13/linux-command-iptables</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>iptables — administration tool for IPv4 packet filtering and NAT
@@ -2487,9 +2487,9 @@ SNAT:
   
   <entry>
     <title type="html"><![CDATA[Linux命令vmstat]]></title>
-    <link href="http://nosea.github.io/blog/2013/11/10/linux-command-vmstat/"/>
+    <link href="http://nosea.github.io/blog/2013/11-10/linux-command-vmstat/"/>
     <updated>2013-11-10T10:38:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/11/10/linux-command-vmstat</id>
+    <id>http://nosea.github.io/blog/2013/11-10/linux-command-vmstat</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>vmstat上报关于进程、内存、内存分页、阻塞IO、traps、CPU活动信息
@@ -2538,9 +2538,9 @@ CPU:
   
   <entry>
     <title type="html"><![CDATA[Linux命令top]]></title>
-    <link href="http://nosea.github.io/blog/2013/11/09/linux-command-top/"/>
+    <link href="http://nosea.github.io/blog/2013/11-09/linux-command-top/"/>
     <updated>2013-11-09T16:29:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/11/09/linux-command-top</id>
+    <id>http://nosea.github.io/blog/2013/11-09/linux-command-top</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>top -- display Linux tasks

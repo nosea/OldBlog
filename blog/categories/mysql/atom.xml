@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mysql | nosea's Blog]]></title>
   <link href="http://nosea.github.io/blog/categories/mysql/atom.xml" rel="self"/>
   <link href="http://nosea.github.io/"/>
-  <updated>2017-04-06T15:25:38+00:00</updated>
+  <updated>2017-04-09T13:26:26+00:00</updated>
   <id>http://nosea.github.io/</id>
   <author>
     <name><![CDATA[noseawu]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[MySQL Skills]]></title>
-    <link href="http://nosea.github.io/blog/2013/12/08/mysql-skills/"/>
+    <link href="http://nosea.github.io/blog/2013/12-08/mysql-skills/"/>
     <updated>2013-12-08T11:02:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/12/08/mysql-skills</id>
+    <id>http://nosea.github.io/blog/2013/12-08/mysql-skills</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>纯记录
@@ -36,9 +36,9 @@
   
   <entry>
     <title type="html"><![CDATA[Mysql Statistical Analysis Exercise]]></title>
-    <link href="http://nosea.github.io/blog/2013/04/17/mysql-statistical-analysis-exercise/"/>
+    <link href="http://nosea.github.io/blog/2013/04-17/mysql-statistical-analysis-exercise/"/>
     <updated>2013-04-17T10:26:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/04/17/mysql-statistical-analysis-exercise</id>
+    <id>http://nosea.github.io/blog/2013/04-17/mysql-statistical-analysis-exercise</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>MySQL查询练习题
@@ -244,9 +244,9 @@ II:说明
   
   <entry>
     <title type="html"><![CDATA[Mysql Basic]]></title>
-    <link href="http://nosea.github.io/blog/2013/04/08/mysql-basic/"/>
+    <link href="http://nosea.github.io/blog/2013/04-08/mysql-basic/"/>
     <updated>2013-04-08T15:31:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/04/08/mysql-basic</id>
+    <id>http://nosea.github.io/blog/2013/04-08/mysql-basic</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>MySQL 笔记

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Awk | nosea's Blog]]></title>
   <link href="http://nosea.github.io/blog/categories/awk/atom.xml" rel="self"/>
   <link href="http://nosea.github.io/"/>
-  <updated>2017-04-06T15:25:38+00:00</updated>
+  <updated>2017-04-09T13:26:26+00:00</updated>
   <id>http://nosea.github.io/</id>
   <author>
     <name><![CDATA[noseawu]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Awk常用函数]]></title>
-    <link href="http://nosea.github.io/blog/2013/11/24/awk-funclib/"/>
+    <link href="http://nosea.github.io/blog/2013/11-24/awk-funclib/"/>
     <updated>2013-11-24T14:52:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/11/24/awk-funclib</id>
+    <id>http://nosea.github.io/blog/2013/11-24/awk-funclib</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>收集些我觉得有用的函数
@@ -110,9 +110,9 @@ BEGIN {
   
   <entry>
     <title type="html"><![CDATA[Awk Skills]]></title>
-    <link href="http://nosea.github.io/blog/2013/03/26/awk-skills/"/>
+    <link href="http://nosea.github.io/blog/2013/03-26/awk-skills/"/>
     <updated>2013-03-26T16:50:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/03/26/awk-skills</id>
+    <id>http://nosea.github.io/blog/2013/03-26/awk-skills</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>Awk 常用技巧
@@ -234,9 +234,9 @@ $ awk -v OFS='--' 'NR==FNR{a[$1]=$2}; NR!=FNR &amp;&amp; a[$1]{print $1, a[$1], 
   
   <entry>
     <title type="html"><![CDATA[Awk 基础]]></title>
-    <link href="http://nosea.github.io/blog/2013/03/26/awk-basic/"/>
+    <link href="http://nosea.github.io/blog/2013/03-26/awk-basic/"/>
     <updated>2013-03-26T15:09:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/03/26/awk-basic</id>
+    <id>http://nosea.github.io/blog/2013/03-26/awk-basic</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>Awk 基础知识

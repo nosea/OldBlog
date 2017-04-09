@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Raid - nosea's Blog</title>
+  <meta name="author" content="noseawu">
+
+  
+  <meta name="description" content="Introduction RAID,独立磁盘冗余数组（Redundant Array of Independent Disks），也称磁盘阵列。
+它通过RAID Controller将多块磁盘虚拟为大容量的磁盘使用，提供了更高的存储性能。 说明 术语： EDAP —— Extended Data &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nosea.github.io/blog/2013/11-02/raid/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="nosea's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">nosea's Blog</a></h1>
+  
+    <h2>Hello 2017.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="nosea.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Raid</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-11-02T18:21:00+00:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2013</span></span> <span class='time'>6:21 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>Introduction</h1>
+
+<pre><code>RAID,独立磁盘冗余数组（Redundant Array of Independent Disks），也称磁盘阵列。
+它通过RAID Controller将多块磁盘虚拟为大容量的磁盘使用，提供了更高的存储性能。
+</code></pre>
+
+<!--more-->
+
+
+<h1>说明</h1>
+
+<pre><code>术语：
+  EDAP —— Extended Data Avaliability and Protection.
+      RAID 磁盘阵列支援自动检测故障硬盘；
+      RAID 磁盘阵列支援重建硬盘坏轨的资料；
+      RAID 磁盘阵列支援支持不须停机的备援 Hot Spare;
+      RAID 磁盘阵列支援支持不须停机的硬盘替换 HOT Swap；
+      RAID 磁盘阵列支援扩充硬盘容量
+优点：
+   1、多块廉价磁盘比相同存储空间的单个磁盘便宜，降低成本。
+   2、多个磁盘同时读写，提高了存储的吞吐量，速度更快。
+   3、良好的容错机制可以保证数据的安全，单个磁盘损坏不会影响整体的使用
+分类：
+  RAID可以分为：软件RAID、硬件RAID、外置RAID(External RAID)
+  软件RAID：
+    一般包含在操作系统中。软RAID所有操作都由操作系统负责，会占用系统资源。
+    目前看RAID1+0和RAID 1跟硬件RAID性能没有太大区别。
+    但有校验的RAID可能会导致写的瓶颈，因为硬件RAID可以在高速缓存中合并非连续
+    写和校验写为连续写的操作，而软件RAID则要确认每次数据和校验是不是都写到磁盘
+    上去了。
+    例如，内核用软件RAID把/dev/sda1 和 /dev/sda2用于RAID阵列，那么就不能通过
+    sda1和sda2访问了，软件RAID把它们组合为一个类似/dev/md0的，通过这个访问。
+
+  硬件RAID
+    需要一个RAID 控制器，通常需要安装驱动程序内核才能识别这个控制器，它
+    独立于系统，不占用系统资源，部分带有电池，防止意外掉电的数据写入。对带有校验
+    的RAID来讲，性能会好点。系统可以通过一个自定义设备节点来访问RAID阵列，
+    跟通过/dev/hda和/dev/sda访问IDE和SCSI控制器一样。
+
+  外置RAID
+    术语硬件RAID的一种，但它的RAID卡不会安装在系统里，而是安装在外置的存储设备内。
+    而这个外置的储存设备则会连接到系统的SCSI卡上。系统没有任何的RAID功能, 因为它
+    只有一张SCSI卡；所有的RAID功能将会移到这个外置存储里。好处是外置的存储往往可
+    以连接更多的硬盘,不会受系统机箱的大小所影响。而一些高级的技术,如双机容错,是需
+    要多个服务器外连到一个外置储存上,以提供容错能力.外置式RAID的应用之一是可以安
+    装任何的操作系统,因此是与操作系统无关的。为什么呢?因为在系统里只存在一张SCSI
+    卡,并不是RAID卡。而对于这个系统及这张SCSI卡来说,这个外置式的RAID只是一个大型
+    硬盘,并不是什么特别的设备,所以这个外置式的RAID可以安装任何的操作系统。唯一的
+    要求就是你用的这张SCSI卡在这个操作系统要安装驱动程序。
+</code></pre>
+
+<h1>标准RAID</h1>
+
+<pre><code>标准raid主要有RAID-0, RAID-1, RAID-2, RAID-3, RAID-4, RAID-5, RAID-6.
+</code></pre>
+
+<h2>RAID 0</h2>
+
+<pre><code>  RAID 0是将多个磁盘组合成一个大的磁盘，写入的时候是并行向多块磁盘写入，因为是
+并行I/O，因此速度也最快。但是RAID 0没有冗余，若其中一块盘损坏，所有的数据都
+将丢失。
+  RAID 0适合于对性能要求较高，而对数据安全不太在乎的情形，理论上其性能为：
+总性能 = "单个磁盘性能" x "磁盘数量"，但受限于I/O总线和其他等因素，RAID的性能
+会边际递减.
+</code></pre>
+
+<h2>RAID 1</h2>
+
+<pre><code>  RAID 1就是磁盘镜像，用两组以上的N个磁盘相互镜像，那么每个磁盘都有自己的镜像盘，
+这样就最大程度的保证了数据的安全。如果磁盘和它的镜像盘同时损坏，那就没有办法了。
+  RAID 1适用于对数据安全要求很高的场合，它的读性能和单个磁盘差别不大，因为要同时
+写入两块磁盘，写的性能有所降低，镜像盘完全备份，因此RAID 1磁盘利用率最低，但安全
+性级别是最好的.
+</code></pre>
+
+<h2>RAID 2</h2>
+
+<pre><code>  RAID 0的升级版，较少少使用
+</code></pre>
+
+<h2>RAID 3</h2>
+
+<pre><code>  RAID 3是把数据按位或字节的方式交叉存放在N+1个硬盘上，实际数据占用的有效空间
+为N个硬盘的空间总和，而第N+1个硬盘上存储的数据是校验容错信息，当这N+1个硬盘中
+的其中一个硬盘出现故障时，从其它N个硬盘中的数据也可以恢复原始数据，这样，仅使用
+这N个硬盘也可以带伤继续工作（如采集和回放素材），当更换一个新硬盘后，系统可以重
+新恢复完整的校验容错信息。由于在一个硬盘阵列中，多于一个硬盘同时出现故障率的几率
+很小，所以一般情况下，使用RAID3，安全性是可以得到保障的。
+与RAID0相比，RAID3在读写速度方面相对
+较慢。使用的容错算法和分块大小决定RAID使用的应用场合，在通常情况下，RAID3
+比较适合大文件类型且安全性要求较高的应用，如视频编辑、硬盘播出机、大型数据库等.
+             -- 摘自百度百科
+</code></pre>
+
+<h1>混合RAID</h1>
+
+<pre><code>混合的主要有JBOD, RAID-7, RAID-10, RAID-50, RAID-53, RAID-60.
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">noseawu</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2013-11-02T18:21:00+00:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2013</span></span> <span class='time'>6:21 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/gaoe/'>gaoe</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://nosea.github.io/blog/2013/11-02/raid/" data-via="" data-counturl="http://nosea.github.io/blog/2013/11-02/raid/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/10-31/linux-command-rsync/" title="Previous Post: Linux命令rsync">&laquo; Linux命令rsync</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/11-09/linux-command-top/" title="Next Post: Linux命令top">Linux命令top &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01-26/boost-propertytree/">Boost PropertyTree</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-26/boost-filesystem/">Boost Filesystem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-26/tools-eclipse/">Eclipse 相关</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-25/boost-program-options/">Boost Program Options</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-25/fix-windows-7-bootmbr/">修复win7的引导</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - noseawu -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

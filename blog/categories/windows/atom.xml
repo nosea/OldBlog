@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Windows | nosea's Blog]]></title>
   <link href="http://nosea.github.io/blog/categories/windows/atom.xml" rel="self"/>
   <link href="http://nosea.github.io/"/>
-  <updated>2017-04-06T15:25:38+00:00</updated>
+  <updated>2017-04-09T13:26:26+00:00</updated>
   <id>http://nosea.github.io/</id>
   <author>
     <name><![CDATA[noseawu]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[修复win7的引导]]></title>
-    <link href="http://nosea.github.io/blog/2015/01/25/fix-windows-7-bootmbr/"/>
+    <link href="http://nosea.github.io/blog/2015/01-25/fix-windows-7-bootmbr/"/>
     <updated>2015-01-25T14:47:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2015/01/25/fix-windows-7-bootmbr</id>
+    <id>http://nosea.github.io/blog/2015/01-25/fix-windows-7-bootmbr</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>案例：装有双系统(win7 和 Linux)，其中引导由linux得grub引导，且win7和linux的引导

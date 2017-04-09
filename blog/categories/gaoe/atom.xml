@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Gaoe | nosea's Blog]]></title>
   <link href="http://nosea.github.io/blog/categories/gaoe/atom.xml" rel="self"/>
   <link href="http://nosea.github.io/"/>
-  <updated>2017-04-06T15:25:38+00:00</updated>
+  <updated>2017-04-09T13:26:26+00:00</updated>
   <id>http://nosea.github.io/</id>
   <author>
     <name><![CDATA[noseawu]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Shell Trap]]></title>
-    <link href="http://nosea.github.io/blog/2013/12/02/shell-trap/"/>
+    <link href="http://nosea.github.io/blog/2013/12-02/shell-trap/"/>
     <updated>2013-12-02T22:35:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/12/02/shell-trap</id>
+    <id>http://nosea.github.io/blog/2013/12-02/shell-trap</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>有些错误犯一次就够了
@@ -55,9 +55,9 @@
   
   <entry>
     <title type="html"><![CDATA[Raid]]></title>
-    <link href="http://nosea.github.io/blog/2013/11/02/raid/"/>
+    <link href="http://nosea.github.io/blog/2013/11-02/raid/"/>
     <updated>2013-11-02T18:21:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/11/02/raid</id>
+    <id>http://nosea.github.io/blog/2013/11-02/raid</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>RAID,独立磁盘冗余数组（Redundant Array of Independent Disks），也称磁盘阵列。
@@ -161,9 +161,9 @@
   
   <entry>
     <title type="html"><![CDATA[GAOE：术语]]></title>
-    <link href="http://nosea.github.io/blog/2013/07/07/gaoe-terminology/"/>
+    <link href="http://nosea.github.io/blog/2013/07-07/gaoe-terminology/"/>
     <updated>2013-07-07T18:40:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/07/07/gaoe-terminology</id>
+    <id>http://nosea.github.io/blog/2013/07-07/gaoe-terminology</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>各种运维术语

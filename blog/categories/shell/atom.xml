@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Shell | nosea's Blog]]></title>
   <link href="http://nosea.github.io/blog/categories/shell/atom.xml" rel="self"/>
   <link href="http://nosea.github.io/"/>
-  <updated>2017-04-06T15:25:38+00:00</updated>
+  <updated>2017-04-09T13:26:26+00:00</updated>
   <id>http://nosea.github.io/</id>
   <author>
     <name><![CDATA[noseawu]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Bash Tips]]></title>
-    <link href="http://nosea.github.io/blog/2014/08/31/bash-tips/"/>
+    <link href="http://nosea.github.io/blog/2014/08-31/bash-tips/"/>
     <updated>2014-08-31T22:58:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2014/08/31/bash-tips</id>
+    <id>http://nosea.github.io/blog/2014/08-31/bash-tips</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>long time tips
@@ -124,9 +124,9 @@ base_proc
   
   <entry>
     <title type="html"><![CDATA[Shell Color Format]]></title>
-    <link href="http://nosea.github.io/blog/2014/01/01/shell-color-format/"/>
+    <link href="http://nosea.github.io/blog/2014/01-01/shell-color-format/"/>
     <updated>2014-01-01T21:59:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2014/01/01/shell-color-format</id>
+    <id>http://nosea.github.io/blog/2014/01-01/shell-color-format</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>终端颜色打印
@@ -232,9 +232,9 @@ Code    说明
   
   <entry>
     <title type="html"><![CDATA[Shell 条件表达式]]></title>
-    <link href="http://nosea.github.io/blog/2013/10/14/shell-conditional-expression/"/>
+    <link href="http://nosea.github.io/blog/2013/10-14/shell-conditional-expression/"/>
     <updated>2013-10-14T22:40:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/10/14/shell-conditional-expression</id>
+    <id>http://nosea.github.io/blog/2013/10-14/shell-conditional-expression</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>Shell条件测试
@@ -355,9 +355,9 @@ string1 &gt; string2
   
   <entry>
     <title type="html"><![CDATA[Shell 命令行参数解析]]></title>
-    <link href="http://nosea.github.io/blog/2013/10/13/command-line-arguments-process-in-shell/"/>
+    <link href="http://nosea.github.io/blog/2013/10-13/command-line-arguments-process-in-shell/"/>
     <updated>2013-10-13T15:31:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/10/13/command-line-arguments-process-in-shell</id>
+    <id>http://nosea.github.io/blog/2013/10-13/command-line-arguments-process-in-shell</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>    命令行参数的处理是最常用的需求，主要处理长选项和短选项
@@ -521,9 +521,9 @@ Thanks!</p>
   
   <entry>
     <title type="html"><![CDATA[Shell 多进程]]></title>
-    <link href="http://nosea.github.io/blog/2013/10/12/shell-multiprocess/"/>
+    <link href="http://nosea.github.io/blog/2013/10-12/shell-multiprocess/"/>
     <updated>2013-10-12T14:50:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/10/12/shell-multiprocess</id>
+    <id>http://nosea.github.io/blog/2013/10-12/shell-multiprocess</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>  Shell没有多进程的概念，但是可以通过将任务放在后台以及命名管道实现

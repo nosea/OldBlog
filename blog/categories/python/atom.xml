@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | nosea's Blog]]></title>
   <link href="http://nosea.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://nosea.github.io/"/>
-  <updated>2017-04-06T15:25:38+00:00</updated>
+  <updated>2017-04-09T13:26:26+00:00</updated>
   <id>http://nosea.github.io/</id>
   <author>
     <name><![CDATA[noseawu]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Python多线程无法接收Keyboard Interrupt信号]]></title>
-    <link href="http://nosea.github.io/blog/2013/10/11/python-multithread-kill/"/>
+    <link href="http://nosea.github.io/blog/2013/10-11/python-multithread-kill/"/>
     <updated>2013-10-11T13:25:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/10/11/python-multithread-kill</id>
+    <id>http://nosea.github.io/blog/2013/10-11/python-multithread-kill</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>如何让线程相应Keyborad interrupt信号
@@ -164,9 +164,9 @@ Thanks!</p>
   
   <entry>
     <title type="html"><![CDATA[Python中文编码问题]]></title>
-    <link href="http://nosea.github.io/blog/2013/10/10/python-code-problem/"/>
+    <link href="http://nosea.github.io/blog/2013/10-10/python-code-problem/"/>
     <updated>2013-10-10T21:26:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/10/10/python-code-problem</id>
+    <id>http://nosea.github.io/blog/2013/10-10/python-code-problem</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>因折腾过好几次python在中文的处理乱码的情况，特此记录
@@ -238,9 +238,9 @@ Thanks!</p>
   
   <entry>
     <title type="html"><![CDATA[Python Note I]]></title>
-    <link href="http://nosea.github.io/blog/2013/02/04/python-note-i/"/>
+    <link href="http://nosea.github.io/blog/2013/02-04/python-note-i/"/>
     <updated>2013-02-04T15:10:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/02/04/python-note-i</id>
+    <id>http://nosea.github.io/blog/2013/02-04/python-note-i</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>Dictionary, List, Tuple
@@ -369,9 +369,9 @@ True
   
   <entry>
     <title type="html"><![CDATA[Python Docstring]]></title>
-    <link href="http://nosea.github.io/blog/2013/02/02/python-docstring/"/>
+    <link href="http://nosea.github.io/blog/2013/02-02/python-docstring/"/>
     <updated>2013-02-02T16:10:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/02/02/python-docstring</id>
+    <id>http://nosea.github.io/blog/2013/02-02/python-docstring</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>docstring 使用
@@ -438,9 +438,9 @@ True
   
   <entry>
     <title type="html"><![CDATA[Python标准库configparser]]></title>
-    <link href="http://nosea.github.io/blog/2013/02/01/python-stdlib-configparser/"/>
+    <link href="http://nosea.github.io/blog/2013/02-01/python-stdlib-configparser/"/>
     <updated>2013-02-01T16:47:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/02/01/python-stdlib-configparser</id>
+    <id>http://nosea.github.io/blog/2013/02-01/python-stdlib-configparser</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>模块作用：读取/写入配置文件

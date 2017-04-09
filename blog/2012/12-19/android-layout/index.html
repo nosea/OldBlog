@@ -1,0 +1,423 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Android的布局 - nosea's Blog</title>
+  <meta name="author" content="noseawu">
+
+  
+  <meta name="description" content="一.关于一些属性 android:id - 为控件指定id android:text - 指定控件中显示的文字，这里尽量用string.xml android:gravity - 指定控件中的内容的基本位置，比如居中，居右 android:textSize - 指定控件当中的字体大小 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nosea.github.io/blog/2012/12-19/android-layout/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="nosea's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">nosea's Blog</a></h1>
+  
+    <h2>Hello 2017.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="nosea.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Android的布局</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-12-19T16:43:00+00:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>4:43 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>一.关于一些属性
+    android:id - 为控件指定id
+    android:text - 指定控件中显示的文字，这里尽量用string.xml
+    android:gravity - 指定控件中的内容的基本位置，比如居中，居右
+    android:textSize - 指定控件当中的字体大小
+    android:width - 指定控件的宽度
+    android:height - 指定控件的高度
+    android:padding<em> - 指定控件的内边距，调整内容和边框之间的距离
+      也可以之用padding来用
+    android:singleLine - 如果设置为真的话，则控件的内容将在同一行显示
+    android:background - 设置背景色
+    android:layout_margin</em> - 设置控件之间的距离 px</p>
+
+<!-- more -->
+
+
+<p>二.LinearLayout - 线性布局
+    1.可以使所有的控件按照单一的方向摆放(垂直或水平)
+    2. android:layout_weight属性可以设置控件所占空间比例，默认值为0
+    3.android:layout_gravity属性设置控件的基本位置
+三.TableLayout - 表格布局
+    1.继承自LinearLayout
+    2.包含很多TableRow对象，一个TableRow就是一行，每个TableRow里有多少控件，就有多少列
+    3.可以使控件放在行或列中
+    4.android:stretchColumns属性设置某一列为拉伸列，列顺序是从0开始</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+</span><span class='line'><span class="nt">&lt;TableLayout</span> <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+</span><span class='line'>    <span class="na">android:layout_width=</span><span class="s">&quot;fill_parent&quot;</span>
+</span><span class='line'>    <span class="na">android:layout_height=</span><span class="s">&quot;fill_parent&quot;</span>
+</span><span class='line'>    <span class="na">android:stretchColumns=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;TableRow</span> <span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;TextView</span>
+</span><span class='line'>          <span class="na">android:padding=</span><span class="s">&quot;3dip&quot;</span>
+</span><span class='line'>          <span class="na">android:background=</span><span class="s">&quot;#aa0000&quot;</span>
+</span><span class='line'>          <span class="na">android:text=</span><span class="s">&quot;@string/first_column&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;TextView</span>
+</span><span class='line'>          <span class="na">android:padding=</span><span class="s">&quot;3dip&quot;</span>
+</span><span class='line'>          <span class="na">android:background=</span><span class="s">&quot;#00aa00&quot;</span>
+</span><span class='line'>          <span class="na">android:layout_gravity=</span><span class="s">&quot;center&quot;</span>
+</span><span class='line'>          <span class="na">android:text=</span><span class="s">&quot;@string/second_column&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>  
+</span><span class='line'>      <span class="nt">&lt;TextView</span>
+</span><span class='line'>          <span class="na">android:padding=</span><span class="s">&quot;3dip&quot;</span>
+</span><span class='line'>          <span class="na">android:layout_gravity=</span><span class="s">&quot;right&quot;</span>
+</span><span class='line'>          <span class="na">android:background=</span><span class="s">&quot;#0000aa&quot;</span>
+</span><span class='line'>          <span class="na">android:text=</span><span class="s">&quot;@string/third_column&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/TableRow&gt;</span>   
+</span><span class='line'>  
+</span><span class='line'>  <span class="nt">&lt;TableRow</span> <span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;TextView</span>
+</span><span class='line'>          <span class="na">android:padding=</span><span class="s">&quot;3dip&quot;</span>
+</span><span class='line'>          <span class="na">android:text=</span><span class="s">&quot;@string/first_column&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;TextView</span>
+</span><span class='line'>          <span class="na">android:padding=</span><span class="s">&quot;3dip&quot;</span>
+</span><span class='line'>          <span class="na">android:gravity=</span><span class="s">&quot;right&quot;</span>
+</span><span class='line'>          <span class="na">android:background=</span><span class="s">&quot;#00aa00&quot;</span>
+</span><span class='line'>          <span class="na">android:text=</span><span class="s">&quot;@string/second_column&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/TableRow&gt;</span>   
+</span><span class='line'>  <span class="nt">&lt;TableRow</span> <span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;TextView</span>
+</span><span class='line'>          <span class="na">android:padding=</span><span class="s">&quot;3dip&quot;</span>
+</span><span class='line'>          <span class="na">android:text=</span><span class="s">&quot;@string/first_column&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;TextView</span>
+</span><span class='line'>          <span class="na">android:padding=</span><span class="s">&quot;3dip&quot;</span>
+</span><span class='line'>          <span class="na">android:gravity=</span><span class="s">&quot;center&quot;</span>
+</span><span class='line'>          <span class="na">android:background=</span><span class="s">&quot;#00aa00&quot;</span>
+</span><span class='line'>          <span class="na">android:text=</span><span class="s">&quot;@string/second_column&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/TableRow&gt;</span>   
+</span><span class='line'><span class="nt">&lt;/TableLayout&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>1.从上面的程序结果可以看出，每行的列数不均匀时，每一列都不可越过另一列的界限
+2.android:stretchColumns最好设置，否则排列很难看
+</code></pre>
+
+<p>四.RelativeLayout - 相对布局
+     android:layout_above 将该控件的底部至于给定ID的控件之上
+     android:layout_below 将该控件的顶部至于给定ID的控件之下
+     android:layout_toLeftOf 将该控件的右边缘和给定ID控件的左边缘对齐
+     android:layout_toRightOf 将该控件的左边缘和给定ID控件的右边缘对齐</p>
+
+<pre><code> android:layout_alignBaseline 将该控件的baseline和给定ID控件的baseline对齐
+ android:layout_alignBottom 将该控件的底部边缘和给定ID控件的底部边缘对齐
+ android:layout_alignLeft 将该控件的左边缘和给定ID控件的左边缘对齐
+ android:layout_alignRight 将该控件的右边缘和给定ID控件的右边缘对齐
+
+ android:layout_alignParentBottom 如果该值为true，则将该控件的底部和父控件的底部对齐
+ android:layout_alignParentLeft 如果该值为true，则将该控件的左边和父控件的左边对齐
+ android:layout_alignParentRight 如果该值为true，则将该控件的右边和父控件的右边对齐
+ android:layout_alignParentTop 如果该值为true，则将该控件的顶部和父控件的顶部对齐
+
+ android:layout_centerHorizontal 如果值为真，该控件被置于水平方向的中央
+ android:layout_centerInParent 如果值为真，该控件被置于父控件水平方向和垂直方向的中央
+ android:layout_centerVertical 如果值为真，该控件被置于垂直方向的中央
+</code></pre>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+</span><span class='line'><span class="nt">&lt;RelativeLayout</span> <span class="na">xmlns:android=</span><span class="s">&quot;http://schemas.android.com/apk/res/android&quot;</span>
+</span><span class='line'>    <span class="na">android:layout_width=</span><span class="s">&quot;fill_parent&quot;</span>
+</span><span class='line'>    <span class="na">android:layout_height=</span><span class="s">&quot;fill_parent&quot;</span>
+</span><span class='line'>    <span class="na">android:paddingLeft=</span><span class="s">&quot;16dp&quot;</span>
+</span><span class='line'>    <span class="na">android:paddingRight=</span><span class="s">&quot;16dp&quot;</span> <span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;Button</span>
+</span><span class='line'>        <span class="na">android:id=</span><span class="s">&quot;@+id/one&quot;</span>
+</span><span class='line'>        <span class="na">android:layout_width=</span><span class="s">&quot;fill_parent&quot;</span>
+</span><span class='line'>        <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
+</span><span class='line'>        <span class="na">android:text=</span><span class="s">&quot;@string/strOne&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;Button</span>
+</span><span class='line'>        <span class="na">android:id=</span><span class="s">&quot;@+id/two&quot;</span>
+</span><span class='line'>        <span class="na">android:layout_below=</span><span class="s">&quot;@id/one&quot;</span>
+</span><span class='line'>        <span class="na">android:layout_width=</span><span class="s">&quot;100dp&quot;</span>
+</span><span class='line'>        <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
+</span><span class='line'>        <span class="na">android:text=</span><span class="s">&quot;@string/strTwo&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;Button</span>
+</span><span class='line'>        <span class="na">android:id=</span><span class="s">&quot;@+id/three&quot;</span>
+</span><span class='line'>        <span class="na">android:layout_toRightOf=</span><span class="s">&quot;@id/two&quot;</span>
+</span><span class='line'>        <span class="na">android:layout_below=</span><span class="s">&quot;@id/one&quot;</span>
+</span><span class='line'>        <span class="na">android:layout_width=</span><span class="s">&quot;100dp&quot;</span>
+</span><span class='line'>        <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
+</span><span class='line'>        <span class="na">android:text=</span><span class="s">&quot;@string/strThree&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;Button</span>
+</span><span class='line'>        <span class="na">android:id=</span><span class="s">&quot;@+id/four&quot;</span>
+</span><span class='line'>        <span class="na">android:layout_toRightOf=</span><span class="s">&quot;@id/three&quot;</span>
+</span><span class='line'>        <span class="na">android:layout_below=</span><span class="s">&quot;@id/one&quot;</span>
+</span><span class='line'>        <span class="na">android:layout_width=</span><span class="s">&quot;100dp&quot;</span>
+</span><span class='line'>        <span class="na">android:layout_height=</span><span class="s">&quot;wrap_content&quot;</span>
+</span><span class='line'>        <span class="na">android:text=</span><span class="s">&quot;@string/strFour&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;/RelativeLayout&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>五.关于嵌套布局
+    1.当嵌套多个布局文件时，比如多个LinearLayout时，注意android:layout_weight的分配
+    2.当内容不同时，即使android:layout_weight一样，占用的空间也不同
+    3.各种布局文件的嵌套可以实现较实用和美观的界面</p>
+
+<p>Reference:  <br/>
+<a href="http://www.marschen.com/">mars的视频教程</a> <br/>
+Thanks!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">noseawu</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2012-12-19T16:43:00+00:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>4:43 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>android</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://nosea.github.io/blog/2012/12-19/android-layout/" data-via="" data-counturl="http://nosea.github.io/blog/2012/12-19/android-layout/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/12-18/make-local-project-on-github/" title="Previous Post: 把本地项目放到Github">&laquo; 把本地项目放到Github</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/12-21/add-emacs-to-windows-right-click-menu/" title="Next Post: 把Emacs添加到右键菜单">把Emacs添加到右键菜单 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01-26/boost-propertytree/">Boost PropertyTree</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-26/boost-filesystem/">Boost Filesystem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-26/tools-eclipse/">Eclipse 相关</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-25/boost-program-options/">Boost Program Options</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-25/fix-windows-7-bootmbr/">修复win7的引导</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - noseawu -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

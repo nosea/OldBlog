@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | nosea's Blog]]></title>
   <link href="http://nosea.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://nosea.github.io/"/>
-  <updated>2017-04-06T15:25:38+00:00</updated>
+  <updated>2017-04-09T13:26:26+00:00</updated>
   <id>http://nosea.github.io/</id>
   <author>
     <name><![CDATA[noseawu]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[在mac上安装octopress]]></title>
-    <link href="http://nosea.github.io/blog/2014/12/16/install-octopress-on-mac/"/>
+    <link href="http://nosea.github.io/blog/2014/12-16/install-octopress-on-mac/"/>
     <updated>2014-12-16T22:30:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2014/12/16/install-octopress-on-mac</id>
+    <id>http://nosea.github.io/blog/2014/12-16/install-octopress-on-mac</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>在Mac上安装Octopress记录
@@ -104,9 +104,9 @@ rake generate
   
   <entry>
     <title type="html"><![CDATA[Table of Contents in Octopress]]></title>
-    <link href="http://nosea.github.io/blog/2012/12/27/table-of-contents-in-octopress/"/>
+    <link href="http://nosea.github.io/blog/2012/12-27/table-of-contents-in-octopress/"/>
     <updated>2012-12-27T19:12:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2012/12/27/table-of-contents-in-octopress</id>
+    <id>http://nosea.github.io/blog/2012/12-27/table-of-contents-in-octopress</id>
     <content type="html"><![CDATA[<h1>1.安装jQuery</h1>
 
 <h2>1.1 下载</h2>
@@ -458,9 +458,9 @@ Thanks!</li>
   
   <entry>
     <title type="html"><![CDATA[在Linux和Windows下同步Octopress]]></title>
-    <link href="http://nosea.github.io/blog/2012/12/11/sync-octopress-between-linux-and-windows/"/>
+    <link href="http://nosea.github.io/blog/2012/12-11/sync-octopress-between-linux-and-windows/"/>
     <updated>2012-12-11T16:54:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2012/12/11/sync-octopress-between-linux-and-windows</id>
+    <id>http://nosea.github.io/blog/2012/12-11/sync-octopress-between-linux-and-windows</id>
     <content type="html"><![CDATA[<p>一.需求
     需要在Win7和Ubuntu下写东西，因此需要实时更新。</p>
 
@@ -498,9 +498,9 @@ Thanks!</li>
   
   <entry>
     <title type="html"><![CDATA[配置 Octopress]]></title>
-    <link href="http://nosea.github.io/blog/2012/12/10/configure-octopress/"/>
+    <link href="http://nosea.github.io/blog/2012/12-10/configure-octopress/"/>
     <updated>2012-12-10T17:09:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2012/12/10/configure-octopress</id>
+    <id>http://nosea.github.io/blog/2012/12-10/configure-octopress</id>
     <content type="html"><![CDATA[<p>一.给Octopress添加评论<br/>
     1.到DISQUS:<a href="http://disqus.com/">http://disqus.com/</a> 注册一个账号，并且把你的博客地址添加到DISQUS.<br/>
     2.编辑_config.xml, 修改如下两行 <br/>
@@ -575,9 +575,9 @@ default_asides: [asides/category_list.html, asides/recent_posts.html]
   
   <entry>
     <title type="html"><![CDATA[Install Octopress on Windows]]></title>
-    <link href="http://nosea.github.io/blog/2012/12/08/install-octopress-on-windows/"/>
+    <link href="http://nosea.github.io/blog/2012/12-08/install-octopress-on-windows/"/>
     <updated>2012-12-08T13:01:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2012/12/08/install-octopress-on-windows</id>
+    <id>http://nosea.github.io/blog/2012/12-08/install-octopress-on-windows</id>
     <content type="html"><![CDATA[<ul>
 <li>Environment: <br/>
 OS: Windows 7 SP1 <br/>
@@ -740,7 +740,7 @@ That&rsquo;s where I choose to install python.</li>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ ssh -vT &lt;a href="&#x6d;&#x61;&#105;&#108;&#116;&#111;&#58;&#103;&#105;&#x74;&#64;&#103;&#x69;&#x74;&#104;&#x75;&#x62;&#x2e;&#99;&#111;&#x6d;">&#x67;&#105;&#116;&#64;&#x67;&#x69;&#x74;&#104;&#x75;&#x62;&#x2e;&#99;&#111;&#x6d;&lt;/a>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ ssh -vT &lt;a href="&#109;&#97;&#105;&#108;&#116;&#x6f;&#58;&#x67;&#x69;&#x74;&#64;&#x67;&#105;&#x74;&#104;&#117;&#x62;&#x2e;&#99;&#x6f;&#109;">&#103;&#x69;&#x74;&#64;&#x67;&#x69;&#116;&#x68;&#117;&#98;&#46;&#x63;&#x6f;&#109;&lt;/a>
 </span><span class='line'>
 </span><span class='line'>&lt;h1>&hellip;&lt;/h1>
 </span><span class='line'>

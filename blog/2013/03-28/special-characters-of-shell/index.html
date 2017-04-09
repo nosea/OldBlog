@@ -1,0 +1,522 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Special Characters of Shell - nosea's Blog</title>
+  <meta name="author" content="noseawu">
+
+  
+  <meta name="description" content="Introduction shell 特殊字符 Content # 1、注释 在同一行写注释注意命令尾和#之间要有空格分开 eg: $ echo Test#This is not a comment Test#This is not a comment $ echo Test #This is &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nosea.github.io/blog/2013/03-28/special-characters-of-shell/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="nosea's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">nosea's Blog</a></h1>
+  
+    <h2>Hello 2017.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="nosea.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Special Characters of Shell</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-03-28T23:53:00+00:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>11:53 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>Introduction</h1>
+
+<pre><code>shell 特殊字符
+</code></pre>
+
+<!--more--> 
+
+
+<h1>Content</h1>
+
+<h2>#</h2>
+
+<pre><code>1、注释
+   在同一行写注释注意命令尾和#之间要有空格分开
+   eg: 
+   $ echo Test#This is not a comment
+   Test#This is not a comment
+   $ echo Test #This is not a comment
+   Test
+2、被quoted或者escaped则后面不表示注释
+   eg: "#", '#'  or \#
+3、用于参数替换结构中
+   eg:
+4、用于数值常量表达式
+</code></pre>
+
+<h2>;                    semicolon</h2>
+
+<pre><code>command separator，允许多个命令在同一行上
+</code></pre>
+
+<h2>;;                    double semicolon</h2>
+
+<pre><code>用于case语句中
+</code></pre>
+
+<h2>.                    dot</h2>
+
+<pre><code>1、同source
+2、隐藏文件的名称前缀
+3、代表当前目录  &lt;=&gt; $PWD
+4、regexp里匹配单个字符
+</code></pre>
+
+<h2>&ldquo;                    double quote</h2>
+
+<pre><code>partial quoting，weak quoting
+</code></pre>
+
+<h2>&lsquo;                    single quote</h2>
+
+<pre><code>full quoting, strong quoting
+</code></pre>
+
+<h2>,                    comma operator</h2>
+
+<pre><code>1、逗号操作符，用于连接一系列运算，但只返回最后一个运算的值
+   eg:  let "a=((4+1, 5+1, 7+3))"
+2、串联字符串
+   eg:
+   $ mkdir -p test{,1}/{a,b,c}
+   t$ tree 
+   .
+   ├── test
+   │   ├── a
+   │   ├── b
+   │   └── c
+   └── test1
+       ├── a
+       ├── b
+       └── c
+</code></pre>
+
+<h2>\                    backslash</h2>
+
+<pre><code>escape[backslash]
+</code></pre>
+
+<h2>/                    forward slash</h2>
+
+<pre><code>1、文件路径分隔符
+2、除法
+</code></pre>
+
+<h2>`</h2>
+
+<pre><code>command substitution
+</code></pre>
+
+<h2>:                    colon</h2>
+
+<pre><code>1、null command -- "NOP", 不做任何操作, 其exit status是true(0)
+  eg:
+  while :
+      xxx
+      ...
+  done
+2、作为一个placeholder
+  eg:
+  : ${username=`whoami`}
+
+  # 如果有个变量没有设定的话，会打印出错信息
+  : ${HOSTNAME?} ${USER?} ${MAIL?} 
+
+  # 清空一个文件
+  : &gt; data.log
+  # 等效于
+  cat /dev/null &gt; data.log
+3、field分隔符，在/etc/passwd里，在$PATH变量里
+</code></pre>
+
+<h2>!</h2>
+
+<pre><code>取反
+</code></pre>
+
+<h2>*                    asterisk</h2>
+
+<pre><code>1、wild card，本身匹配目录里的每个文件
+2、在regexp里匹配位置前面的0~多个
+3、乘号
+</code></pre>
+
+<h2>?</h2>
+
+<pre><code>1、test operator
+   eg:((a=b&lt;4?5:6))
+2、wild card，匹配单个
+3、regexp里匹配前面是null 或者string
+</code></pre>
+
+<h2>$</h2>
+
+<pre><code>1、variable substitution
+2、regexp里指末尾
+</code></pre>
+
+<h2>${}</h2>
+
+<pre><code>parameter substitution
+</code></pre>
+
+<h2>$*, $@</h2>
+
+<pre><code>positional parameters
+</code></pre>
+
+<h2>$?</h2>
+
+<pre><code>exit status variable,包括command，function，script
+</code></pre>
+
+<h2>$$</h2>
+
+<pre><code>process ID variable
+</code></pre>
+
+<h2>()                    parentheses</h2>
+
+<pre><code>1、command group
+  注意:
+    圆括号里的命令在subshell里执行
+2、数组的初始化
+  array=(1 2 3)
+  echo ${array[0]}
+</code></pre>
+
+<h2>{xxx,yyy,zzz,&hellip;}</h2>
+
+<pre><code>Brace expansion
+echo "It's gonna be"\ {alright,ok}!
+</code></pre>
+
+<h2>{1..4}，{a..z}</h2>
+
+<pre><code>Extended Brace expansion
+</code></pre>
+
+<h2>{}                    curly brackets</h2>
+
+<pre><code>1、Block of code
+   as an inline group，事实上，这个生成了一个没有名字的函数，
+   在{}里的命令是自动运行的，而函数，是你必须手动调用才运行，
+   而且函数运行后，里面的变量在外面也可见
+   {}是在当前shell中执行的，而不是subshell
+   注意格式必须是
+   { command_to_execute; }  # 前后的空格是必须的
+2、{} placeholder for text
+</code></pre>
+
+<h2>[]</h2>
+
+<pre><code>1、Test
+   在里面的是测试表达式，这个是shell内置的测试表达式,而不是/usr/bin/test
+2、取数组的值
+3、range of characters
+   regexp里的[]表示其中的任意一个
+</code></pre>
+
+<h2>[[]]</h2>
+
+<pre><code>比[]更加灵活的测试表达式
+</code></pre>
+
+<h2>$[]                    integer expansion</h2>
+
+<pre><code>计算位于$[]的整数表达式
+eg:
+$ echo $[4+5]
+9
+</code></pre>
+
+<h2>(())                    integer expansion</h2>
+
+<pre><code>计算位于(())的整数表达式
+</code></pre>
+
+<h2>> &amp;> >&amp; >> &lt; &lt;></h2>
+
+<pre><code>1、重定向
+   eg:
+   command &amp;&gt; fd  # 是将命令的stdout和stderr重定向到fd
+   command &gt;&amp;2  # 将命令的stdout重定向到stderr
+2、比较操作
+</code></pre>
+
+<h2>&lt;&lt;</h2>
+
+<pre><code>redirection used in a here document
+</code></pre>
+
+<h2>&lt;&lt;&lt;</h2>
+
+<pre><code>redirection used in a here string
+</code></pre>
+
+<h2>\&lt;, \></h2>
+
+<pre><code>regexp里的word boundary
+grep '\&lt;time\&gt;' file
+</code></pre>
+
+<h2>|                    pipe</h2>
+
+<pre><code>将上一个命令的stdout发送到下一个命令的stdin
+</code></pre>
+
+<h2>>|</h2>
+
+<pre><code>force redirection
+</code></pre>
+
+<h2>||, &amp;&amp;</h2>
+
+<pre><code>逻辑操作符OR
+逻辑操作符AND
+</code></pre>
+
+<h2>&amp;</h2>
+
+<pre><code>Run job in background
+</code></pre>
+
+<h2>-</h2>
+
+<pre><code>1、option, prefix
+2、redirection from/to stdin or stdout [dash]
+3、上一个工作目录
+   eg: cd -
+4、减号
+</code></pre>
+
+<h2>=</h2>
+
+<pre><code>赋值
+</code></pre>
+
+<h2>+</h2>
+
+<pre><code>1、加号
+2、regexp里
+</code></pre>
+
+<h2>%</h2>
+
+<pre><code>modulo(取模)
+</code></pre>
+
+<h2>～</h2>
+
+<pre><code>home directory &lt;=&gt; $HOME
+</code></pre>
+
+<h2>~+</h2>
+
+<pre><code>current working directory &lt;=&gt; $PWD
+</code></pre>
+
+<h2>~-</h2>
+
+<pre><code>previous working directory &lt;=&gt; $OLDPWD
+</code></pre>
+
+<h2>^</h2>
+
+<pre><code>regexp里表示行首
+</code></pre>
+
+<h2>whitespace</h2>
+
+<pre><code>作为commands或者variables的分隔符
+$IFS 默认为whitespace，作为命令的分隔符
+</code></pre>
+
+<h1>Reference</h1>
+
+<p>ABS-guide CHA-3  <br/>
+Thanks!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">noseawu</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2013-03-28T23:53:00+00:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>11:53 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/shell/'>shell</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://nosea.github.io/blog/2013/03-28/special-characters-of-shell/" data-via="" data-counturl="http://nosea.github.io/blog/2013/03-28/special-characters-of-shell/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/03-27/configure-crontab/" title="Previous Post: cron配置">&laquo; cron配置</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/04-02/sed-basic/" title="Next Post: Sed Basic">Sed Basic &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01-26/boost-propertytree/">Boost PropertyTree</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-26/boost-filesystem/">Boost Filesystem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-26/tools-eclipse/">Eclipse 相关</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-25/boost-program-options/">Boost Program Options</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-25/fix-windows-7-bootmbr/">修复win7的引导</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - noseawu -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

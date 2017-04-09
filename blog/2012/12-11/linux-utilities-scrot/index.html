@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Linux 实用工具 - Scrot - nosea's Blog</title>
+  <meta name="author" content="noseawu">
+
+  
+  <meta name="description" content="屏幕截图工具 一.安装 Ubuntu: sudo apt-get install scrot Fedora: yum install scrot #有点久没用了，一般情况是这样子 自己编译: 到这个网址下载&ndash;>http://linuxbrit.co.uk/downloads/ 二.使用 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://nosea.github.io/blog/2012/12-11/linux-utilities-scrot/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="nosea's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">nosea's Blog</a></h1>
+  
+    <h2>Hello 2017.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="nosea.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Linux 实用工具 - Scrot</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-12-11T18:37:00+00:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>6:37 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>屏幕截图工具  <br/>
+一.安装
+    Ubuntu: sudo apt-get install scrot
+    Fedora: yum install scrot  #有点久没用了，一般情况是这样子
+    自己编译: 到这个网址下载&ndash;><a href="http://linuxbrit.co.uk/downloads/">http://linuxbrit.co.uk/downloads/</a></p>
+
+<!-- more -->
+
+
+<p>二.使用
+    scrot [options] [file]
+    -c, &ndash;count
+         配合-d选项使用，用来显示倒计时
+    -d, &ndash;delay NUM
+         延时NUM 秒抓取图像
+    -e, &ndash;exec APP
+         由APP对抓取的图像进行操作
+    -q, &ndash;quality NUM
+         更改抓取图像质量. NUM取值范围(1-100), 值越高质量越好.
+         默认值：75
+    -s, &ndash;select
+         用鼠标选择一个窗口
+三.范例
+    scrot a.png  #截下整个屏幕
+    scrot -s a.png #自己选择范围</p>
+
+<p>Reference:<a href="http://linuxtoy.org/archives/mastering-scrot.html">scrot 从入门到精通</a>  <br/>
+   Thanks!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">noseawu</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2012-12-11T18:37:00+00:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>6:37 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>linux</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://nosea.github.io/blog/2012/12-11/linux-utilities-scrot/" data-via="" data-counturl="http://nosea.github.io/blog/2012/12-11/linux-utilities-scrot/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/12-11/sync-octopress-between-linux-and-windows/" title="Previous Post: 在Linux和Windows下同步Octopress">&laquo; 在Linux和Windows下同步Octopress</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/12-12/user-interface-of-android/" title="Next Post: Android的用户界面">Android的用户界面 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01-26/boost-propertytree/">Boost PropertyTree</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-26/boost-filesystem/">Boost Filesystem</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-26/tools-eclipse/">Eclipse 相关</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-25/boost-program-options/">Boost Program Options</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01-25/fix-windows-7-bootmbr/">修复win7的引导</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2017 - noseawu -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

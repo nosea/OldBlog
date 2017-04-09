@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Linux | nosea's Blog]]></title>
   <link href="http://nosea.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://nosea.github.io/"/>
-  <updated>2017-04-06T15:25:38+00:00</updated>
+  <updated>2017-04-09T13:26:26+00:00</updated>
   <id>http://nosea.github.io/</id>
   <author>
     <name><![CDATA[noseawu]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Linux命令tcpdump]]></title>
-    <link href="http://nosea.github.io/blog/2015/01/06/linux-command-tcpdump/"/>
+    <link href="http://nosea.github.io/blog/2015/01-06/linux-command-tcpdump/"/>
     <updated>2015-01-06T17:41:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2015/01/06/linux-command-tcpdump</id>
+    <id>http://nosea.github.io/blog/2015/01-06/linux-command-tcpdump</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>tcpdump命令日常使用
@@ -196,9 +196,9 @@ $ sudo tcpdump -nlv -c10 'tcp and src host 192.168.9.73 and less 100'
   
   <entry>
     <title type="html"><![CDATA[Linux命令xargs]]></title>
-    <link href="http://nosea.github.io/blog/2013/11/21/linux-command-xargs/"/>
+    <link href="http://nosea.github.io/blog/2013/11-21/linux-command-xargs/"/>
     <updated>2013-11-21T22:32:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/11/21/linux-command-xargs</id>
+    <id>http://nosea.github.io/blog/2013/11-21/linux-command-xargs</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>xargs - build and execute command lines from standard input
@@ -218,9 +218,9 @@ command_1 | xargs command_2
   
   <entry>
     <title type="html"><![CDATA[Linux命令iptables]]></title>
-    <link href="http://nosea.github.io/blog/2013/11/13/linux-command-iptables/"/>
+    <link href="http://nosea.github.io/blog/2013/11-13/linux-command-iptables/"/>
     <updated>2013-11-13T17:08:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/11/13/linux-command-iptables</id>
+    <id>http://nosea.github.io/blog/2013/11-13/linux-command-iptables</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>iptables — administration tool for IPv4 packet filtering and NAT
@@ -585,9 +585,9 @@ iptables-save
   
   <entry>
     <title type="html"><![CDATA[Linux命令vmstat]]></title>
-    <link href="http://nosea.github.io/blog/2013/11/10/linux-command-vmstat/"/>
+    <link href="http://nosea.github.io/blog/2013/11-10/linux-command-vmstat/"/>
     <updated>2013-11-10T10:38:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/11/10/linux-command-vmstat</id>
+    <id>http://nosea.github.io/blog/2013/11-10/linux-command-vmstat</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>vmstat上报关于进程、内存、内存分页、阻塞IO、traps、CPU活动信息
@@ -636,9 +636,9 @@ CPU:
   
   <entry>
     <title type="html"><![CDATA[Linux命令top]]></title>
-    <link href="http://nosea.github.io/blog/2013/11/09/linux-command-top/"/>
+    <link href="http://nosea.github.io/blog/2013/11-09/linux-command-top/"/>
     <updated>2013-11-09T16:29:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/11/09/linux-command-top</id>
+    <id>http://nosea.github.io/blog/2013/11-09/linux-command-top</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>top -- display Linux tasks

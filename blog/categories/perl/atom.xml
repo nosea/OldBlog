@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Perl | nosea's Blog]]></title>
   <link href="http://nosea.github.io/blog/categories/perl/atom.xml" rel="self"/>
   <link href="http://nosea.github.io/"/>
-  <updated>2017-04-06T15:25:38+00:00</updated>
+  <updated>2017-04-09T13:26:26+00:00</updated>
   <id>http://nosea.github.io/</id>
   <author>
     <name><![CDATA[noseawu]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Perl Basic]]></title>
-    <link href="http://nosea.github.io/blog/2013/11/23/perl-basic/"/>
+    <link href="http://nosea.github.io/blog/2013/11-23/perl-basic/"/>
     <updated>2013-11-23T00:15:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2013/11/23/perl-basic</id>
+    <id>http://nosea.github.io/blog/2013/11-23/perl-basic</id>
     <content type="html"><![CDATA[<h1>Introduction</h1>
 
 <pre><code>Perl —— Practical Extraction and Report Language

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android | nosea's Blog]]></title>
   <link href="http://nosea.github.io/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://nosea.github.io/"/>
-  <updated>2017-04-06T15:25:38+00:00</updated>
+  <updated>2017-04-09T13:26:26+00:00</updated>
   <id>http://nosea.github.io/</id>
   <author>
     <name><![CDATA[noseawu]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Android的布局]]></title>
-    <link href="http://nosea.github.io/blog/2012/12/19/android-layout/"/>
+    <link href="http://nosea.github.io/blog/2012/12-19/android-layout/"/>
     <updated>2012-12-19T16:43:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2012/12/19/android-layout</id>
+    <id>http://nosea.github.io/blog/2012/12-19/android-layout</id>
     <content type="html"><![CDATA[<p>一.关于一些属性
     android:id - 为控件指定id
     android:text - 指定控件中显示的文字，这里尽量用string.xml
@@ -209,9 +209,9 @@ Thanks!</p>
   
   <entry>
     <title type="html"><![CDATA[Activity的切换]]></title>
-    <link href="http://nosea.github.io/blog/2012/12/16/switch-to-another-activity/"/>
+    <link href="http://nosea.github.io/blog/2012/12-16/switch-to-another-activity/"/>
     <updated>2012-12-16T22:02:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2012/12/16/switch-to-another-activity</id>
+    <id>http://nosea.github.io/blog/2012/12-16/switch-to-another-activity</id>
     <content type="html"><![CDATA[<p>一.同个Activity的view
     1.添加view在布局文件中添加，一般注意宽高属性
       layout_width, layout_height
@@ -257,9 +257,9 @@ Thanks!</p>
   
   <entry>
     <title type="html"><![CDATA[Activity 生命周期]]></title>
-    <link href="http://nosea.github.io/blog/2012/12/14/activity-lifecycle/"/>
+    <link href="http://nosea.github.io/blog/2012/12-14/activity-lifecycle/"/>
     <updated>2012-12-14T12:38:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2012/12/14/activity-lifecycle</id>
+    <id>http://nosea.github.io/blog/2012/12-14/activity-lifecycle</id>
     <content type="html"><![CDATA[<p>一.基本生命周期  <br/>
 <img src="/image_tag/basic-lifecycle.png"></p>
 
@@ -313,9 +313,9 @@ Reference:  <br/>
   
   <entry>
     <title type="html"><![CDATA[Android的用户界面]]></title>
-    <link href="http://nosea.github.io/blog/2012/12/12/user-interface-of-android/"/>
+    <link href="http://nosea.github.io/blog/2012/12-12/user-interface-of-android/"/>
     <updated>2012-12-12T11:19:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2012/12/12/user-interface-of-android</id>
+    <id>http://nosea.github.io/blog/2012/12-12/user-interface-of-android</id>
     <content type="html"><![CDATA[<p>一.概览
         The graphical user interface for an Android app is built using a hierarchy
     of View and ViewGroup objects. View objects are usually UI widgets such as buttons
@@ -340,9 +340,9 @@ Reference:  <br/>
   
   <entry>
     <title type="html"><![CDATA[Android的一些基本概念]]></title>
-    <link href="http://nosea.github.io/blog/2012/12/11/basic-knowledge-of-android/"/>
+    <link href="http://nosea.github.io/blog/2012/12-11/basic-knowledge-of-android/"/>
     <updated>2012-12-11T13:27:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2012/12/11/basic-knowledge-of-android</id>
+    <id>http://nosea.github.io/blog/2012/12-11/basic-knowledge-of-android</id>
     <content type="html"><![CDATA[<p>一.Android的体系架构 from: <a href="http://developer.android.com/about/versions/index.html">App Framework</a>  <br/>
 <img src="/image_tag/system-architecture.jpg"></p>
 

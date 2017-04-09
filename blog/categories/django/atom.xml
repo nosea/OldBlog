@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Django | nosea's Blog]]></title>
   <link href="http://nosea.github.io/blog/categories/django/atom.xml" rel="self"/>
   <link href="http://nosea.github.io/"/>
-  <updated>2017-04-06T15:25:38+00:00</updated>
+  <updated>2017-04-09T13:26:26+00:00</updated>
   <id>http://nosea.github.io/</id>
   <author>
     <name><![CDATA[noseawu]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Django笔记-视图和URL配置]]></title>
-    <link href="http://nosea.github.io/blog/2012/12/18/views-and-urlconfs-of-django/"/>
+    <link href="http://nosea.github.io/blog/2012/12-18/views-and-urlconfs-of-django/"/>
     <updated>2012-12-18T15:22:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2012/12/18/views-and-urlconfs-of-django</id>
+    <id>http://nosea.github.io/blog/2012/12-18/views-and-urlconfs-of-django</id>
     <content type="html"><![CDATA[<p>一.基础知识
     1.什么是视图(view)
       I.视图(函数)：接受一个Web请求并返回Web响应的Python函数。
@@ -66,9 +66,9 @@
   
   <entry>
     <title type="html"><![CDATA[Django笔记 - 开始Django]]></title>
-    <link href="http://nosea.github.io/blog/2012/12/18/notes-of-start-django/"/>
+    <link href="http://nosea.github.io/blog/2012/12-18/notes-of-start-django/"/>
     <updated>2012-12-18T10:11:00+00:00</updated>
-    <id>http://nosea.github.io/blog/2012/12/18/notes-of-start-django</id>
+    <id>http://nosea.github.io/blog/2012/12-18/notes-of-start-django</id>
     <content type="html"><![CDATA[<p>一.到<a href="https://www.djangoproject.com/">官网</a>下载最新稳定版,关于哪个版本好, 官网右侧有说明，安装  <br/>
 Linux
 <code>bash
